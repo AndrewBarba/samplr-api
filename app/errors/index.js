@@ -62,6 +62,7 @@ class NotFoundError extends AppError {
  * Export
  * ------------------------------------------------------------------------- */
 
+exports.AppError = AppError;
 exports.ServerError = ServerError;
 exports.BadRequestError = BadRequestError;
 exports.UnauthorizedError = UnauthorizedError;
