@@ -1,0 +1,22 @@
+/* jshint config
+ *
+ * docs for jshint : http://www.jshint.com/docs/
+ * options for jshint : http://www.jshint.com/docs/options/
+ */
+
+{
+  "node": true,
+  "mocha": true,
+  "globals": {
+    "describe" : true,
+    "before": true,
+    "it": true
+  },
+  "esnext": true,
+  "undef": true,
+  "unused": true,
+  "bitwise": true,
+  "eqeqeq": true,
+  "freeze": true,
+  "strict": false
+}

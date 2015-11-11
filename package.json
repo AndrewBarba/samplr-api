@@ -1,0 +1,40 @@
+{
+  "name": "samplr-api",
+  "version": "1.0.0",
+  "description": "Samplr API built with Node.js and RethinkDB",
+  "url": "https://api.samplr.com/",
+  "author": "Samplr Inc.",
+
+  "engines": {
+    "node": "4.2.2"
+  },
+
+  "dependencies": {
+    "async": "^1.4.0",
+    "bcryptjs": "^2.3.0",
+    "body-parser": "^1.13.2",
+    "express": "^4.13.3",
+    "forky": "~0.3.0",
+    "newrelic": "^1.21.1",
+    "stripe": "^4.0.0",
+    "thinky": "^2.1.6",
+    "underscore": "^1.8.3",
+    "winston": "^1.0.1"
+  },
+
+  "devDependencies": {
+    "mocha": "^2.2.5",
+    "gulp": "^3.9.0",
+    "gulp-jshint": "^1.11.2",
+    "jshint": "^2.8.0",
+    "jshint-stylish": "^2.0.1",
+    "should": "^7.0.2",
+    "supertest": "^1.0.1"
+  },
+
+  "scripts": {
+    "postinstall": "make post-install",
+    "start": "node process/server-cluster",
+    "test": "mocha --timeout 20000"
+  }
+}
