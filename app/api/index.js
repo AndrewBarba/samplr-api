@@ -5,6 +5,7 @@ const express = require('express');
 const config = require('config');
 
 // Middleware
+const cors = require('middleware/cors');
 const parser = require('middleware/parser');
 const headers = require('middleware/headers');
 const notFound = require('middleware/not-found');
@@ -24,6 +25,7 @@ class Api {
     this._server = http.createServer(app);
 
     // load middleware
+    app.use(cors());
     app.use(parser());
     app.use(headers());
 
