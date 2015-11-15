@@ -15,12 +15,6 @@ const DEFAULTS = {
   env: ENV,
   http: {
     port: process.env.PORT || 3000
-  },
-  tradeking: {
-    consumerKey: '8KHtckZoJT7hVJFBvKfLLlRDJxnPnA6fdIjAdZ7O',
-    consumerSecret: 'jcE1pyLXvON98RW2rRXGycI9lkRaGi7mS3USc8rX',
-    authToken: 'w8zugLtjEuPiKMJ7Z5A94mJPzxJ6PG13oPxhYgxj',
-    authSecret: 'dpAH2237FO5sX8o1p3BDUrTr0MQMFUJNtiG4DMK5'
   }
 };
 
