@@ -1,6 +1,6 @@
 "use strict";
 
-if (process.env.NEWRELIC) {
+if (process.env.NEW_RELIC) {
   require('newrelic');
 }
 
