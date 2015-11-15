@@ -3,7 +3,7 @@
 const Model = require('./model');
 const Service = require('./service');
 
-const model = new Model("MODULE_NAME_HERE");
+const model = new Model("Template");
 const service = new Service(model);
 
 exports = module.exports = service;

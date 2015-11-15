@@ -12,7 +12,7 @@ class Modules {
     this._auth = require('./auth');
     this._user = require('./user');
 
-    next();
+    process.nextTick(next);
   }
 }
 

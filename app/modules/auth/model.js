@@ -18,7 +18,7 @@ class AuthModel extends CommonModel {
   }
 
   relationships() {
-    this.belongsTo("user", "userId");
+    this.belongsTo("User", "userId");
   }
 
   generateToken() {

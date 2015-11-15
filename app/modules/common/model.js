@@ -1,6 +1,7 @@
 "use strict";
 
 const _ = require('underscore');
+const Model = require('thinky/lib/model');
 const thinky = require('connections').thinky;
 const type = thinky.type;
 const r = thinky.r;
@@ -12,6 +13,12 @@ class CommonModel {
     // Create Thinky model
     this._schema = _.extend(this.baseSchema(), this.schema());
     this._model = thinky.createModel(modelName, this._schema, options);
+
+    // Forward all model functions
+    _.each(Model.prototype, (fn, name) => {
+      if (this[name] || !_.isFunction(fn)) return;
+      this[name] = () => fn.apply(this._model, arguments);
+    });
 
     // Build indexes
     this.index();
@@ -55,11 +62,11 @@ class CommonModel {
   /**
    * Create an instance of this model
    *
-   * @method new
+   * @method create
    * @param {Object} options
    * @return {ThinkyModel}
    */
-  new(options) {
+  create(options) {
     let Model = this.Model;
     return new Model(options);
   }
@@ -84,23 +91,13 @@ class CommonModel {
   }
 
   /**
-   * Forward ensureIndex method
-   *
-   * @method ensureIndex
-   */
-  ensureIndex(name, fn, options) {
-    this.Model.ensureIndex(name, fn, options);
-    return this;
-  }
-
-  /**
    * Forward hasOne method
    *
    * @method hasOne
    */
-  hasOne(moduleName, rightKey) {
-    let OtherModel = require(`modules/${moduleName}`).model;
-    this.Model.hasOne(OtherModel.Model, moduleName, "id", rightKey);
+  hasOne(modelName, rightKey) {
+    let OtherModel = thinky.models[modelName];
+    this.Model.hasOne(OtherModel, modelName.toLowerCase(), "id", rightKey);
     return this;
   }
 
@@ -109,9 +106,9 @@ class CommonModel {
    *
    * @method belongsTo
    */
-  belongsTo(moduleName, leftKey) {
-    let OtherModel = require(`modules/${moduleName}`).model;
-    this.Model.belongsTo(OtherModel.Model, moduleName, leftKey, "id");
+  belongsTo(modelName, leftKey) {
+    let OtherModel = thinky.models[modelName];
+    this.Model.belongsTo(OtherModel, modelName.toLowerCase(), leftKey, "id");
     return this;
   }
 
@@ -120,9 +117,9 @@ class CommonModel {
    *
    * @method hasMany
    */
-  hasMany(moduleName, rightKey) {
-    let OtherModel = require(`modules/${moduleName}`).model;
-    this.Model.hasMany(OtherModel.Model, moduleName, "id", rightKey);
+  hasMany(modelName, rightKey) {
+    let OtherModel = thinky.models[modelName];
+    this.Model.hasMany(OtherModel, modelName.toLowerCase(), "id", rightKey);
     return this;
   }
 
@@ -131,9 +128,9 @@ class CommonModel {
    *
    * @method hasAndBelongsToMany
    */
-  hasAndBelongsToMany(moduleName) {
-    let OtherModel = require(`modules/${moduleName}`).model;
-    this.Model.hasAndBelongsToMany(OtherModel.Model, moduleName, "id", "id");
+  hasAndBelongsToMany(modelName) {
+    let OtherModel = thinky.models[modelName];
+    this.Model.hasAndBelongsToMany(OtherModel, modelName.toLowerCase(), "id", "id");
     return this;
   }
 }
