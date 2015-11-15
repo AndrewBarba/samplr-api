@@ -8,9 +8,16 @@ const r = thinky.r;
 class CommonModel {
 
   constructor(modelName, options) {
-    this._ThinkySchema = _.extend(this.baseSchema(), this.schema());
-    this._ThinkyModel = thinky.createModel(modelName, this._ThinkySchema, options);
-    _.extend(this, this._ThinkyModel);
+
+    // Create Thinky model
+    this._schema = _.extend(this.baseSchema(), this.schema());
+    this._model = thinky.createModel(modelName, this._schema, options);
+
+    // Build indexes
+    this.index();
+
+    // Build relationships on next tick
+    process.nextTick(() => this.relationships());
   }
 
   // Rethink getters
@@ -19,8 +26,8 @@ class CommonModel {
   get r() { return r; }
 
   // Getters
-  get Schema() { return this._ThinkySchema; }
-  get Model() { return this._ThinkyModel; }
+  get Schema() { return this._schema; }
+  get Model() { return this._model; }
 
   /**
    * Base schema for all models
@@ -30,7 +37,8 @@ class CommonModel {
    */
   baseSchema() {
     return {
-      id: this.type.string()
+      id: this.type.string(),
+      created: this.type.date().default(() => new Date())
     };
   }
 
@@ -57,12 +65,43 @@ class CommonModel {
   }
 
   /**
+   * Build indexes on the given model
+   *
+   * @param {Model} Model
+   * @method buildIndexes
+   */
+  index() {
+    this.ensureIndex("created");
+  }
+
+  /**
+   * Build relationships for this model. Override in subclass
+   * This will be called after all models are created
+   *
+   * @method relationships
+   */
+  relationships() {
+  }
+
+  /**
+   * Forward ensureIndex method
+   *
+   * @method ensureIndex
+   */
+  ensureIndex(name, fn, options) {
+    this.Model.ensureIndex(name, fn, options);
+    return this;
+  }
+
+  /**
    * Forward hasOne method
    *
    * @method hasOne
    */
-  hasOne(OtherModel, fieldName, leftKey, rightKey) {
-    return this.Model.hasOne(OtherModel.Model, fieldName, leftKey, rightKey);
+  hasOne(moduleName, rightKey) {
+    let OtherModel = require(`modules/${moduleName}`).model;
+    this.Model.hasOne(OtherModel.Model, moduleName, "id", rightKey);
+    return this;
   }
 
   /**
@@ -70,8 +109,10 @@ class CommonModel {
    *
    * @method belongsTo
    */
-  belongsTo(OtherModel, fieldName, leftKey, rightKey) {
-    return this.Model.belongsTo(OtherModel.Model, fieldName, leftKey, rightKey);
+  belongsTo(moduleName, leftKey) {
+    let OtherModel = require(`modules/${moduleName}`).model;
+    this.Model.belongsTo(OtherModel.Model, moduleName, leftKey, "id");
+    return this;
   }
 
   /**
@@ -79,8 +120,10 @@ class CommonModel {
    *
    * @method hasMany
    */
-  hasMany(OtherModel, fieldName, leftKey, rightKey) {
-    return this.Model.hasMany(OtherModel.Model, fieldName, leftKey, rightKey);
+  hasMany(moduleName, rightKey) {
+    let OtherModel = require(`modules/${moduleName}`).model;
+    this.Model.hasMany(OtherModel.Model, moduleName, "id", rightKey);
+    return this;
   }
 
   /**
@@ -88,8 +131,10 @@ class CommonModel {
    *
    * @method hasAndBelongsToMany
    */
-  hasAndBelongsToMany(OtherModel, fieldName, leftKey, rightKey) {
-    return this.Model.hasAndBelongsToMany(OtherModel.Model, fieldName, leftKey, rightKey);
+  hasAndBelongsToMany(moduleName) {
+    let OtherModel = require(`modules/${moduleName}`).model;
+    this.Model.hasAndBelongsToMany(OtherModel.Model, moduleName, "id", "id");
+    return this;
   }
 }
 
