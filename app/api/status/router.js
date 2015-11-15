@@ -5,19 +5,20 @@ const controller = require('./controller');
 
 swagger.addGet({
   spec: {
-    path: "/",
-    summary: "Get root",
+    path: "/status",
+    summary: "Get API status",
     method: "GET",
-    type: "Root",
-    nickname: "root",
+    type: "Status",
+    nickname: "status",
     produces: ["application/json"]
   },
   action: function(req, res, next) {
-    controller.root(req, res, next);
+    controller.status(req, res, next);
   }
 });
 
-swagger.configureDeclaration('root', {
-  description: 'Root',
+swagger.configureDeclaration('status', {
+  description: 'Status',
+  authorizations: ['apiKey'],
   produces: ['application/json']
 });

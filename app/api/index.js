@@ -1,11 +1,14 @@
 "use strict";
 
 const http = require('http');
+const path = require('path');
 const express = require('express');
 const config = require('config');
+const swagger = require("swagger-node-express");
 
 // Middleware
 const cors = require('middleware/cors');
+const gzip = require('middleware/gzip');
 const parser = require('middleware/parser');
 const headers = require('middleware/headers');
 const notFound = require('middleware/not-found');
@@ -13,24 +16,34 @@ const errors = require('middleware/errors');
 
 class Api {
   constructor() {
+    this._server = null;
     this._port = config.http.port;
   }
 
   get port() { return this._port; }
   get server() { return this._server; }
 
+  loadRoutes() {
+    require('./status');
+  }
+
   init(next) {
     // create app
     let app = express();
     this._server = http.createServer(app);
+    this.configureSwagger(app);
 
     // load middleware
+    app.use(gzip());
     app.use(cors());
     app.use(parser());
     app.use(headers());
 
     // load routes
-    app.use('/', require('./root').router);
+    this.loadRoutes();
+
+    // Expose docs
+    this.configureSwaggerDocs();
 
     // not found
     app.use(notFound());
@@ -45,6 +58,26 @@ class Api {
     return this.server.listen(this.port, () => {
       next();
     });
+  }
+
+  configureSwagger(app) {
+
+    // Load swagegr
+    swagger.setAppHandler(app);
+
+    // Basic info
+    swagger.setApiInfo({
+      title: "Experience Sampling API",
+      contact: "abarba@ccs.neu.edu"
+    });
+
+    // Api docs
+    swagger.configureSwaggerPaths('', '/api-docs', '');
+    app.use('/docs', express.static(path.join(__dirname, '../../docs')));
+  }
+
+  configureSwaggerDocs() {
+    swagger.configure('/', config.app.version);
   }
 }
 

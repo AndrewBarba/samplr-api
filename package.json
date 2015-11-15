@@ -13,6 +13,7 @@
     "async": "1.5.0",
     "bcryptjs": "2.3.0",
     "body-parser": "1.14.1",
+    "compression": "1.6.0",
     "cors": "2.7.1",
     "express": "4.13.3",
     "forky": "0.3.0",
