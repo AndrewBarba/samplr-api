@@ -28,6 +28,12 @@ class ServerError extends AppError {
   }
 }
 
+class InvalidArgumentError extends AppError {
+  constructor(message) {
+    super(500, message || "Invalid argument error");
+  }
+}
+
 /* ------------------------------------------------------------------------- *
  * Bad Request Error
  * ------------------------------------------------------------------------- */
@@ -66,4 +72,5 @@ exports.AppError = AppError;
 exports.ServerError = ServerError;
 exports.BadRequestError = BadRequestError;
 exports.UnauthorizedError = UnauthorizedError;
+exports.InvalidArgumentError = InvalidArgumentError;
 exports.NotFoundError = NotFoundError;

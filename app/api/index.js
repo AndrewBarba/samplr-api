@@ -26,7 +26,7 @@ class Api {
   get server() { return this._server; }
 
   loadRoutes() {
-    require('./status');
+    require('./routes');
   }
 
   init(next) {
