@@ -1,0 +1,50 @@
+box: node:4.2.2
+
+services:
+  - rethinkdb:2.2.0
+
+build:
+  steps:
+    - script:
+        name: build info
+        code: |
+          echo "node version $(node -v) running"
+          echo "npm version $(npm -v) running"
+
+    - script:
+        name: env
+        code: env
+
+    - script:
+        name: clean
+        code: |
+          npm cache clean
+
+    - npm-install
+
+    - script:
+        name: postinstall
+        code: |
+          npm run postinstall
+
+    - script:
+         name: test
+         code: |
+           npm test
+
+  after-steps:
+     - slack-notifier:
+        url: $SLACK_URL
+        channel: $SLACK_CHANNEL
+
+deploy:
+  steps:
+    - heroku-deploy:
+        key-name: HEROKU_DEPLOY_KEY
+        user: $HEROKU_USER
+        app-name: $HEROKU_APP_NAME
+
+  after-steps:
+     - slack-notifier:
+        url: $SLACK_URL
+        channel: $SLACK_CHANNEL
