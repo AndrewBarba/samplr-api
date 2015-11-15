@@ -76,7 +76,6 @@ class CommonModel {
   /**
    * Build indexes on the given model
    *
-   * @param {Model} Model
    * @method buildIndexes
    */
   index() {
