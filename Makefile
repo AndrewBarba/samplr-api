@@ -10,7 +10,6 @@ updates:
 
 post-install:
 	cd ./node_modules; \
-	ln -snf ../static; \
 	ln -snf ../app; \
 	ln -snf ../app/api; \
 	ln -snf ../app/config; \
@@ -19,4 +18,6 @@ post-install:
 	ln -snf ../app/lib; \
 	ln -snf ../app/logger; \
 	ln -snf ../app/middleware; \
-	ln -snf ../app/modules;
+	ln -snf ../app/modules; \
+	ln -snf ../static; \
+	ln -snf ../test;
