@@ -15,8 +15,13 @@ class CommonService {
    * @param {Object} options
    * @return {Promise}
    */
-  create(options) {
-    return this.model.create(options).save();
+  create(options, next) {
+    return this
+      .model
+      .create(options)
+      .save()
+      .then(res => next(null, res))
+      .error(err => next(err));
   }
 }
 

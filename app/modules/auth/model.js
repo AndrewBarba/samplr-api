@@ -8,7 +8,8 @@ class AuthModel extends CommonModel {
   schema() {
     return {
       token: this.type.string().default(this.generateToken),
-      userId: this.type.string()
+      userId: this.type.string().required(),
+      password: this.type.string().required()
     };
   }
 
