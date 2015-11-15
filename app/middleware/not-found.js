@@ -1,9 +1,9 @@
 "use strict";
 
-const errors = require('errors');
+const Errors = require('errors');
 
 module.exports = () => {
   return (req, res, next) => {
-    next(new errors.NotFoundError());
+    next(new Errors.NotFoundError());
   };
 };
