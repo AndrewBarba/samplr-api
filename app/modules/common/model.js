@@ -2,26 +2,20 @@
 
 const _ = require('underscore');
 const thinky = require('connections').thinky;
+const type = thinky.type;
+const r = thinky.r;
 
 class CommonModel {
 
   constructor(modelName, options) {
-
-    // Rethink properties
-    this._thinky = thinky;
-    this._type = thinky.type;
-    this._r = thinky.r;
-
-    // Init model
-    this._schema = _.extend(this.baseSchema(), this.schema());
-    this._model = thinky.createModel(modelName, this._schema, options);
+    this._ThinkySchema = _.extend(this.baseSchema(), this.schema());
+    this._ThinkyModel = thinky.createModel(modelName, this._ThinkySchema, options);
+    _.extend(this, this._ThinkyModel);
   }
 
-  // Getters
-  get model() { return this._model; }
-  get thinky() { return this._thinky; }
-  get type() { return this._type; }
-  get r() { return this._r; }
+  get thinky() { return thinky; }
+  get type() { return type; }
+  get r() { return r; }
 
   /**
    * Base schema for all models
@@ -43,6 +37,18 @@ class CommonModel {
    */
   schema() {
     return {};
+  }
+
+  /**
+   * Create an instance of this model
+   *
+   * @method new
+   * @param {Object} options
+   * @return {ThinkyModel}
+   */
+  new(options) {
+    let Model = this._ThinkyModel;
+    return new Model(options);
   }
 }
 

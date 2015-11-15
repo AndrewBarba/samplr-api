@@ -2,13 +2,13 @@
 
 const CommonModel = require('modules/common').Model;
 
-class AuthModel extends CommonModel {
+class TemplateModel extends CommonModel {
 
   schema() {
     return {
-      token: this.type.string()
+      template: this.type.string()
     };
   }
 }
 
-module.exports = AuthModel;
+module.exports = TemplateModel;
