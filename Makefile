@@ -20,9 +20,3 @@ post-install:
 	ln -snf ../app/logger; \
 	ln -snf ../app/middleware; \
 	ln -snf ../app/modules;
-
-prod:
-	git checkout master; \
-	git merge dev; \
-	git push; \
-	git checkout dev;
