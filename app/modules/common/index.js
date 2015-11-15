@@ -1,4 +1,7 @@
 "use strict";
 
-exports.model = require('./model');
-exports.service = require('./service');
+const Model = require('./model');
+const Service = require('./service');
+
+exports.Service = Service;
+exports.Model = Model;

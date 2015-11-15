@@ -8,6 +8,7 @@ class Connections {
   }
 
   get rethinkdb() { return this._rethinkdb; }
+  get thinky() { return this._rethinkdb.thinky; }
 
   init(next) {
     async.parallel([
