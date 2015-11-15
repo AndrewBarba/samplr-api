@@ -13,6 +13,7 @@ class CommonService {
    *
    * @method create
    * @param {Object} options
+   * @param {Function} next
    * @return {Promise}
    */
   create(options, next) {
@@ -21,6 +22,40 @@ class CommonService {
       .create(options)
       .save()
       .then(res => next(null, res))
+      .error(err => next(err));
+  }
+
+  /**
+   * Read a single object by ID
+   *
+   * @method read
+   * @param {String} objectId
+   * @param {Function} next
+   * @return {Promise}
+   */
+  read(objectId, next) {
+    return this
+      .model
+      .get(objectId)
+      .then(res => next(null, res))
+      .error(err => next(err));
+  }
+
+  /**
+   * Read a single object by indexed key and value
+   *
+   * @method readIndex
+   * @param {String} key
+   * @param {String} value
+   * @param {Function} next
+   * @return {Promise}
+   */
+  readIndex(key, value, next) {
+    return this
+      .model
+      .getAll(value, { index: key })
+      .limit(1)
+      .then(res => next(null, res[0]))
       .error(err => next(err));
   }
 }

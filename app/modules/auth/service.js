@@ -70,7 +70,38 @@ class AuthService extends CommonService {
     if (!options.email) return next(new Errors.InvalidArgumentError("AuthService.login - options.email is required"));
     if (!options.password) return next(new Errors.InvalidArgumentError("AuthService.login - options.password is required"));
 
-    next(new Errors.BadRequestError('Not implemented'));
+    async.waterfall([
+      // get user
+      (done) => {
+        User.readIndex("email", options.email, (err, user) => {
+          if (err) return done(err);
+          if (!user) return done(new Errors.BadRequestError('User does not exist'));
+          done(null, user);
+        });
+      },
+      // get auth
+      (user, done) => {
+        this.model.readIndex("userId", user.id, (err, auth) => {
+          if (err) return done(err);
+          if (!auth) return done(new Errors.BadRequestError('Auth does not exist for this user'));
+          done(null, auth, user);
+        });
+      },
+      // compare password
+      (auth, user, done) => {
+        bcrypt.compare(options.password, auth.password, (err, res) => {
+          if (err) return done(err);
+          if (!res) return done(new Errors.BadRequestError('Password does not match'));
+          done(null, auth, user);
+        });
+      }
+    ], (err, auth, user) => {
+      if (err) return next(err);
+
+      auth.user = user;
+
+      next(null, auth);
+    });
   }
 }
 
