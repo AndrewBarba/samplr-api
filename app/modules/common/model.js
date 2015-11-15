@@ -1,10 +1,12 @@
 "use strict";
 
 const _ = require('underscore');
-const Model = require('thinky/lib/model');
 const thinky = require('connections').thinky;
 const type = thinky.type;
 const r = thinky.r;
+
+// Base model
+const Model = require('thinky/lib/model');
 
 class CommonModel {
 
