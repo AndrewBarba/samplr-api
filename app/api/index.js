@@ -16,10 +16,12 @@ const errors = require('middleware/errors');
 
 class Api {
   constructor() {
+    this._app = null;
     this._server = null;
     this._port = config.http.port;
   }
 
+  get app() { return this._app; }
   get port() { return this._port; }
   get server() { return this._server; }
 
@@ -29,7 +31,7 @@ class Api {
 
   init(next) {
     // create app
-    let app = express();
+    let app = this._app = express();
     this._server = http.createServer(app);
     this.configureSwagger(app);
 

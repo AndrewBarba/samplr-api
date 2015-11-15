@@ -36,7 +36,7 @@
 
   "scripts": {
     "postinstall": "make post-install",
-    "start": "node process/server-cluster",
-    "test": "gulp jshint && mocha --timeout 20000 --reporter progress"
+    "start": "make start",
+    "test": "make test-all"
   }
 }
