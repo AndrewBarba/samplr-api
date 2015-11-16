@@ -28,6 +28,11 @@ build:
           npm run postinstall
 
     - script:
+        name: rethinkdb
+        code: |
+          rethinkdb &
+
+    - script:
          name: test
          code: |
            npm test
