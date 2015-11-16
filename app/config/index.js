@@ -72,7 +72,7 @@ const TEST = _.extend({}, DEVELOPMENT, {
     level: 'debug'
   },
   rethinkdb: {
-    // default settings
+    host: process.env.RETHINKDB_PORT_29015_TCP_ADDR || 'localhost'
   }
 });
 
