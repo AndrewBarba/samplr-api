@@ -30,7 +30,7 @@ build:
     - script:
         name: rethinkdb
         code: |
-          rethinkdb &
+          rethinkdb
 
     - script:
          name: test
