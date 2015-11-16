@@ -1,9 +1,10 @@
 "use strict";
 
 const agent = require('test/lib/agent');
+const should = require('should');
 
-describe('Integration', () => {
-  it('should start the server', done => {
-    agent.start(done);
-  });
+before(done => agent.start(done));
+
+it('should start the server', () => {
+  should.exist(agent.client());
 });

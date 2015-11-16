@@ -8,10 +8,6 @@ const async = require('async');
 const app = require('app');
 const config = require('config');
 const logger = require('logger');
-const EventEmitter = require('events').EventEmitter;
-
-// Server to emit events
-const server = new EventEmitter();
 
 logger.info(`Samplr API: ${config.env}\n`);
 
@@ -37,8 +33,5 @@ async.series([
   }
 ], err => {
   if (err) throw err;
-  server.emit('ready', app.api.app);
   logger.info('Server listening on port:', config.http.port);
 });
-
-module.exports = server;

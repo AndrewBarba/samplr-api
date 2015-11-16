@@ -31,7 +31,7 @@ class AuthService extends CommonService {
     if (!options.firstName) return next(new Errors.InvalidArgumentError("AuthService.register - options.firstName is required"));
     if (!options.lastName) return next(new Errors.InvalidArgumentError("AuthService.register - options.lastName is required"));
 
-    async.auth({
+    async.auto({
       // create a new user
       user: (done) => {
         User.create(options, done);

@@ -4,17 +4,16 @@
  * Abstract Application Error
  * ------------------------------------------------------------------------- */
 
-class AppError {
+class AppError extends Error {
   constructor(statusCode, message) {
-    this._error = new Error(message);
+    super(message);
     this._statusCode = statusCode;
   }
-
-  get error() { return this._error; }
+  
   get statusCode() { return this._statusCode; }
 
   toString() {
-    return `${this.statusCode} - ${this.error.toString()}`;
+    return `${this.statusCode} - ${this.message}`;
   }
 }
 

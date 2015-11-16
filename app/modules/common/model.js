@@ -5,9 +5,6 @@ const thinky = require('connections').thinky;
 const type = thinky.type;
 const r = thinky.r;
 
-// Base model
-const Model = require('thinky/lib/model');
-
 class CommonModel {
 
   constructor(modelName, options) {
@@ -15,12 +12,6 @@ class CommonModel {
     // Create Thinky model
     this._schema = _.extend(this.baseSchema(), this.schema());
     this._model = thinky.createModel(modelName, this._schema, options);
-
-    // Forward all model functions
-    _.each(Model.prototype, (fn, name) => {
-      if (this[name] || !_.isFunction(fn)) return;
-      this[name] = () => fn.apply(this._model, arguments);
-    });
 
     // Build indexes
     this.index();
@@ -89,6 +80,34 @@ class CommonModel {
    * @method relationships
    */
   relationships() {
+  }
+
+  /**
+   * Forward ensureIndex method
+   *
+   * @method ensureIndex
+   */
+  ensureIndex(key) {
+    this.Model.ensureIndex(key);
+    return this;
+  }
+
+  /**
+   * Forward get method
+   *
+   * @method get
+   */
+  get(objectId) {
+    return this.Model.get(objectId);
+  }
+
+  /**
+   * Forward getAll method
+   *
+   * @method readIndex
+   */
+  getAll(value, options) {
+    return this.Model.getAll(value, options);
   }
 
   /**

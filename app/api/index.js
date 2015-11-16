@@ -32,7 +32,7 @@ class Api {
   init(next) {
     // create app
     let app = this._app = express();
-    this._server = http.createServer(app);
+    let server = this._server = http.createServer(app);
     this.configureSwagger(app);
 
     // load middleware
@@ -53,12 +53,12 @@ class Api {
     // errors
     app.use(errors());
 
-    return next(null, this.server);
+    return next(null, server);
   }
 
   listen(next) {
-    return this.server.listen(this.port, () => {
-      next();
+    return this.server.listen(this.port, err => {
+      next(err, this.server);
     });
   }
 
