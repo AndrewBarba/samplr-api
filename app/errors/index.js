@@ -5,15 +5,17 @@
  * ------------------------------------------------------------------------- */
 
 class AppError extends Error {
-  constructor(statusCode, message) {
+  constructor(statusCode, message, title) {
     super(message);
     this._statusCode = statusCode;
+    this._title = title;
   }
-  
+
   get statusCode() { return this._statusCode; }
+  get title() { return this._title; }
 
   toString() {
-    return `${this.statusCode} - ${this.message}`;
+    return `${this.statusCode} ${this.title} - ${this.message}`;
   }
 }
 
@@ -23,13 +25,13 @@ class AppError extends Error {
 
 class ServerError extends AppError {
   constructor(message) {
-    super(500, message || "Server error");
+    super(500, message || "Server error", "Server Error");
   }
 }
 
 class InvalidArgumentError extends AppError {
   constructor(message) {
-    super(500, message || "Invalid argument error");
+    super(500, message || "Invalid argument error", "Invalid argument error");
   }
 }
 
@@ -39,7 +41,7 @@ class InvalidArgumentError extends AppError {
 
 class BadRequestError extends AppError {
   constructor(message) {
-    super(400, message || "Bad request");
+    super(400, message || "Bad request", "Bad request");
   }
 }
 
@@ -49,7 +51,7 @@ class BadRequestError extends AppError {
 
 class UnauthorizedError extends AppError {
   constructor(message) {
-    super(401, message || "Unauthorized");
+    super(401, message || "Unauthorized", "Unauthorized");
   }
 }
 
@@ -59,7 +61,7 @@ class UnauthorizedError extends AppError {
 
 class NotFoundError extends AppError {
   constructor(message) {
-    super(404, message || "Not found");
+    super(404, message || "Not found", "Not found");
   }
 }
 

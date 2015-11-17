@@ -10,9 +10,11 @@ module.exports = () => {
 
     let statusCode = err.statusCode || 500;
     let message = err.message;
+    let title = err.title;
     let stack = config.ENV_PROD ? null : err.stack;
 
     res.status(statusCode).json({
+      title: title,
       error: message,
       stack: stack
     });
