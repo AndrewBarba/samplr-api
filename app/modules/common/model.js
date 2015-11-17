@@ -10,8 +10,8 @@ class CommonModel {
   constructor(modelName, options) {
 
     // Create Thinky model
-    this._schema = _.extend(this.baseSchema(), this.schema());
-    this._model = thinky.createModel(modelName, this._schema, options);
+    let schema = _.extend(this.baseSchema(), this.schema());
+    this._model = thinky.createModel(modelName, schema, options);
 
     // Build indexes
     this.index();
@@ -21,13 +21,10 @@ class CommonModel {
   }
 
   // Rethink getters
+  get Model() { return this._model; }
   get thinky() { return thinky; }
   get type() { return type; }
   get r() { return r; }
-
-  // Getters
-  get Schema() { return this._schema; }
-  get Model() { return this._model; }
 
   /**
    * Base schema for all models
@@ -38,7 +35,8 @@ class CommonModel {
   baseSchema() {
     return {
       id: this.type.string(),
-      created: this.type.date().default(() => new Date())
+      created: this.type.date().default(() => new Date()),
+      modified: this.type.date().default(() => new Date())
     };
   }
 
@@ -56,12 +54,11 @@ class CommonModel {
    * Create an instance of this model
    *
    * @method create
-   * @param {Object} options
-   * @return {ThinkyModel}
+   * @param  {Object} options
+   * @return {ThinkyObject}
    */
   create(options) {
-    let Model = this.Model;
-    return new Model(options);
+    return new this.Model(options);
   }
 
   /**
@@ -80,6 +77,7 @@ class CommonModel {
    * @method relationships
    */
   relationships() {
+    // setup
   }
 
   /**

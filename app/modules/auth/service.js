@@ -53,7 +53,7 @@ class AuthService extends CommonService {
       let auth = results.auth;
       auth.user = results.user;
 
-      next(null, auth);
+      next(null, sanitizeAuth(auth));
     });
   }
 
@@ -81,7 +81,7 @@ class AuthService extends CommonService {
       },
       // get auth
       (user, done) => {
-        this.model.readIndex("userId", user.id, (err, auth) => {
+        this.readIndex("userId", user.id, (err, auth) => {
           if (err) return done(err);
           if (!auth) return done(new Errors.BadRequestError('Auth does not exist for this user'));
           done(null, auth, user);
@@ -100,9 +100,15 @@ class AuthService extends CommonService {
 
       auth.user = user;
 
-      next(null, auth);
+      next(null, sanitizeAuth(auth));
     });
   }
+}
+
+function sanitizeAuth(auth) {
+  delete auth.password;
+  delete auth.userId;
+  return auth;
 }
 
 module.exports = AuthService;

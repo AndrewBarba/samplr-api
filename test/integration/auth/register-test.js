@@ -8,7 +8,7 @@ describe('Integration', () => {
     describe('Register', () => {
 
       let data = {
-        email: "int_auth_reg@test.com",
+        email: `int_auth_reg+${Date.now()}@test.com`,
         password: "xxx",
         firstName: "Andrew",
         lastName: "Test",
