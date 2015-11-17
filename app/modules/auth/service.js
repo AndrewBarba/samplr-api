@@ -1,7 +1,7 @@
 "use strict";
 
 const async = require('async');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const Errors = require('app/errors');
 const CommonService = require('modules/common').Service;
 

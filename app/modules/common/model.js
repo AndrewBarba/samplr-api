@@ -1,7 +1,7 @@
 "use strict";
 
 const _ = require('underscore');
-const thinky = require('connections').thinky;
+const thinky = require('app/connections').thinky;
 const type = thinky.type;
 const r = thinky.r;
 

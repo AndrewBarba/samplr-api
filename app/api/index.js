@@ -3,16 +3,16 @@
 const http = require('http');
 const path = require('path');
 const express = require('express');
-const config = require('config');
 const swagger = require("swagger-node-express");
+const config = require('config');
 
 // Middleware
-const cors = require('middleware/cors');
-const gzip = require('middleware/gzip');
-const parser = require('middleware/parser');
-const headers = require('middleware/headers');
-const notFound = require('middleware/not-found');
-const errors = require('middleware/errors');
+const cors = require('app/middleware/cors');
+const gzip = require('app/middleware/gzip');
+const parser = require('app/middleware/parser');
+const headers = require('app/middleware/headers');
+const notFound = require('app/middleware/not-found');
+const errors = require('app/middleware/errors');
 
 class Api {
   constructor() {

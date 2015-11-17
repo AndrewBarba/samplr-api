@@ -1,7 +1,7 @@
 "use strict";
 
 const thinky = require('thinky');
-const config = require('app/config');
+const config = require('config');
 
 class RethinkDB {
   constructor(options) {
