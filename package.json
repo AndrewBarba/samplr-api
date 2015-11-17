@@ -30,6 +30,7 @@
     "jshint": "2.8.0",
     "jshint-stylish": "2.1.0",
     "mocha": "2.3.4",
+    "require-directory": "2.1.1",
     "should": "7.1.1",
     "supertest": "1.1.0"
   },
