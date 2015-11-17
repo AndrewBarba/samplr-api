@@ -9,7 +9,7 @@ const CommonService = require('modules/common').Service;
 const User = require('modules/user');
 
 // Constants
-const SALT_WORK_FACTOR = 10;
+const SALT_WORK_FACTOR = 4;
 
 class AuthService extends CommonService {
 

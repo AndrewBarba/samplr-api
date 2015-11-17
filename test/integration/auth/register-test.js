@@ -25,6 +25,8 @@ describe('Integration', () => {
             should.not.exist(err);
             let auth = result.body;
             should.exist(auth);
+            should.exist(auth.token);
+            should.not.exist(auth.password);
             should.exist(auth.user);
             auth.user.email.should.equal(data.email);
             auth.user.firstName.should.equal(data.firstName);
