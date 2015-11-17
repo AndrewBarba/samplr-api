@@ -16,6 +16,7 @@ class AuthModel extends CommonModel {
   index() {
     super.index();
     this.ensureIndex("token");
+    this.ensureIndex("userId");
   }
 
   relationships() {

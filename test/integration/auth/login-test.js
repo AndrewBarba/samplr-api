@@ -3,24 +3,32 @@
 const should = require('should');
 const agent = require('test/lib/agent');
 
+// Modules
+const Auth = require('modules/auth');
+
 describe('Integration', () => {
   describe('Auth', () => {
-    describe('Register', () => {
+    describe('Login', () => {
 
       let data = {
-        email: `int_auth_reg@test.com`,
+        email: `int_auth_login@test.com`,
         password: "xxx",
         firstName: "Andrew",
         lastName: "Test",
         age: 22
       };
 
-      it('should register a new user', done => {
+      before(done => Auth.register(data, done));
+
+      it('should login a new user', done => {
         agent
           .client()
-          .post('/auth/register')
-          .send(data)
-          .expect(201)
+          .post('/auth/login')
+          .send({
+            email: data.email,
+            password: data.password
+          })
+          .expect(200)
           .end(function(err, result) {
             should.not.exist(err);
             let auth = result.body;
@@ -36,11 +44,14 @@ describe('Integration', () => {
           });
       });
 
-      it('should not register a new user', done => {
+      it('should not login a new user', done => {
         agent
           .client()
-          .post('/auth/register')
-          .send(data)
+          .post('/auth/login')
+          .send({
+            email: data.email,
+            password: "wrong password"
+          })
           .expect(400)
           .end(done);
       });
