@@ -12,6 +12,11 @@ class UserModel extends CommonModel {
       age: this.type.number().integer().min(0).max(199).required()
     };
   }
+
+  index() {
+    super.index();
+    this.ensureIndex("email");
+  }
 }
 
 module.exports = UserModel;

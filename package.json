@@ -11,7 +11,7 @@
 
   "dependencies": {
     "async": "1.5.0",
-    "bcryptjs": "2.3.0",
+    "bcrypt": "0.8.5",
     "body-parser": "1.14.1",
     "compression": "1.6.0",
     "cors": "2.7.1",
@@ -29,7 +29,8 @@
     "gulp-jshint": "1.12.0",
     "jshint": "2.8.0",
     "jshint-stylish": "2.1.0",
-    "mocha": "2.3.3",
+    "mocha": "2.3.4",
+    "require-directory": "2.1.1",
     "should": "7.1.1",
     "supertest": "1.1.0"
   },

@@ -72,13 +72,7 @@ const TEST = _.extend({}, DEVELOPMENT, {
     level: 'debug'
   },
   rethinkdb: {
-    host: 'aws-us-east-1-portal.2.dblayer.com',
-    port: 10511,
-    db: 'test',
-    authKey: 'skirmNQlg18q5xUbU54xNN0neQRgeRP1UD2HCa8iSZE',
-    ssl: {
-      rejectUnauthorized: false
-    }
+    host: process.env.RETHINKDB_PORT_29015_TCP_ADDR || 'localhost'
   }
 });
 

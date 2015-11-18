@@ -3,16 +3,16 @@
 const http = require('http');
 const path = require('path');
 const express = require('express');
-const config = require('config');
 const swagger = require("swagger-node-express");
+const config = require('config');
 
 // Middleware
-const cors = require('middleware/cors');
-const gzip = require('middleware/gzip');
-const parser = require('middleware/parser');
-const headers = require('middleware/headers');
-const notFound = require('middleware/not-found');
-const errors = require('middleware/errors');
+const cors = require('app/middleware/cors');
+const gzip = require('app/middleware/gzip');
+const parser = require('app/middleware/parser');
+const headers = require('app/middleware/headers');
+const notFound = require('app/middleware/not-found');
+const errors = require('app/middleware/errors');
 
 class Api {
   constructor() {
@@ -32,7 +32,7 @@ class Api {
   init(next) {
     // create app
     let app = this._app = express();
-    this._server = http.createServer(app);
+    let server = this._server = http.createServer(app);
     this.configureSwagger(app);
 
     // load middleware
@@ -53,12 +53,12 @@ class Api {
     // errors
     app.use(errors());
 
-    return next(null, this.server);
+    return next(null, server);
   }
 
   listen(next) {
-    return this.server.listen(this.port, () => {
-      next();
+    return this.server.listen(this.port, err => {
+      next(err, this.server);
     });
   }
 

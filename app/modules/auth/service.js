@@ -1,7 +1,7 @@
 "use strict";
 
 const async = require('async');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const Errors = require('app/errors');
 const CommonService = require('modules/common').Service;
 
@@ -31,7 +31,7 @@ class AuthService extends CommonService {
     if (!options.firstName) return next(new Errors.InvalidArgumentError("AuthService.register - options.firstName is required"));
     if (!options.lastName) return next(new Errors.InvalidArgumentError("AuthService.register - options.lastName is required"));
 
-    async.auth({
+    async.auto({
       // create a new user
       user: (done) => {
         User.create(options, done);
@@ -53,7 +53,7 @@ class AuthService extends CommonService {
       let auth = results.auth;
       auth.user = results.user;
 
-      next(null, auth);
+      next(null, sanitizeAuth(auth));
     });
   }
 
@@ -70,8 +70,45 @@ class AuthService extends CommonService {
     if (!options.email) return next(new Errors.InvalidArgumentError("AuthService.login - options.email is required"));
     if (!options.password) return next(new Errors.InvalidArgumentError("AuthService.login - options.password is required"));
 
-    next(new Errors.BadRequestError('Not implemented'));
+    async.waterfall([
+      // get user
+      (done) => {
+        User.readIndex("email", options.email, (err, user) => {
+          if (err) return done(err);
+          if (!user) return done(new Errors.BadRequestError('User does not exist'));
+          done(null, user);
+        });
+      },
+      // get auth
+      (user, done) => {
+        this.readIndex("userId", user.id, (err, auth) => {
+          if (err) return done(err);
+          if (!auth) return done(new Errors.BadRequestError('Auth does not exist for this user'));
+          done(null, auth, user);
+        });
+      },
+      // compare password
+      (auth, user, done) => {
+        bcrypt.compare(options.password, auth.password, (err, res) => {
+          if (err) return done(err);
+          if (!res) return done(new Errors.BadRequestError('Password does not match'));
+          done(null, auth, user);
+        });
+      }
+    ], (err, auth, user) => {
+      if (err) return next(err);
+
+      auth.user = user;
+
+      next(null, sanitizeAuth(auth));
+    });
   }
+}
+
+function sanitizeAuth(auth) {
+  delete auth.password;
+  delete auth.userId;
+  return auth;
 }
 
 module.exports = AuthService;

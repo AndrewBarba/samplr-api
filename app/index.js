@@ -2,10 +2,10 @@
 
 class App {
   constructor() {
-    this._config = require('config');
-    this._api = require('api');
-    this._modules = require('modules');
-    this._connections = require('connections');
+    this._config = require('./config');
+    this._api = require('./api');
+    this._modules = require('./modules');
+    this._connections = require('./connections');
   }
 
   get config() { return this._config; }

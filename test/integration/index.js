@@ -2,23 +2,15 @@
 
 process.env.NODE_ENV = 'test';
 
-const should = require('should');
+const requireDirectory = require('require-directory');
 const agent = require('test/lib/agent');
+const mockDb = require('test/lib/mock-db');
 
-describe('Integration', () => {
+// reset the database
+before(done => mockDb.reset(done));
 
-  // Start the server
-  before(done => agent.start(done));
+// start the server
+before(done => agent.start(done));
 
-  it('should be OK', function(done) {
-    agent
-      .client
-      .get('/status')
-      .expect(200)
-      .end(function(err, result) {
-        should.not.exist(err);
-        result.body.status.should.equal("OK");
-        done();
-      });
-  });
-});
+// Start integration tests
+it('should run integration tests', () => requireDirectory(module));

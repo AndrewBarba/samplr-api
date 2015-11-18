@@ -1,26 +1,17 @@
 "use strict";
 
 const _ = require('underscore');
-const thinky = require('connections').thinky;
+const thinky = require('app/connections').thinky;
 const type = thinky.type;
 const r = thinky.r;
-
-// Base model
-const Model = require('thinky/lib/model');
 
 class CommonModel {
 
   constructor(modelName, options) {
 
     // Create Thinky model
-    this._schema = _.extend(this.baseSchema(), this.schema());
-    this._model = thinky.createModel(modelName, this._schema, options);
-
-    // Forward all model functions
-    _.each(Model.prototype, (fn, name) => {
-      if (this[name] || !_.isFunction(fn)) return;
-      this[name] = () => fn.apply(this._model, arguments);
-    });
+    let schema = _.extend(this.baseSchema(), this.schema());
+    this._model = thinky.createModel(modelName, schema, options);
 
     // Build indexes
     this.index();
@@ -30,13 +21,10 @@ class CommonModel {
   }
 
   // Rethink getters
+  get Model() { return this._model; }
   get thinky() { return thinky; }
   get type() { return type; }
   get r() { return r; }
-
-  // Getters
-  get Schema() { return this._schema; }
-  get Model() { return this._model; }
 
   /**
    * Base schema for all models
@@ -47,7 +35,8 @@ class CommonModel {
   baseSchema() {
     return {
       id: this.type.string(),
-      created: this.type.date().default(() => new Date())
+      created: this.type.date().default(() => new Date()),
+      modified: this.type.date().default(() => new Date())
     };
   }
 
@@ -65,12 +54,11 @@ class CommonModel {
    * Create an instance of this model
    *
    * @method create
-   * @param {Object} options
-   * @return {ThinkyModel}
+   * @param  {Object} options
+   * @return {ThinkyObject}
    */
   create(options) {
-    let Model = this.Model;
-    return new Model(options);
+    return new this.Model(options);
   }
 
   /**
@@ -89,6 +77,35 @@ class CommonModel {
    * @method relationships
    */
   relationships() {
+    // setup
+  }
+
+  /**
+   * Forward ensureIndex method
+   *
+   * @method ensureIndex
+   */
+  ensureIndex(key) {
+    this.Model.ensureIndex(key);
+    return this;
+  }
+
+  /**
+   * Forward get method
+   *
+   * @method get
+   */
+  get(objectId) {
+    return this.Model.get(objectId);
+  }
+
+  /**
+   * Forward getAll method
+   *
+   * @method readIndex
+   */
+  getAll(value, options) {
+    return this.Model.getAll(value, options);
   }
 
   /**
@@ -98,6 +115,7 @@ class CommonModel {
    */
   hasOne(modelName, rightKey) {
     let OtherModel = thinky.models[modelName];
+    OtherModel.ensureIndex(rightKey);
     this.Model.hasOne(OtherModel, modelName.toLowerCase(), "id", rightKey);
     return this;
   }
@@ -109,6 +127,7 @@ class CommonModel {
    */
   belongsTo(modelName, leftKey) {
     let OtherModel = thinky.models[modelName];
+    this.Model.ensureIndex(leftKey);
     this.Model.belongsTo(OtherModel, modelName.toLowerCase(), leftKey, "id");
     return this;
   }
@@ -120,6 +139,7 @@ class CommonModel {
    */
   hasMany(modelName, rightKey) {
     let OtherModel = thinky.models[modelName];
+    OtherModel.ensureIndex(rightKey);
     this.Model.hasMany(OtherModel, modelName.toLowerCase(), "id", rightKey);
     return this;
   }
