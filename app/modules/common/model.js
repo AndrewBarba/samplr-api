@@ -115,6 +115,7 @@ class CommonModel {
    */
   hasOne(modelName, rightKey) {
     let OtherModel = thinky.models[modelName];
+    OtherModel.ensureIndex(rightKey);
     this.Model.hasOne(OtherModel, modelName.toLowerCase(), "id", rightKey);
     return this;
   }
@@ -126,6 +127,7 @@ class CommonModel {
    */
   belongsTo(modelName, leftKey) {
     let OtherModel = thinky.models[modelName];
+    this.Model.ensureIndex(leftKey);
     this.Model.belongsTo(OtherModel, modelName.toLowerCase(), leftKey, "id");
     return this;
   }
@@ -137,6 +139,7 @@ class CommonModel {
    */
   hasMany(modelName, rightKey) {
     let OtherModel = thinky.models[modelName];
+    OtherModel.ensureIndex(rightKey);
     this.Model.hasMany(OtherModel, modelName.toLowerCase(), "id", rightKey);
     return this;
   }
