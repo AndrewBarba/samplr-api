@@ -8,6 +8,7 @@ class Modules {
     require('./auth');
     require('./user');
     require('./group');
+    require('./survey');
 
     process.nextTick(next);
   }

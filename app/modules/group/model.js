@@ -6,13 +6,9 @@ class GroupModel extends CommonModel {
 
   schema() {
     return {
-      name: this.type.string(),
-      userId: this.type.string()
+      name: this.type.string().required(),
+      userId: this.type.string().required()
     };
-  }
-
-  index() {
-    super.index();
   }
 
   relationships() {
