@@ -1,4 +1,9 @@
 
+default:
+	rm -rf node_modules
+	npm cache clean
+	npm install
+
 start:
 	node process/server-cluster
 
