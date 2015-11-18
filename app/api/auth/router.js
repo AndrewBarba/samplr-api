@@ -13,7 +13,7 @@ swagger.addPost({
     nickname: "register",
     produces: ["application/json"]
   },
-  action: function(req, res, next) {
+  action: (req, res, next) => {
     validator.validateRegister(req, res, err => {
       if (err) return next(err);
       controller.register(req, res, next);
@@ -30,7 +30,7 @@ swagger.addPost({
     nickname: "login",
     produces: ["application/json"]
   },
-  action: function(req, res, next) {
+  action: (req, res, next) => {
     validator.validateLogin(req, res, err => {
       if (err) return next(err);
       controller.login(req, res, next);

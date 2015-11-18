@@ -12,7 +12,7 @@ swagger.addGet({
     nickname: "root",
     produces: ["application/json"]
   },
-  action: function(req, res, next) {
+  action: (req, res, next) => {
     controller.root(req, res, next);
   }
 });
