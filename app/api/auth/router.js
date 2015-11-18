@@ -2,6 +2,7 @@
 
 const swagger = require('swagger-node-express');
 const controller = require('./controller');
+const validator = require('./validator');
 
 swagger.addPost({
   spec: {
@@ -13,7 +14,10 @@ swagger.addPost({
     produces: ["application/json"]
   },
   action: function(req, res, next) {
-    controller.register(req, res, next);
+    validator.validateRegister(req, res, err => {
+      if (err) return next(err);
+      controller.register(req, res, next);
+    });
   }
 });
 
@@ -27,7 +31,10 @@ swagger.addPost({
     produces: ["application/json"]
   },
   action: function(req, res, next) {
-    controller.login(req, res, next);
+    validator.validateLogin(req, res, err => {
+      if (err) return next(err);
+      controller.login(req, res, next);
+    });
   }
 });
 
