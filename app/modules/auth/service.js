@@ -16,6 +16,24 @@ const SALT_WORK_FACTOR = 10;
 class AuthService extends CommonService {
 
   /**
+   * Read auth by token
+   *
+   * @method readByToken
+   */
+  readByToken(token, next) {
+    return this.readIndex("token", token, next);
+  }
+
+  /**
+   * Read auth by user id
+   *
+   * @method readByToken
+   */
+  readByUserId(userId, next) {
+    return this.readIndex("userId", userId, next);
+  }
+
+  /**
    * Register a new user
    *
    * @method register
@@ -80,7 +98,7 @@ class AuthService extends CommonService {
     async.waterfall([
       // get user
       (done) => {
-        User.readIndex("email", options.email, (err, user) => {
+        User.readByEmail(options.email, (err, user) => {
           if (err) return done(err);
           if (!user) return done(new Errors.BadRequestError('User does not exist'));
           done(null, user);
@@ -88,7 +106,7 @@ class AuthService extends CommonService {
       },
       // get auth
       (user, done) => {
-        this.readIndex("userId", user.id, (err, auth) => {
+        this.readByUserId(user.id, (err, auth) => {
           if (err) return done(err);
           if (!auth) return done(new Errors.BadRequestError('Auth does not exist for this user'));
           done(null, auth, user);

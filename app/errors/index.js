@@ -45,6 +45,12 @@ class BadRequestError extends AppError {
   }
 }
 
+class ValidatorError extends BadRequestError {
+  constructor(message) {
+    super(400, message || "Validation Error", "Validation Error");
+  }
+}
+
 /* ------------------------------------------------------------------------- *
  * Unauthorized Error
  * ------------------------------------------------------------------------- */
@@ -72,6 +78,7 @@ class NotFoundError extends AppError {
 exports.AppError = AppError;
 exports.ServerError = ServerError;
 exports.BadRequestError = BadRequestError;
+exports.ValidatorError = ValidatorError;
 exports.UnauthorizedError = UnauthorizedError;
 exports.InvalidArgumentError = InvalidArgumentError;
 exports.NotFoundError = NotFoundError;

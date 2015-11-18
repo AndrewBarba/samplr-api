@@ -1,4 +1,9 @@
 
+default:
+	rm -rf node_modules
+	npm cache clean
+	npm install
+
 start:
 	node process/server-cluster
 
@@ -11,6 +16,7 @@ updates:
 post-install:
 	cd ./node_modules; \
 	ln -snf ../app; \
+	ln -snf ../app/api; \
 	ln -snf ../app/config; \
 	ln -snf ../app/lib; \
 	ln -snf ../app/logger; \

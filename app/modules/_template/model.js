@@ -9,6 +9,14 @@ class TemplateModel extends CommonModel {
       template: this.type.string()
     };
   }
+
+  index() {
+    super.index();
+  }
+
+  relationships() {
+    // setup
+  }
 }
 
 module.exports = TemplateModel;

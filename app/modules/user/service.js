@@ -6,6 +6,15 @@ const CommonService = require('modules/common').Service;
 class UserService extends CommonService {
 
   /**
+   * Read a user by their email address
+   *
+   * @method readByEmail
+   */
+  readByEmail(email, next) {
+    return this.readIndex("email", email.toLowerCase(), next);
+  }
+
+  /**
    * Create a new user
    *
    * @method create
@@ -28,7 +37,7 @@ class UserService extends CommonService {
       if (user) return next(new Errors.BadRequestError('User already exists with this email address'));
 
       super.create({
-        email: options.email,
+        email: options.email.toLowerCase(),
         firstName: options.firstName,
         lastName: options.lastName,
         age: options.age,

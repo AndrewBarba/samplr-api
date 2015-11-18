@@ -10,6 +10,7 @@ const config = require('config');
 const cors = require('app/middleware/cors');
 const gzip = require('app/middleware/gzip');
 const parser = require('app/middleware/parser');
+const validator = require('app/middleware/validator');
 const headers = require('app/middleware/headers');
 const notFound = require('app/middleware/not-found');
 const errors = require('app/middleware/errors');
@@ -39,6 +40,7 @@ class Api {
     app.use(gzip());
     app.use(cors());
     app.use(parser());
+    app.use(validator());
     app.use(headers());
 
     // load routes

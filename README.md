@@ -5,7 +5,7 @@ Samplr API built with Node.js and RethinkDB
 
 ## Setup
 ```
-npm install
+make
 ```
 
 ## Test

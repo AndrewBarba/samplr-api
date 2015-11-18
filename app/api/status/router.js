@@ -12,7 +12,7 @@ swagger.addGet({
     nickname: "status",
     produces: ["application/json"]
   },
-  action: function(req, res, next) {
+  action: (req, res, next) => {
     controller.status(req, res, next);
   }
 });

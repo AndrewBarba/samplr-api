@@ -16,6 +16,7 @@
     "compression": "1.6.0",
     "cors": "2.7.1",
     "express": "4.13.3",
+    "express-validator": "2.18.0",
     "forky": "0.3.0",
     "newrelic": "1.23.1",
     "swagger-node-express": "2.1.3",
