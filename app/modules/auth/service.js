@@ -16,6 +16,17 @@ const SALT_WORK_FACTOR = 10;
 class AuthService extends CommonService {
 
   /**
+   * Read auth by token
+   *
+   * @method readByToken
+   * @param {Object}   token
+   * @param {Function} next
+   */
+  readByToken(token, next) {
+    return this.readIndex("token", token, next);
+  }
+
+  /**
    * Register a new user
    *
    * @method register
