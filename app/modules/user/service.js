@@ -13,13 +13,15 @@ class UserService extends CommonService {
    * @param {String} options.email
    * @param {String} options.firstName
    * @param {String} options.lastName
+   * @param {String} options.type
    * @param {Number} [options.age]
    */
   create(options, next) {
-    if (!options) return next(new Errors.InvalidArgumentError("AuthService.register - options is required"));
-    if (!options.email) return next(new Errors.InvalidArgumentError("AuthService.register - options.email is required"));
-    if (!options.firstName) return next(new Errors.InvalidArgumentError("AuthService.register - options.firstName is required"));
-    if (!options.lastName) return next(new Errors.InvalidArgumentError("AuthService.register - options.lastName is required"));
+    if (!options) return next(new Errors.InvalidArgumentError("UserService.create - options is required"));
+    if (!options.email) return next(new Errors.InvalidArgumentError("UserService.create - options.email is required"));
+    if (!options.firstName) return next(new Errors.InvalidArgumentError("UserService.create - options.firstName is required"));
+    if (!options.lastName) return next(new Errors.InvalidArgumentError("UserService.create - options.lastName is required"));
+    if (!options.type) return next(new Errors.InvalidArgumentError("UserService.create - options.type is required"));
 
     this.readIndex("email", options.email, (err, user) => {
       if (err) return next(err);
@@ -29,7 +31,8 @@ class UserService extends CommonService {
         email: options.email,
         firstName: options.firstName,
         lastName: options.lastName,
-        age: options.age
+        age: options.age,
+        type: options.type
       }, next);
     });
   }
