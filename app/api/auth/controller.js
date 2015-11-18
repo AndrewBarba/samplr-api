@@ -16,6 +16,7 @@ exports.register = (req, res, next) => {
   let password = req.body.password;
   let firstName = req.body.firstName;
   let lastName = req.body.lastName;
+  let type = req.body.type;
   let age = req.body.age;
 
   Auth.register({
@@ -23,6 +24,7 @@ exports.register = (req, res, next) => {
     password: password,
     firstName: firstName,
     lastName: lastName,
+    type: type,
     age: age
   }, function(err, auth) {
     if (err) return next(err);

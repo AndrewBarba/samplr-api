@@ -12,9 +12,10 @@ describe('Integration', () => {
 
       let data = {
         email: `int_auth_login@test.com`,
-        password: "xxx",
+        password: "xxx123",
         firstName: "Andrew",
         lastName: "Test",
+        type: "RESEARCHER",
         age: 22
       };
 
@@ -40,6 +41,7 @@ describe('Integration', () => {
             auth.user.firstName.should.equal(data.firstName);
             auth.user.lastName.should.equal(data.lastName);
             auth.user.age.should.equal(data.age);
+            auth.user.type.should.equal(data.type);
             done();
           });
       });

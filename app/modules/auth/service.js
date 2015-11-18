@@ -9,6 +9,8 @@ const CommonService = require('modules/common').Service;
 const User = require('modules/user');
 
 // Constants
+const MIN_PASSWORD_LENGTH = 6;
+const MAX_PASSWORD_LENGTH = 64;
 const SALT_WORK_FACTOR = 10;
 
 class AuthService extends CommonService {
@@ -30,6 +32,7 @@ class AuthService extends CommonService {
     if (!options.password) return next(new Errors.InvalidArgumentError("AuthService.register - options.password is required"));
     if (!options.firstName) return next(new Errors.InvalidArgumentError("AuthService.register - options.firstName is required"));
     if (!options.lastName) return next(new Errors.InvalidArgumentError("AuthService.register - options.lastName is required"));
+    if (!options.type) return next(new Errors.InvalidArgumentError("AuthService.register - options.type is required"));
 
     async.auto({
       // create a new user
@@ -38,7 +41,11 @@ class AuthService extends CommonService {
       },
       // hash password
       password: (done) => {
-        bcrypt.hash(options.password, SALT_WORK_FACTOR, done);
+        let password = options.password;
+        if (password.length < MIN_PASSWORD_LENGTH) return done(new Errors.InvalidArgumentError(`Password must be at least ${MIN_PASSWORD_LENGTH} characters.`));
+        if (password.length > MAX_PASSWORD_LENGTH) return done(new Errors.InvalidArgumentError(`Password must be ${MAX_PASSWORD_LENGTH} characters or less.`));
+
+        bcrypt.hash(password, SALT_WORK_FACTOR, done);
       },
       // create auth
       auth: ['user', 'password', (done, results) => {
@@ -89,7 +96,11 @@ class AuthService extends CommonService {
       },
       // compare password
       (auth, user, done) => {
-        bcrypt.compare(options.password, auth.password, (err, res) => {
+        let password = options.password;
+        if (password.length < MIN_PASSWORD_LENGTH) return done(new Errors.InvalidArgumentError(`Password must be at least ${MIN_PASSWORD_LENGTH} characters.`));
+        if (password.length > MAX_PASSWORD_LENGTH) return done(new Errors.InvalidArgumentError(`Password must be ${MAX_PASSWORD_LENGTH} characters or less.`));
+
+        bcrypt.compare(password, auth.password, (err, res) => {
           if (err) return done(err);
           if (!res) return done(new Errors.BadRequestError('Password does not match'));
           done(null, auth, user);
