@@ -70,6 +70,20 @@ class CommonAuth {
       });
     });
   }
+
+  /**
+   * Requires a valid auth token and logged in user
+   * must be the same as the user id in the url
+   *
+   * @method requiresCurrentUser
+   */
+  requiresCurrentUser(req, res, next) {
+    this.requiresLogin(req, res, err => {
+      if (err) return next();
+      if (req.params.id !== req.userId) return next(new Errors.UnauthorizedError());
+      next();
+    });
+  }
 }
 
 module.exports = CommonAuth;
