@@ -28,7 +28,7 @@ swagger.addPut({
   spec: {
     path: "/group/{id}",
     summary: "Update a group",
-    method: "POST",
+    method: "PUT",
     type: "Update",
     nickname: "update",
     produces: ["application/json"]

@@ -7,3 +7,4 @@
 require('./status');
 require('./auth');
 require('./group');
+require('./user');
