@@ -8,7 +8,7 @@ const Auth = require('modules/auth');
 const User = require('modules/user');
 
 // Constants
-const USER_TYPE = require('modules/user/type');
+const USER_TYPE = User.TYPE;
 const AUTH_HEADER_KEY = 'x-access-token';
 
 class CommonAuth {
