@@ -23,12 +23,8 @@ class CommonAuth {
     if (!token || !_.isString(token)) return next(new Errors.UnauthorizedError());
 
     Auth.readByToken(token, (err, auth) => {
-      if (err) return next(err);
-      if (!auth) return next(new Errors.UnauthorizedError());
-
-      // Set userId for easy access
+      if (err || !auth) return next(new Errors.UnauthorizedError());
       req.userId = auth.userId;
-
       next();
     });
   }
@@ -42,13 +38,14 @@ class CommonAuth {
     this.requiresLogin(req, res, err => {
       if (err) return next(err);
 
-      User.read(req.userId, (err, user) => {
-        if (err) return next(err);
-        if (!user) return next(new Errors.UnauthorizedError());
-        if (user.type !== USER_TYPE.CLIENT) return next(new Errors.UnauthorizedError());
-
-        next();
-      });
+      User
+        .read(req.userId)
+        .pluck('type')
+        .run((err, user) => {
+          if (err || !user) return next(new Errors.UnauthorizedError());
+          if (user.type !== USER_TYPE.CLIENT) return next(new Errors.UnauthorizedError());
+          next();
+        });
     });
   }
 
@@ -61,13 +58,14 @@ class CommonAuth {
     this.requiresLogin(req, res, err => {
       if (err) return next(err);
 
-      User.read(req.userId, (err, user) => {
-        if (err) return next(err);
-        if (!user) return next(new Errors.UnauthorizedError());
-        if (user.type !== USER_TYPE.RESEARCHER) return next(new Errors.UnauthorizedError());
-
-        next();
-      });
+      User
+        .read(req.userId)
+        .pluck('type')
+        .run((err, user) => {
+          if (err || !user) return next(new Errors.UnauthorizedError());
+          if (user.type !== USER_TYPE.RESEARCHER) return next(new Errors.UnauthorizedError());
+          next();
+        });
     });
   }
 

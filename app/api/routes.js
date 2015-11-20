@@ -6,3 +6,4 @@
 
 require('./status');
 require('./auth');
+require('./group');

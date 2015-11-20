@@ -19,6 +19,8 @@ class AuthService extends CommonService {
    * Read auth by token
    *
    * @method readByToken
+   * @param {String} token
+   * @param {Function} next
    */
   readByToken(token, next) {
     return this.readIndex("token", token, next);
@@ -27,7 +29,9 @@ class AuthService extends CommonService {
   /**
    * Read auth by user id
    *
-   * @method readByToken
+   * @method readByUserId
+   * @param {String} userId
+   * @param {Function} next
    */
   readByUserId(userId, next) {
     return this.readIndex("userId", userId, next);
@@ -43,6 +47,7 @@ class AuthService extends CommonService {
    * @param {String} options.firstName
    * @param {String} options.lastName
    * @param {Number} [options.age]
+   * @param {Function} next
    */
   register(options, next) {
     if (!options) return next(new Errors.InvalidArgumentError("AuthService.register - options is required"));
@@ -89,6 +94,7 @@ class AuthService extends CommonService {
    * @param {Object} options
    * @param {String} options.email
    * @param {String} options.password
+   * @param {Function} next
    */
   login(options, next) {
     if (!options) return next(new Errors.InvalidArgumentError("AuthService.login - options is required"));

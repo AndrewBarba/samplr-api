@@ -24,6 +24,7 @@ class UserService extends CommonService {
    * @param {String} options.lastName
    * @param {String} options.type
    * @param {Number} [options.age]
+   * @param {Function} next
    */
   create(options, next) {
     if (!options) return next(new Errors.InvalidArgumentError("UserService.create - options is required"));
