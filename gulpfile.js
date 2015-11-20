@@ -4,8 +4,10 @@ const gulp = require('gulp');
 const jshint = require('gulp-jshint');
 
 const lintSources = [
+  '*.js',
   'app/**/*.js',
-  'process/**/*.js'
+  'process/**/*.js',
+  'test/**/*.js'
 ];
 
 gulp.task('jshint', () => {
