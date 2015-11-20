@@ -91,6 +91,40 @@ class CommonService {
 
     return rQuery(r, next);
   }
+
+  /**
+   * Update a single object
+   *
+   * @method readAndUpdate
+   * @param  {String}   objectId
+   * @param  {Object}   options
+   * @param  {Function} [next]
+   * @return {Promise}
+   */
+  readAndUpdate(objectId, options, next) {
+    let r = this
+      .read(objectId)
+      .update(options);
+
+    return rQuery(r, next);
+  }
+
+  /**
+   * Update a single object by an indexed key and value
+   *
+   * @method readIndexAndUpdate
+   * @param  {String}   objectId
+   * @param  {Object}   options
+   * @param  {Function} [next]
+   * @return {Promise}
+   */
+  readIndexAndUpdate(key, value, options, next) {
+    let r = this
+      .readIndex(key, value)
+      .update(options);
+
+    return rOneQuery(r, next);
+  }
 }
 
 function rQuery(r, next) {

@@ -9,10 +9,10 @@ const auth = require('./authorization');
 swagger.addPost({
   spec: {
     path: "/group",
-    summary: "Register a new user",
+    summary: "Create a new group",
     method: "POST",
-    type: "Register",
-    nickname: "register",
+    type: "Create",
+    nickname: "create",
     produces: ["application/json"]
   },
   action: (req, res, next) => {
@@ -20,6 +20,24 @@ swagger.addPost({
       done => auth.requiresResearcherLogin(req, res, done),
       done => validator.validateCreate(req, res, done),
       done => controller.create(req, res, done)
+    ], next);
+  }
+});
+
+swagger.addPut({
+  spec: {
+    path: "/group/{id}",
+    summary: "Update a group",
+    method: "POST",
+    type: "Update",
+    nickname: "update",
+    produces: ["application/json"]
+  },
+  action: (req, res, next) => {
+    async.series([
+      done => auth.requiresGroupOwner(req, res, done),
+      done => validator.validateUpdate(req, res, done),
+      done => controller.update(req, res, done)
     ], next);
   }
 });
