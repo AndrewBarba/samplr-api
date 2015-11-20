@@ -112,11 +112,14 @@ class AuthService extends CommonService {
       },
       // get auth
       (user, done) => {
-        this.readByUserId(user.id, (err, auth) => {
-          if (err) return done(err);
-          if (!auth) return done(new Errors.BadRequestError('Auth does not exist for this user'));
-          done(null, auth, user);
-        });
+        this
+          .readByUserId(user.id)
+          .pluck('token', 'password')
+          .execute((err, auth) => {
+            if (err) return done(err);
+            if (!auth[0]) return done(new Errors.BadRequestError('Auth does not exist for this user'));
+            done(null, auth[0], user);
+          });
       },
       // compare password
       (auth, user, done) => {

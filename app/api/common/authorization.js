@@ -19,14 +19,17 @@ class CommonAuth {
    * @method requiresLogin
    */
   requiresLogin(req, res, next) {
-    let token = req.headers[AUTH_HEADER_KEY];
+    let token = req.headers[AUTH_HEADER_KEY] || req.query.auth;
     if (!token || !_.isString(token)) return next(new Errors.UnauthorizedError());
 
-    Auth.readByToken(token, (err, auth) => {
-      if (err || !auth) return next(new Errors.UnauthorizedError());
-      req.userId = auth.userId;
-      next();
-    });
+    Auth
+      .readByToken(token)
+      .pluck('userId')
+      .execute((err, auth) => {
+        if (err || !auth[0]) return next(new Errors.UnauthorizedError());
+        req.userId = auth[0].userId;
+        next();
+      });
   }
 
   /**
@@ -41,7 +44,7 @@ class CommonAuth {
       User
         .read(req.userId)
         .pluck('type')
-        .run((err, user) => {
+        .execute((err, user) => {
           if (err || !user) return next(new Errors.UnauthorizedError());
           if (user.type !== USER_TYPE.CLIENT) return next(new Errors.UnauthorizedError());
           next();
@@ -61,7 +64,7 @@ class CommonAuth {
       User
         .read(req.userId)
         .pluck('type')
-        .run((err, user) => {
+        .execute((err, user) => {
           if (err || !user) return next(new Errors.UnauthorizedError());
           if (user.type !== USER_TYPE.RESEARCHER) return next(new Errors.UnauthorizedError());
           next();

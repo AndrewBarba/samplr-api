@@ -42,6 +42,8 @@ class CommonService {
   /**
    * Read a single object by an indexed key and value
    *
+   * @description If you do not pass next it is up to the caller to unwrap the array!!!
+   *
    * @method readIndex
    * @param  {String}   key
    * @param  {String}   value
@@ -49,14 +51,12 @@ class CommonService {
    * @return {Promise}
    */
   readIndex(key, value, next) {
-    return this
+    let r = this
       .model
       .getAll(value, { index: key })
-      .limit(1)
-      .run((err, res) => {
-        if (err) return next(err);
-        next(null, res[0]);
-      });
+      .limit(1);
+
+    return rOneQuery(r, next);
   }
 
   /**
@@ -96,6 +96,14 @@ class CommonService {
 function rQuery(r, next) {
   if (!next) return r;
   return r.run(next);
+}
+
+function rOneQuery(r, next) {
+  if (!next) return r;
+  return r.run((err, res) => {
+    if (err) return next(err);
+    next(null, res[0]);
+  });
 }
 
 module.exports = CommonService;
