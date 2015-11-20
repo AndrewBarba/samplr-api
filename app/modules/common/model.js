@@ -51,17 +51,6 @@ class CommonModel {
   }
 
   /**
-   * Create an instance of this model
-   *
-   * @method create
-   * @param  {Object} options
-   * @return {ThinkyObject}
-   */
-  create(options) {
-    return new this.Model(options);
-  }
-
-  /**
    * Build indexes on the given model
    *
    * @method buildIndexes
@@ -88,6 +77,17 @@ class CommonModel {
   ensureIndex(key) {
     this.Model.ensureIndex(key);
     return this;
+  }
+
+  /**
+   * Create an instance of this model
+   *
+   * @method create
+   * @param  {Object} options
+   * @return {ThinkyObject}
+   */
+  create(options) {
+    return new this.Model(options);
   }
 
   /**

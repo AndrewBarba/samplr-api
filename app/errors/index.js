@@ -61,6 +61,12 @@ class UnauthorizedError extends AppError {
   }
 }
 
+class ForbiddenError extends AppError {
+  constructor(message) {
+    super(403, message || "Forbidden", "Forbidden");
+  }
+}
+
 /* ------------------------------------------------------------------------- *
  * Not Found Error
  * ------------------------------------------------------------------------- */
@@ -80,5 +86,6 @@ exports.ServerError = ServerError;
 exports.BadRequestError = BadRequestError;
 exports.ValidatorError = ValidatorError;
 exports.UnauthorizedError = UnauthorizedError;
+exports.ForbiddenError = ForbiddenError;
 exports.InvalidArgumentError = InvalidArgumentError;
 exports.NotFoundError = NotFoundError;

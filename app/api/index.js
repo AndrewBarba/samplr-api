@@ -7,13 +7,13 @@ const swagger = require("swagger-node-express");
 const config = require('config');
 
 // Middleware
-const cors = require('app/middleware/cors');
-const gzip = require('app/middleware/gzip');
-const parser = require('app/middleware/parser');
-const validator = require('app/middleware/validator');
-const headers = require('app/middleware/headers');
-const notFound = require('app/middleware/not-found');
-const errors = require('app/middleware/errors');
+const cors = require('./middleware/cors');
+const gzip = require('./middleware/gzip');
+const parser = require('./middleware/parser');
+const validator = require('./middleware/validator');
+const headers = require('./middleware/headers');
+const notFound = require('./middleware/not-found');
+const errors = require('./middleware/errors');
 
 class Api {
   constructor() {

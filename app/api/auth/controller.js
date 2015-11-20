@@ -26,7 +26,7 @@ exports.register = (req, res, next) => {
     lastName: lastName,
     type: type,
     age: age
-  }, function(err, auth) {
+  }, (err, auth) => {
     if (err) return next(err);
     res.status(201).json(auth);
   });
@@ -48,7 +48,7 @@ exports.login = (req, res, next) => {
   Auth.login({
     email: email,
     password: password
-  }, function(err, auth) {
+  }, (err, auth) => {
     if (err) return next(err);
     res.status(200).json(auth);
   });

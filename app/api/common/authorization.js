@@ -8,7 +8,7 @@ const Auth = require('modules/auth');
 const User = require('modules/user');
 
 // Constants
-const USER_TYPE = require('modules/user/type');
+const USER_TYPE = User.TYPE;
 const AUTH_HEADER_KEY = 'x-access-token';
 
 class CommonAuth {
@@ -19,18 +19,17 @@ class CommonAuth {
    * @method requiresLogin
    */
   requiresLogin(req, res, next) {
-    let token = req.headers[AUTH_HEADER_KEY];
+    let token = req.headers[AUTH_HEADER_KEY] || req.query.auth;
     if (!token || !_.isString(token)) return next(new Errors.UnauthorizedError());
 
-    Auth.readByToken(token, (err, auth) => {
-      if (err) return next(err);
-      if (!auth) return next(new Errors.UnauthorizedError());
-
-      // Set userId for easy access
-      req.userId = auth.userId;
-
-      next();
-    });
+    Auth
+      .readByToken(token)
+      .pluck('userId')
+      .execute((err, auth) => {
+        if (err || !auth[0]) return next(new Errors.UnauthorizedError());
+        req.userId = auth[0].userId;
+        next();
+      });
   }
 
   /**
@@ -42,13 +41,14 @@ class CommonAuth {
     this.requiresLogin(req, res, err => {
       if (err) return next(err);
 
-      User.read(req.userId, (err, user) => {
-        if (err) return next(err);
-        if (!user) return next(new Errors.UnauthorizedError());
-        if (user.type !== USER_TYPE.CLIENT) return next(new Errors.UnauthorizedError());
-
-        next();
-      });
+      User
+        .read(req.userId)
+        .pluck('type')
+        .execute((err, user) => {
+          if (err || !user) return next(new Errors.UnauthorizedError());
+          if (user.type !== USER_TYPE.CLIENT) return next(new Errors.UnauthorizedError());
+          next();
+        });
     });
   }
 
@@ -61,13 +61,14 @@ class CommonAuth {
     this.requiresLogin(req, res, err => {
       if (err) return next(err);
 
-      User.read(req.userId, (err, user) => {
-        if (err) return next(err);
-        if (!user) return next(new Errors.UnauthorizedError());
-        if (user.type !== USER_TYPE.RESEARCHER) return next(new Errors.UnauthorizedError());
-
-        next();
-      });
+      User
+        .read(req.userId)
+        .pluck('type')
+        .execute((err, user) => {
+          if (err || !user) return next(new Errors.UnauthorizedError());
+          if (user.type !== USER_TYPE.RESEARCHER) return next(new Errors.UnauthorizedError());
+          next();
+        });
     });
   }
 

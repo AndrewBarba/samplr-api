@@ -1,5 +1,6 @@
 "use strict";
 
+const async = require('async');
 const swagger = require('swagger-node-express');
 const controller = require('./controller');
 const validator = require('./validator');
@@ -14,10 +15,10 @@ swagger.addPost({
     produces: ["application/json"]
   },
   action: (req, res, next) => {
-    validator.validateRegister(req, res, err => {
-      if (err) return next(err);
-      controller.register(req, res, next);
-    });
+    async.series([
+      done => validator.validateRegister(req, res, done),
+      done => controller.register(req, res, done)
+    ], next);
   }
 });
 
@@ -31,10 +32,10 @@ swagger.addPost({
     produces: ["application/json"]
   },
   action: (req, res, next) => {
-    validator.validateLogin(req, res, err => {
-      if (err) return next(err);
-      controller.login(req, res, next);
-    });
+    async.series([
+      done => validator.validateLogin(req, res, done),
+      done => controller.login(req, res, done)
+    ], next);
   }
 });
 
