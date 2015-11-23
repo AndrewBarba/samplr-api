@@ -45,7 +45,7 @@ class BadRequestError extends AppError {
   }
 }
 
-class ValidatorError extends BadRequestError {
+class ValidatorError extends AppError {
   constructor(message) {
     super(400, message || "Validation Error", "Validation Error");
   }

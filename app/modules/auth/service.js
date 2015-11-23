@@ -79,10 +79,8 @@ class AuthService extends CommonService {
       }]
     }, (err, results) => {
       if (err) return next(err);
-
       let auth = results.auth;
       auth.user = results.user;
-
       next(null, sanitizeAuth(auth));
     });
   }
@@ -135,9 +133,7 @@ class AuthService extends CommonService {
       }
     ], (err, auth, user) => {
       if (err) return next(err);
-
       auth.user = user;
-
       next(null, sanitizeAuth(auth));
     });
   }
