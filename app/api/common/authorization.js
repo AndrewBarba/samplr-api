@@ -63,8 +63,7 @@ class CommonAuth {
         .pluck('type')
         .execute((err, user) => {
           if (err || !user) return next(new Errors.UnauthorizedError());
-          if (user.type !== USER_TYPE.CLIENT) return next(new Errors.UnauthorizedError());
-          next();
+          return user.type === USER_TYPE.CLIENT ? next() : next(new Errors.UnauthorizedError());
         });
     });
   }
@@ -83,8 +82,7 @@ class CommonAuth {
         .pluck('type')
         .execute((err, user) => {
           if (err || !user) return next(new Errors.UnauthorizedError());
-          if (user.type !== USER_TYPE.RESEARCHER) return next(new Errors.UnauthorizedError());
-          next();
+          return user.type === USER_TYPE.RESEARCHER ? next() : next(new Errors.UnauthorizedError());
         });
     });
   }
