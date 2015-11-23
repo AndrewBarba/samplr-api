@@ -33,6 +33,23 @@ class CommonAuth {
   }
 
   /**
+   * Requires a valid auth token and logged in user
+   * must be the same as the user id in the url
+   *
+   * @method requiresCurrentUser
+   */
+  requiresCurrentUser(req, res, next) {
+    if (req.userId) {
+      return req.params.id === req.userId ? next() : next(new Errors.UnauthorizedError());
+    }
+
+    this.requiresLogin(req, res, err => {
+      if (err) return next(err);
+      return req.params.id === req.userId ? next() : next(new Errors.UnauthorizedError());
+    });
+  }
+
+  /**
    * Requires a valid client auth token
    *
    * @method requiresClientLogin
@@ -69,20 +86,6 @@ class CommonAuth {
           if (user.type !== USER_TYPE.RESEARCHER) return next(new Errors.UnauthorizedError());
           next();
         });
-    });
-  }
-
-  /**
-   * Requires a valid auth token and logged in user
-   * must be the same as the user id in the url
-   *
-   * @method requiresCurrentUser
-   */
-  requiresCurrentUser(req, res, next) {
-    this.requiresLogin(req, res, err => {
-      if (err) return next();
-      if (req.params.id !== req.userId) return next(new Errors.UnauthorizedError());
-      next();
     });
   }
 }

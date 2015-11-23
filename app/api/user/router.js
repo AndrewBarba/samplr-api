@@ -16,8 +16,26 @@ swagger.addGet({
   },
   action: (req, res, next) => {
     async.series([
-      done => auth.requiresResearcherLogin(req, res, done),
+      done => auth.requiresLogin(req, res, done),
       done => controller.me(req, res, done)
+    ], next);
+  }
+});
+
+swagger.addGet({
+  spec: {
+    path: "/user/{id}/group",
+    summary: "List groups this user owns",
+    method: "GET",
+    type: "List Groups",
+    nickname: "listGroups",
+    produces: ["application/json"]
+  },
+  action: (req, res, next) => {
+    async.series([
+      done => auth.requiresResearcherLogin(req, res, done),
+      done => auth.requiresCurrentUser(req, res, done),
+      done => controller.listGroups(req, res, done)
     ], next);
   }
 });
