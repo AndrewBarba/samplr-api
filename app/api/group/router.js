@@ -42,6 +42,23 @@ swagger.addPut({
   }
 });
 
+swagger.addGet({
+  spec: {
+    path: "/group/{id}/survey",
+    summary: "List surveys for a group",
+    method: "GET",
+    type: "List Surveys",
+    nickname: "listSurveys",
+    produces: ["application/json"]
+  },
+  action: (req, res, next) => {
+    async.series([
+      done => auth.requiresGroupOwner(req, res, done),
+      done => controller.listSurveys(req, res, done)
+    ], next);
+  }
+});
+
 swagger.configureDeclaration('group', {
   description: 'Group',
   authorizations: ['apiKey'],
