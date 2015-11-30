@@ -12,10 +12,12 @@ const Survey = require('modules/survey');
  */
 exports.create = (req, res, next) => {
 
+  let userId = req.userId;
   let groupId = req.body.groupId;
   let name = req.body.name;
 
   Survey.create({
+    userId: userId,
     groupId: groupId,
     name: name
   }, (err, survey) => {

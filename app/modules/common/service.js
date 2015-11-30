@@ -1,8 +1,11 @@
 "use strict";
 
-class CommonService {
+const EventEmitter = require('events').EventEmitter;
+
+class CommonService extends EventEmitter {
 
   constructor(model) {
+    super();
     this._model = model;
   }
 

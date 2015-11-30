@@ -16,6 +16,7 @@ class SurveyService extends CommonService {
    */
   create(options, next) {
     if (!options) return next(new Errors.InvalidArgumentError("SurveyService.create - options is required"));
+    if (!options.userId) return next(new Errors.InvalidArgumentError("SurveyService.create - options.userId is required"));
     if (!options.groupId) return next(new Errors.InvalidArgumentError("SurveyService.create - options.groupId is required"));
     if (!options.name) return next(new Errors.InvalidArgumentError("SurveyService.create - options.name is required"));
 
@@ -31,6 +32,17 @@ class SurveyService extends CommonService {
    */
   listByGroupId(groupId, next) {
     return this.listIndex("groupId", groupId, next);
+  }
+
+  /**
+   * List surveys by user id
+   *
+   * @method listByUserId
+   * @param {String} userId
+   * @param {Function} next
+   */
+  listByUserId(userId, next) {
+    return this.listIndex("userId", userId, next);
   }
 }
 

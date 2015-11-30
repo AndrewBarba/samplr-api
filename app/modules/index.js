@@ -9,6 +9,8 @@ class Modules {
     require('./user');
     require('./group');
     require('./survey');
+    require('./question');
+    require('./response');
 
     process.nextTick(next);
   }
