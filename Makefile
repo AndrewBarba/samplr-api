@@ -7,6 +7,9 @@ default:
 start:
 	node process/server-cluster
 
+worker:
+	node process/worker-cluster
+
 lint:
 	gulp jshint
 

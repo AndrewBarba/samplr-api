@@ -21,6 +21,17 @@ class GroupService extends CommonService {
 
     return super.create(options, next);
   }
+
+  /**
+   * List groups by user id
+   *
+   * @method listByUserId
+   * @param {String} userId
+   * @param {Function} next
+   */
+  listByUserId(userId, next) {
+    return this.listIndex("userId", userId, next);
+  }
 }
 
 module.exports = GroupService;

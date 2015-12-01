@@ -8,8 +8,8 @@ const auth = require('./authorization');
 
 swagger.addPost({
   spec: {
-    path: "/group",
-    summary: "Create a new group",
+    path: "/survey",
+    summary: "Create a new survey",
     method: "POST",
     type: "Create",
     nickname: "create",
@@ -26,8 +26,8 @@ swagger.addPost({
 
 swagger.addPut({
   spec: {
-    path: "/group/{id}",
-    summary: "Update a group",
+    path: "/survey/{id}",
+    summary: "Update a survey",
     method: "PUT",
     type: "Update",
     nickname: "update",
@@ -35,31 +35,14 @@ swagger.addPut({
   },
   action: (req, res, next) => {
     async.series([
-      done => auth.requiresGroupOwner(req, res, done),
+      done => auth.requiresSurveyOwner(req, res, done),
       done => validator.validateUpdate(req, res, done),
       done => controller.update(req, res, done)
     ], next);
   }
 });
 
-swagger.addGet({
-  spec: {
-    path: "/group/{id}/survey",
-    summary: "List surveys for a group",
-    method: "GET",
-    type: "List Surveys",
-    nickname: "listSurveys",
-    produces: ["application/json"]
-  },
-  action: (req, res, next) => {
-    async.series([
-      done => auth.requiresGroupOwner(req, res, done),
-      done => controller.listSurveys(req, res, done)
-    ], next);
-  }
-});
-
-swagger.configureDeclaration('group', {
+swagger.configureDeclaration('survey', {
   description: 'Group',
   authorizations: ['apiKey'],
   produces: ['application/json']

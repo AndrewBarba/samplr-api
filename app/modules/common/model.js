@@ -35,8 +35,8 @@ class CommonModel {
   baseSchema() {
     return {
       id: this.type.string(),
-      created: this.type.date().default(() => new Date()),
-      modified: this.type.date().default(() => new Date())
+      created: this.type.date().default(r.now()),
+      modified: this.type.date().default(r.now())
     };
   }
 

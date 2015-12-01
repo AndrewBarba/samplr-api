@@ -22,8 +22,7 @@ class GroupAuth extends CommonAuth {
         .pluck('userId')
         .execute((err, group) => {
           if (err || !group) return next(new Errors.NotFoundError());
-          if (group.userId !== req.userId) return next(new Errors.ForbiddenError());
-          next();
+          return group.userId === req.userId ? next() : next(new Errors.ForbiddenError());
         });
     });
   }
