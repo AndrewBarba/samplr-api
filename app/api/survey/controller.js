@@ -1,6 +1,7 @@
 "use strict";
 
 const Survey = require('modules/survey');
+const Question = require('modules/question');
 
 /**
  * Create a new survey
@@ -46,5 +47,23 @@ exports.update = (req, res, next) => {
   }, (err, survey) => {
     if (err) return next(err);
     res.status(200).json(survey);
+  });
+};
+
+/**
+ * List questions for a survey
+ *
+ * @method listSurveys
+ * @param {Request}  req
+ * @param {Response} res
+ * @param {Function} next
+ */
+exports.listQuestions = (req, res, next) => {
+
+  let surveyId = req.params.id;
+
+  Question.listBySurveyId(surveyId, (err, questions) => {
+    if (err) return next(err);
+    res.status(200).json(questions);
   });
 };
