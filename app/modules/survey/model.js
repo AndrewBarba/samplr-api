@@ -14,8 +14,6 @@ class SurveyModel extends CommonModel {
       userId: this.type.string().required(),
       groupId: this.type.string().required(),
       name: this.type.string().required(),
-      start: this.type.date().required(),
-      end: this.type.date().required(),
       state: this.type.string().enum(_.values(SURVEY_STATE)).default(SURVEY_STATE.PENDING),
       schedule: [{
         time: this.type.string().enum(_.values(SURVEY_TIME))

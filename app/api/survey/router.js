@@ -5,6 +5,7 @@ const swagger = require('swagger-node-express');
 const controller = require('./controller');
 const validator = require('./validator');
 const auth = require('./authorization');
+const groupAuth = require('../group/authorization');
 
 swagger.addPost({
   spec: {
@@ -17,7 +18,7 @@ swagger.addPost({
   },
   action: (req, res, next) => {
     async.series([
-      done => auth.requiresResearcherLogin(req, res, done),
+      done => groupAuth.requiresGroupOwner(req, res, done),
       done => validator.validateCreate(req, res, done),
       done => controller.create(req, res, done)
     ], next);
@@ -43,7 +44,7 @@ swagger.addPut({
 });
 
 swagger.configureDeclaration('survey', {
-  description: 'Group',
+  description: 'Survey',
   authorizations: ['apiKey'],
   produces: ['application/json']
 });

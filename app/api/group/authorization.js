@@ -18,7 +18,7 @@ class GroupAuth extends CommonAuth {
       if (err) return next(err);
 
       Group
-        .read(req.params.id)
+        .read(req.body.groupId || req.params.id)
         .pluck('userId')
         .execute((err, group) => {
           if (err || !group) return next(new Errors.NotFoundError());

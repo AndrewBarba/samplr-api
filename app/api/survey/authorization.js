@@ -11,20 +11,18 @@ class SurveyAuth extends CommonAuth {
   /**
    * Requires user to own survey in url
    *
-   * @method requiresGroupOwner
+   * @method requiresSurveyOwner
    */
-  requiresGroupOwner(req, res, next) {
+  requiresSurveyOwner(req, res, next) {
     this.requiresLogin(req, res, err => {
       if (err) return next(err);
 
       Survey
-        .read(req.params.id)
-        .getJoin({
-          group: true
-        })
-        .run((err, survey) => {
-          if (err || !survey || !survey.group) return next(new Errors.NotFoundError());
-          return survey.group.userId === req.userId ? next() : next(new Errors.ForbiddenError());
+        .read(req.body.surveyId || req.params.id)
+        .pluck('userId')
+        .execute((err, survey) => {
+          if (err || !survey) return next(new Errors.NotFoundError());
+          return survey.userId === req.userId ? next() : next(new Errors.ForbiddenError());
         });
     });
   }

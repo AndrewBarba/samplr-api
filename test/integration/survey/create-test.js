@@ -5,6 +5,7 @@ const agent = require('test/lib/agent');
 
 // Modules
 const Auth = require('modules/auth');
+const Group = require('modules/group');
 
 describe('Integration', () => {
   describe('Survey', () => {
@@ -29,19 +30,31 @@ describe('Integration', () => {
         });
       });
 
-      let surveyData = {
-        name: "My Survey",
-        groupId: "12345",
-        start: Date.now(),
-        end: Date.now(),
-        schedule: [{
-          time: 'MORNING'
-        }, {
-          time: 'SUNSET'
-        }]
-      };
+      let group;
+
+      before(done => {
+        Group.create({
+          name: "Hello, World",
+          userId: auth.user.id
+        }, (err, _group) => {
+          if (err) return done(err);
+          group = _group;
+          done();
+        });
+      });
 
       it('should create a survey', done => {
+
+        let surveyData = {
+          name: "My Survey",
+          groupId: group.id,
+          schedule: [{
+            time: 'MORNING'
+          }, {
+            time: 'SUNSET'
+          }]
+        };
+
         agent
           .client()
           .post('/survey')
@@ -64,6 +77,17 @@ describe('Integration', () => {
       });
 
       it('should not create a survey', done => {
+
+        let surveyData = {
+          name: "My Survey",
+          groupId: group.id,
+          schedule: [{
+            time: 'MORNING'
+          }, {
+            time: 'SUNSET'
+          }]
+        };
+
         agent
           .client()
           .post('/survey')

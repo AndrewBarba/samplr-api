@@ -6,16 +6,16 @@ class SurveyValidator extends CommonValidator {
 
   validateCreate(req, res, next) {
 
-    req.checkBody('name').notEmpty().isString();
-    req.checkBody('groupId').notEmpty().isString();
-    req.checkBody('schedule').notEmpty().isArray();
+    req.checkBody('title').notEmpty().isString();
+    req.checkBody('surveyId').notEmpty().isString();
+    req.checkBody('responses').notEmpty().isArray();
 
     this.validate(req, res, next);
   }
 
   validateUpdate(req, res, next) {
 
-    req.checkBody('name').notEmpty().isString();
+    req.checkBody('title').notEmpty().isString();
 
     this.validate(req, res, next);
   }
