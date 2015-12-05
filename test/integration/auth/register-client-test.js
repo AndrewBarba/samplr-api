@@ -3,12 +3,34 @@
 const should = require('should');
 const agent = require('test/lib/agent');
 
+// Modules
+const Auth = require('modules/auth');
+
 describe('Integration', () => {
   describe('Auth', () => {
-    describe('Register', () => {
+    describe('Register Client', () => {
+
+      let auth;
+
+      let userData = {
+        email: `int_auth_reg_researcher@test.com`,
+        password: "xxx123",
+        firstName: "Andrew",
+        lastName: "Test",
+        type: "RESEARCHER",
+        age: 22
+      };
+
+      before(done => {
+        Auth.register(userData, (err, _auth) => {
+          if (err) return done(err);
+          auth = _auth;
+          done();
+        });
+      });
 
       let data = {
-        email: `int_auth_reg@test.com`,
+        email: `int_auth_reg_client@test.com`,
         password: "xxx123",
         firstName: "Andrew",
         lastName: "Test",
@@ -18,7 +40,10 @@ describe('Integration', () => {
       it('should register a new user', done => {
         agent
           .client()
-          .post('/auth/register')
+          .post('/auth/register/client')
+          .query({
+            auth: auth.token
+          })
           .send(data)
           .expect(201)
           .end(function(err, result) {
@@ -32,7 +57,7 @@ describe('Integration', () => {
             auth.user.firstName.should.equal(data.firstName);
             auth.user.lastName.should.equal(data.lastName);
             auth.user.age.should.equal(data.age);
-            auth.user.type.should.equal("RESEARCHER");
+            auth.user.type.should.equal("CLIENT");
             done();
           });
       });

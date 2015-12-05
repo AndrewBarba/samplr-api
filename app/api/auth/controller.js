@@ -2,6 +2,9 @@
 
 const Auth = require('modules/auth');
 
+// Constants
+const USER_TYPE = require('modules/user').TYPE;
+
 /**
  * Register a new user
  *
@@ -12,20 +15,37 @@ const Auth = require('modules/auth');
  */
 exports.register = (req, res, next) => {
 
-  let email = req.body.email;
-  let password = req.body.password;
-  let firstName = req.body.firstName;
-  let lastName = req.body.lastName;
-  let type = req.body.type;
-  let age = req.body.age;
+  Auth.register({
+    email: req.body.email,
+    password: req.body.password,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    age: req.body.age,
+    type: USER_TYPE.RESEARCHER
+  }, (err, auth) => {
+    if (err) return next(err);
+    res.status(201).json(auth);
+  });
+};
+
+/**
+ * Register a new client user
+ *
+ * @method register
+ * @param {Request}  req
+ * @param {Response} res
+ * @param {Function} next
+ */
+exports.registerClient = (req, res, next) => {
 
   Auth.register({
-    email: email,
-    password: password,
-    firstName: firstName,
-    lastName: lastName,
-    type: type,
-    age: age
+    userId: req.userId,
+    email: req.body.email,
+    password: req.body.password,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    age: req.body.age,
+    type: USER_TYPE.CLIENT
   }, (err, auth) => {
     if (err) return next(err);
     res.status(201).json(auth);

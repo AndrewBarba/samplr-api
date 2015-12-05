@@ -50,9 +50,10 @@ exports.listGroups = (req, res, next) => {
  */
 exports.search = (req, res, next) => {
 
+  let userId = req.userId;
   let query = req.query.query;
 
-  User.search(query, (err, users) => {
+  User.search(userId, query, (err, users) => {
     if (err) return next(err);
     res.status(200).json(users);
   });

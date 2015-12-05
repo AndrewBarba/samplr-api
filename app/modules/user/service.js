@@ -42,7 +42,8 @@ class UserService extends CommonService {
         firstName: options.firstName,
         lastName: options.lastName,
         age: options.age,
-        type: options.type
+        type: options.type,
+        userId: options.userId
       }, next);
     });
   }
@@ -51,29 +52,30 @@ class UserService extends CommonService {
    * Search for a user
    *
    * @method search
+   * @param {String} userId
    * @param {String} query
    * @param {Function} next
    */
-  search(query, next) {
+  search(userId, query, next) {
     if (query.indexOf('@') >= 0) {
-      return this.list(user => {
+      return this.listIndex("userId", userId).filter(user => {
         return user("email").match(`(?i)${query}`);
-      }, next);
+      }).run(next);
     }
 
     let parts = query.split(" ");
 
     if (parts.length === 1) {
-      return this.list(user => {
+      return this.listIndex("userId", userId).filter(user => {
         return user("firstName").match(`(?i)${parts[0]}`);
-      }, next);
+      }).run(next);
     }
 
-    return this.list(user => {
+    return this.listIndex("userId", userId).filter(user => {
       return user("firstName")
         .match(`(?i)${parts[0]}`)
         .or(user("lastName").match(`(?i)${parts[1]}`));
-    }, next);
+    }).run(next);
   }
 }
 

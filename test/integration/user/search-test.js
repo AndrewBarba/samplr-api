@@ -5,6 +5,7 @@ const agent = require('test/lib/agent');
 
 // Modules
 const Auth = require('modules/auth');
+const User = require('modules/user');
 
 describe('Integration', () => {
   describe('User', () => {
@@ -12,7 +13,7 @@ describe('Integration', () => {
 
       let auth;
 
-      let userData = {
+      let userResData = {
         email: `int_user_search@test.com`,
         password: "xxx123",
         firstName: "Andrew",
@@ -22,9 +23,29 @@ describe('Integration', () => {
       };
 
       before(done => {
-        Auth.register(userData, (err, _auth) => {
+        Auth.register(userResData, (err, _auth) => {
           if (err) return done(err);
           auth = _auth;
+          done();
+        });
+      });
+
+      let user;
+
+      before(done => {
+        let userClientData = {
+          email: `int_user_search_client@test.com`,
+          password: "xxx123",
+          firstName: "Andrew",
+          lastName: "Test",
+          type: "CLIENT",
+          userId: auth.user.id,
+          age: 22
+        };
+
+        User.create(userClientData, (err, _user) => {
+          if (err) return done(err);
+          user = _user;
           done();
         });
       });
