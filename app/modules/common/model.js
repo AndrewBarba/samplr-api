@@ -74,8 +74,8 @@ class CommonModel {
    *
    * @method ensureIndex
    */
-  ensureIndex(key) {
-    this.Model.ensureIndex(key);
+  ensureIndex(key, options) {
+    this.Model.ensureIndex(key, options);
     return this;
   }
 

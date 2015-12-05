@@ -23,6 +23,7 @@ class UserModel extends CommonModel {
   index() {
     super.index();
     this.ensureIndex("email");
+    this.ensureIndex("name", doc => doc("firstName").add(doc("lastName")));
   }
 }
 
