@@ -17,6 +17,13 @@ class GroupValidator extends CommonValidator {
 
     this.validate(req, res, next);
   }
+
+  validateAddUser(req, res, next) {
+
+    req.checkBody('userId').notEmpty().isString();
+
+    this.validate(req, res, next);
+  }
 }
 
 module.exports = new GroupValidator();

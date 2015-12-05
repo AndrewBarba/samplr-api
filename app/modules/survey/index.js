@@ -7,3 +7,5 @@ const model = new Model("Survey");
 const service = new Service(model);
 
 exports = module.exports = service;
+exports.TIME = require('./time');
+exports.STATE = require('./state');

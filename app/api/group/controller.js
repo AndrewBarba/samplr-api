@@ -63,3 +63,22 @@ exports.listSurveys = (req, res, next) => {
     res.status(200).json(surveys);
   });
 };
+
+/**
+ * Adds a user to a group
+ *
+ * @method addUser
+ * @param {Request}  req
+ * @param {Response} res
+ * @param {Function} next
+ */
+exports.addUser = (req, res, next) => {
+
+  let groupId = req.params.id;
+  let userId = req.body.userId;
+
+  Group.addUser(groupId, userId, (err, group) => {
+    if (err) return next(err);
+    res.status(201).json(group);
+  });
+};

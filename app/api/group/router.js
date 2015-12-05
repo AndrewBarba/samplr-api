@@ -42,6 +42,24 @@ swagger.addPut({
   }
 });
 
+swagger.addPut({
+  spec: {
+    path: "/group/{id}/user",
+    summary: "Add a user to a group",
+    method: "PUT",
+    type: "Add User",
+    nickname: "addUser",
+    produces: ["application/json"]
+  },
+  action: (req, res, next) => {
+    async.series([
+      done => auth.requiresGroupOwner(req, res, done),
+      done => validator.validateAddUser(req, res, done),
+      done => controller.addUser(req, res, done)
+    ], next);
+  }
+});
+
 swagger.addGet({
   spec: {
     path: "/group/{id}/survey",

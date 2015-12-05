@@ -32,6 +32,8 @@ describe('Integration', () => {
       let surveyData = {
         name: "My Survey",
         groupId: "12345",
+        start: Date.now(),
+        end: Date.now(),
         schedule: [{
           time: 'MORNING'
         }, {
