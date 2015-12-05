@@ -102,10 +102,19 @@ class CommonModel {
   /**
    * Forward getAll method
    *
-   * @method readIndex
+   * @method getAll
    */
   getAll(value, options) {
     return this.Model.getAll(value, options);
+  }
+
+  /**
+   * Forward filter method
+   *
+   * @method filter
+   */
+  filter(options) {
+    return this.Model.filter(options);
   }
 
   /**

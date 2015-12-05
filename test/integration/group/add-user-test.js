@@ -58,7 +58,8 @@ describe('Integration', () => {
             should.not.exist(err);
             let group = result.body;
             should.exist(group);
-            console.log(group);
+            group.users.length.should.equal(1);
+            group.users[0].email.should.equal(userData.email);
             done();
           });
       });

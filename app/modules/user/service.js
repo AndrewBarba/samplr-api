@@ -46,6 +46,35 @@ class UserService extends CommonService {
       }, next);
     });
   }
+
+  /**
+   * Search for a user
+   *
+   * @method search
+   * @param {String} query
+   * @param {Function} next
+   */
+  search(query, next) {
+    if (query.indexOf('@') >= 0) {
+      return this.list(user => {
+        return user("email").match(`(?i)${query}`);
+      }, next);
+    }
+
+    let parts = query.split(" ");
+
+    if (parts.length === 1) {
+      return this.list(user => {
+        return user("firstName").match(`(?i)${parts[0]}`);
+      }, next);
+    }
+
+    return this.list(user => {
+      return user("firstName")
+        .match(`(?i)${parts[0]}`)
+        .or(user("lastName").match(`(?i)${parts[1]}`));
+    }, next);
+  }
 }
 
 module.exports = UserService;

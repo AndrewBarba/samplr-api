@@ -39,3 +39,21 @@ exports.listGroups = (req, res, next) => {
     res.status(200).json(groups);
   });
 };
+
+/**
+ * Search for a user
+ *
+ * @method search
+ * @param {Request}  req
+ * @param {Response} res
+ * @param {Function} next
+ */
+exports.search = (req, res, next) => {
+
+  let query = req.query.query;
+
+  User.search(query, (err, users) => {
+    if (err) return next(err);
+    res.status(200).json(users);
+  });
+};

@@ -40,6 +40,23 @@ swagger.addGet({
   }
 });
 
+swagger.addGet({
+  spec: {
+    path: "/user/search",
+    summary: "Search for a user",
+    method: "GET",
+    type: "Search",
+    nickname: "search",
+    produces: ["application/json"]
+  },
+  action: (req, res, next) => {
+    async.series([
+      done => auth.requiresResearcherLogin(req, res, done),
+      done => controller.search(req, res, done)
+    ], next);
+  }
+});
+
 swagger.configureDeclaration('user', {
   description: 'User',
   authorizations: ['apiKey'],
