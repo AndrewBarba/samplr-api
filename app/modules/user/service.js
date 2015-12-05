@@ -57,25 +57,27 @@ class UserService extends CommonService {
    * @param {Function} next
    */
   search(userId, query, next) {
-    if (query.indexOf('@') >= 0) {
-      return this.listIndex("userId", userId).filter(user => {
-        return user("email").match(`(?i)${query}`);
-      }).run(next);
-    }
 
     let parts = query.split(" ");
+    let op = this.listIndex("userId", userId);
 
-    if (parts.length === 1) {
-      return this.listIndex("userId", userId).filter(user => {
+    if (query.indexOf('@') >= 0) {
+      op = op.filter(user => {
+        return user("email").match(`(?i)${query}`);
+      });
+    } else if (parts.length === 1) {
+      op = op.filter(user => {
         return user("firstName").match(`(?i)${parts[0]}`);
-      }).run(next);
+      });
+    } else {
+      op = op.filter(user => {
+        return user("firstName")
+          .match(`(?i)${parts[0]}`)
+          .or(user("lastName").match(`(?i)${parts[1]}`));
+      });
     }
 
-    return this.listIndex("userId", userId).filter(user => {
-      return user("firstName")
-        .match(`(?i)${parts[0]}`)
-        .or(user("lastName").match(`(?i)${parts[1]}`));
-    }).run(next);
+    op.run(next);
   }
 }
 
