@@ -15,11 +15,13 @@ exports.create = (req, res, next) => {
   let userId = req.userId;
   let groupId = req.body.groupId;
   let name = req.body.name;
+  let schedule = req.body.schedule;
 
   Survey.create({
     userId: userId,
     groupId: groupId,
-    name: name
+    name: name,
+    schedule
   }, (err, survey) => {
     if (err) return next(err);
     res.status(201).json(survey);
