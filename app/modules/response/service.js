@@ -36,11 +36,16 @@ class ResponseService extends CommonService {
    * @param {String} userId
    * @param {Function} next
    */
-  listBySurveyId(surveyId, next) {
+  listBySurveyId(surveyId, state, next) {
+    if (arguments.length === 2) {
+      next = state;
+      state = RESPONSE_STATE.COMPLETE;
+    }
+
     return this
       .listIndex("surveyId", surveyId)
       .filter({
-        state: RESPONSE_STATE.COMPLETE
+        state: state
       })
       .run(next);
   }
@@ -52,11 +57,16 @@ class ResponseService extends CommonService {
    * @param {String} userId
    * @param {Function} next
    */
-  listByQuestionId(questionId, next) {
+  listByQuestionId(questionId, state, next) {
+    if (arguments.length === 2) {
+      next = state;
+      state = RESPONSE_STATE.COMPLETE;
+    }
+
     return this
       .listIndex("questionId", questionId)
       .filter({
-        state: RESPONSE_STATE.COMPLETE
+        state: state
       })
       .run(next);
   }
@@ -68,11 +78,16 @@ class ResponseService extends CommonService {
    * @param {String} userId
    * @param {Function} next
    */
-  listByUserId(userId, next) {
+  listByUserId(userId, state, next) {
+    if (arguments.length === 2) {
+      next = state;
+      state = RESPONSE_STATE.READY;
+    }
+
     return this
       .listIndex("userId", userId)
       .filter({
-        state: RESPONSE_STATE.PENDING
+        state: state
       })
       .run(next);
   }
