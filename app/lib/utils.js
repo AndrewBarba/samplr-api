@@ -4,6 +4,13 @@ const crypto = require('crypto');
 
 class Utils {
 
+  /**
+   * Produces a random string of alphanumeric characters
+   *
+   * @method randomHex
+   * @param {Integer} number
+   * @return {String}
+   */
   randomHex(length) {
     let num = Math.ceil(length / 2);
     let odd = length % 2 !== 0;

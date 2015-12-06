@@ -12,9 +12,7 @@ class Connections {
 
   init(next) {
     async.parallel([
-      done => {
-        this.rethinkdb.init(done);
-      }
+      done => this.rethinkdb.init(done)
     ], next);
   }
 }
