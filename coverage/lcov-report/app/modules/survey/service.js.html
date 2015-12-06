@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">65.08% </span>
+        <span class="strong">87.3% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>41/63</span>
+        <span class='fraction'>55/63</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">33.33% </span>
+        <span class="strong">66.67% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>5/15</span>
+        <span class='fraction'>10/15</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">71.43% </span>
+        <span class="strong">85.71% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>5/7</span>
+        <span class='fraction'>6/7</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">70.69% </span>
+        <span class="strong">94.83% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>41/58</span>
+        <span class='fraction'>55/58</span>
       </div>
     </div>
   </div>
-  <div class='status-line medium'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -341,7 +341,7 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">30×</span>
 <span class="cline-any cline-yes">30×</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">150×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -357,27 +357,27 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">150×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">150×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">30×</span>
+<span class="cline-any cline-yes">30×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">30×</span>
+<span class="cline-any cline-yes">30×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">30×</span>
+<span class="cline-any cline-yes">30×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">30×</span>
+<span class="cline-any cline-yes">30×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">30×</span>
+<span class="cline-any cline-yes">30×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">150×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
@@ -510,7 +510,7 @@ function _generateResponses(survey, user, start, end, questions) {
   do {
     _.each(questions, question =&gt; {
       _.each(survey.schedule, schedule =&gt; {
-<span class="cstat-no" title="statement not covered" >        responses.push({</span>
+        responses.push({
           date: _responseDate(date, schedule.time),
           userId: user.id,
           surveyId: survey.id,
@@ -525,28 +525,28 @@ function _generateResponses(survey, user, start, end, questions) {
   return responses;
 }
 &nbsp;
-<span class="fstat-no" title="function not covered" >function _responseDate(date, time) {</span>
-<span class="cstat-no" title="statement not covered" >  date = moment(date).startOf('day');</span>
+function _responseDate(date, time) {
+  date = moment(date).startOf('day');
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  switch (time) {</span>
+  switch (time) {
     case SURVEY_TIME.SUNRISE:
-<span class="cstat-no" title="statement not covered" >      date = date.set('hour', 6);</span>
-<span class="cstat-no" title="statement not covered" >      break;</span>
+      date = date.set('hour', 6);
+      break;
     case SURVEY_TIME.MORNING:
-<span class="cstat-no" title="statement not covered" >      date = date.set('hour', 9);</span>
-<span class="cstat-no" title="statement not covered" >      break;</span>
+      date = date.set('hour', 9);
+      break;
     case SURVEY_TIME.NOON:
-<span class="cstat-no" title="statement not covered" >      date = date.set('hour', 12);</span>
-<span class="cstat-no" title="statement not covered" >      break;</span>
+      date = date.set('hour', 12);
+      break;
     case SURVEY_TIME.SUNSET:
-<span class="cstat-no" title="statement not covered" >      date = date.set('hour', 7);</span>
-<span class="cstat-no" title="statement not covered" >      break;</span>
+      date = date.set('hour', 7);
+      break;
     case SURVEY_TIME.NIGHT:
-<span class="cstat-no" title="statement not covered" >      date = date.set('hour', 10);</span>
-<span class="cstat-no" title="statement not covered" >      break;</span>
+      date = date.set('hour', 10);
+      break;
   }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return date.toDate();</span>
+  return date.toDate();
 }
 &nbsp;
 module.exports = SurveyService;
@@ -556,7 +556,7 @@ module.exports = SurveyService;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Dec 06 2015 14:22:37 GMT-0500 (EST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Dec 06 2015 15:28:37 GMT-0500 (EST)
 </div>
 </div>
 <script src="../../../prettify.js"></script>
