@@ -26,8 +26,12 @@ class Api {
   get port() { return this._port; }
   get server() { return this._server; }
 
-  loadRoutes() {
+  loadRoutes(app) {
     require('./routes');
+
+    // root
+    let controller = require('./root').controller;
+    app.get('/', controller.root);
   }
 
   init(next) {
@@ -44,7 +48,7 @@ class Api {
     app.use(headers());
 
     // load routes
-    this.loadRoutes();
+    this.loadRoutes(app);
 
     // Expose docs
     this.configureSwaggerDocs();

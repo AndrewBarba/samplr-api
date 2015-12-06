@@ -10,3 +10,4 @@ require('./group');
 require('./survey');
 require('./user');
 require('./question');
+require('./response');

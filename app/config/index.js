@@ -77,8 +77,8 @@ const TEST = _.extend({}, DEVELOPMENT, {
 });
 
 module.exports = {
-  'production': PRODUCTION,
-  'development': DEVELOPMENT,
-  'local': LOCAL,
-  'test': TEST
+  production: PRODUCTION,
+  development: DEVELOPMENT,
+  local: LOCAL,
+  test: TEST
 }[ENV];
