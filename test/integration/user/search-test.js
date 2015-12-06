@@ -53,7 +53,7 @@ describe('Integration', () => {
       it('should search for a user', done => {
         agent
           .client()
-          .get('/user/search')
+          .get('/user/' + auth.user.id + '/user')
           .query({
             auth: auth.token,
             query: "And Te"
@@ -71,7 +71,7 @@ describe('Integration', () => {
       it('should not search', done => {
         agent
           .client()
-          .get('/user/search')
+          .get('/user/' + auth.user.id + '/user')
           .expect(401)
           .end(done);
       });

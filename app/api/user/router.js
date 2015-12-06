@@ -61,17 +61,18 @@ swagger.addGet({
 
 swagger.addGet({
   spec: {
-    path: "/user/search",
-    summary: "Search for a user",
+    path: "/user/{id}/user",
+    summary: "List my users",
     method: "GET",
-    type: "Search",
-    nickname: "search",
+    type: "List users",
+    nickname: "listUsers",
     produces: ["application/json"]
   },
   action: (req, res, next) => {
     async.series([
+      done => auth.requiresCurrentUser(req, res, done),
       done => auth.requiresResearcherLogin(req, res, done),
-      done => controller.search(req, res, done)
+      done => controller.listUsers(req, res, done)
     ], next);
   }
 });
