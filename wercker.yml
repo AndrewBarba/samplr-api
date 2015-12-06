@@ -1,4 +1,4 @@
-box: node:4.2.2
+box: node:4.2.3
 
 services:
   - rethinkdb:2.2.1
