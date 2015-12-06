@@ -7,6 +7,7 @@ const CommonModel = require('modules/common').Model;
 
 // Constants
 const USER_TYPE = require('./type');
+const PUSH_TYPE = require('./push-type');
 
 class UserModel extends CommonModel {
 
@@ -17,7 +18,11 @@ class UserModel extends CommonModel {
       email: this.type.string().email().required(),
       type: this.type.string().enum(_.values(USER_TYPE)).required(),
       age: this.type.number().integer().min(0).max(199).optional(),
-      userId: this.type.string().optional()
+      userId: this.type.string().optional(),
+      push: {
+        token: this.type.string().optional(),
+        type: this.type.string().enum(_.values(PUSH_TYPE)).optional()
+      }
     };
   }
 

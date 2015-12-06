@@ -2,7 +2,7 @@
 
 const CommonValidator = require('api/common/validator');
 
-class SurveyValidator extends CommonValidator {
+class QuestionValidator extends CommonValidator {
 
   validateCreate(req, res, next) {
 
@@ -21,4 +21,4 @@ class SurveyValidator extends CommonValidator {
   }
 }
 
-module.exports = new SurveyValidator();
+module.exports = new QuestionValidator();

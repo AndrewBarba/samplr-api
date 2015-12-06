@@ -58,3 +58,27 @@ exports.search = (req, res, next) => {
     res.status(200).json(users);
   });
 };
+
+/**
+ * Add a push token to a user
+ *
+ * @method addPush
+ * @param {Request}  req
+ * @param {Response} res
+ * @param {Function} next
+ */
+exports.addPush = (req, res, next) => {
+
+  let userId = req.params.id;
+  let push = {
+    token: req.body.token,
+    type: req.body.type
+  };
+
+  User.readAndUpdate(userId, {
+    push: push
+  }, (err, group) => {
+    if (err) return next(err);
+    res.status(200).json(group);
+  });
+};
