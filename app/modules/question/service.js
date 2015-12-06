@@ -24,7 +24,7 @@ class QuestionService extends CommonService {
   }
 
   /**
-   * List surveys by survey id
+   * List questions by survey id
    *
    * @method listBySurveyId
    * @param {String} surveyId
@@ -32,17 +32,6 @@ class QuestionService extends CommonService {
    */
   listBySurveyId(surveyId, next) {
     return this.listIndex("surveyId", surveyId, next);
-  }
-
-  /**
-   * List surveys by user id
-   *
-   * @method listByUserId
-   * @param {String} userId
-   * @param {Function} next
-   */
-  listByUserId(userId, next) {
-    return this.listIndex("userId", userId, next);
   }
 }
 
