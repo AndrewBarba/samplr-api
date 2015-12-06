@@ -43,6 +43,23 @@ swagger.addPut({
   }
 });
 
+swagger.addGet({
+  spec: {
+    path: "/question/{id}/response",
+    summary: "List responses for a question",
+    method: "GET",
+    type: "List Responses",
+    nickname: "listResponses",
+    produces: ["application/json"]
+  },
+  action: (req, res, next) => {
+    async.series([
+      done => auth.requiresQuestionOwner(req, res, done),
+      done => controller.listResponses(req, res, done)
+    ], next);
+  }
+});
+
 swagger.configureDeclaration('question', {
   description: 'Question',
   authorizations: ['apiKey'],

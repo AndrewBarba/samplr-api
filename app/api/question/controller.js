@@ -1,6 +1,7 @@
 "use strict";
 
 const Question = require('modules/question');
+const Response = require('modules/response');
 
 /**
  * Create a new question
@@ -46,5 +47,23 @@ exports.update = (req, res, next) => {
   }, (err, question) => {
     if (err) return next(err);
     res.status(200).json(question);
+  });
+};
+
+/**
+ * List responses for this question
+ *
+ * @method listResponses
+ * @param {Request}  req
+ * @param {Response} res
+ * @param {Function} next
+ */
+exports.listResponses = (req, res, next) => {
+
+  let questionId = req.params.id;
+
+  Response.listByQuestionId(questionId, (err, resposnes) => {
+    if (err) return next(err);
+    res.status(200).json(resposnes);
   });
 };

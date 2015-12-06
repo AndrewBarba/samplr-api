@@ -2,6 +2,7 @@
 
 const Survey = require('modules/survey');
 const Question = require('modules/question');
+const Response = require('modules/response');
 
 /**
  * Get a survey
@@ -83,6 +84,24 @@ exports.listQuestions = (req, res, next) => {
   Question.listBySurveyId(surveyId, (err, questions) => {
     if (err) return next(err);
     res.status(200).json(questions);
+  });
+};
+
+/**
+ * List responses for this survey
+ *
+ * @method listResponses
+ * @param {Request}  req
+ * @param {Response} res
+ * @param {Function} next
+ */
+exports.listResponses = (req, res, next) => {
+
+  let surveyId = req.params.id;
+
+  Response.listBySurveyId(surveyId, (err, resposnes) => {
+    if (err) return next(err);
+    res.status(200).json(resposnes);
   });
 };
 

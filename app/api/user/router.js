@@ -43,6 +43,24 @@ swagger.addGet({
 
 swagger.addGet({
   spec: {
+    path: "/user/{id}/response",
+    summary: "List responses this user needs to answer",
+    method: "GET",
+    type: "List Resposnes",
+    nickname: "listResponses",
+    produces: ["application/json"]
+  },
+  action: (req, res, next) => {
+    async.series([
+      done => auth.requiresClientLogin(req, res, done),
+      done => auth.requiresCurrentUser(req, res, done),
+      done => controller.listResponses(req, res, done)
+    ], next);
+  }
+});
+
+swagger.addGet({
+  spec: {
     path: "/user/search",
     summary: "Search for a user",
     method: "GET",

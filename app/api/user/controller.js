@@ -3,6 +3,7 @@
 
 const User = require('modules/user');
 const Group = require('modules/group');
+const Response = require('modules/response');
 
 /**
  * Get current user
@@ -37,6 +38,24 @@ exports.listGroups = (req, res, next) => {
   Group.listByUserId(userId, (err, groups) => {
     if (err) return next(err);
     res.status(200).json(groups);
+  });
+};
+
+/**
+ * List responses for this user
+ *
+ * @method listResponses
+ * @param {Request}  req
+ * @param {Response} res
+ * @param {Function} next
+ */
+exports.listResponses = (req, res, next) => {
+
+  let userId = req.userId;
+
+  Response.listByUserId(userId, (err, resposnes) => {
+    if (err) return next(err);
+    res.status(200).json(resposnes);
   });
 };
 
