@@ -19,6 +19,12 @@ class ResponseModel extends CommonModel {
     };
   }
 
+  index() {
+    super.index();
+    this.ensureIndex("date");
+    this.ensureIndex("state");
+  }
+
   relationships() {
     this.belongsTo("User", "userId");
     this.belongsTo("Question", "questionId");
