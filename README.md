@@ -37,7 +37,7 @@ Every time code is pushed to the remote repository, [Wercker](https://app.wercke
 All deploys are done from [Wercker](https://app.wercker.com/#applications/5649495fcf52f280570cbc8e) with the exception of Pull Requests. To deploy to production, select a passing commit and then select "Deploy to" in the top right, and select "production". Follow the same instruction to deploy to "development".
 
 ## Hosting
-We have two main hosting providers, [Heroku](https://www.heroku.com) and [Compose.io](https://www.compose.io). Heroku hosts our application nodes scheduled jobs. Compose.io hosts our RethinkDB deployment and any future databases we may introduce.
+We have two main hosting providers, [Heroku](https://www.heroku.com) and [Compose.io](https://www.compose.io). Heroku hosts our application nodes and scheduled jobs. Compose.io hosts our RethinkDB deployment and any future databases we may introduce.
 
 #### Heroku
 We have 3 types of environments on Heroku:
