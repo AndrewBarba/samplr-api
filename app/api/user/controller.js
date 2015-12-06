@@ -65,6 +65,24 @@ exports.listResponses = (req, res, next) => {
 };
 
 /**
+ * Complete responses
+ *
+ * @method completeResponses
+ * @param {Request}  req
+ * @param {Response} res
+ * @param {Function} next
+ */
+exports.completeResponses = (req, res, next) => {
+
+  let responses = req.body.responses;
+
+  Response.bulkComplete(responses, (err, result) => {
+    if (err) return next(err);
+    res.status(200).json(result);
+  });
+};
+
+/**
  * Search for a user
  *
  * @method search

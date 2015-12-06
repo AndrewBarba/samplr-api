@@ -41,6 +41,25 @@ swagger.addGet({
   }
 });
 
+swagger.addPut({
+  spec: {
+    path: "/user/{id}/response",
+    summary: "Complete responses",
+    method: "PUT",
+    type: "Complete Resposnes",
+    nickname: "completeResponses",
+    produces: ["application/json"]
+  },
+  action: (req, res, next) => {
+    async.series([
+      done => auth.requiresClientLogin(req, res, done),
+      done => auth.requiresCurrentUser(req, res, done),
+      done => validator.validateCompleteResponses(req, res, done),
+      done => controller.completeResponses(req, res, done)
+    ], next);
+  }
+});
+
 swagger.addGet({
   spec: {
     path: "/user/{id}/response",

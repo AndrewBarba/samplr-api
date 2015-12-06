@@ -1,5 +1,6 @@
 "use strict";
 
+const async = require('async');
 const Errors = require('app/errors');
 const CommonService = require('modules/common').Service;
 
@@ -41,6 +42,19 @@ class ResponseService extends CommonService {
     return this.readAndUpdate(responseId, {
       state: RESPONSE_STATE.COMPLETE,
       value: value
+    }, next);
+  }
+
+  /**
+   * Bulk complete responses
+   *
+   * @method bulkComplete
+   * @param {[Object]} responses
+   * @param {Function} next
+   */
+  bulkComplete(responses, next) {
+    async.map(responses, (response, done) => {
+      this.complete(response.id, response.value, done);
     }, next);
   }
 
