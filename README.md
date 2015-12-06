@@ -31,7 +31,7 @@ There are two main branches in this project, `master` and `dev`. `master` is exp
 When `dev` is ready to be merged to `master`, open a Pull Request and merge when all tests are passing.
 
 #### Continuous Integration
-Every time code is pushed to the remote repository, [Wercker](https://app.wercker.com/#applications/5649495fcf52f280570cbc8e) will build and test the new code. This happens for all branches, including open Pull Requests. Wercker will report back to Github automatically to let you know when it is safe to merge a branch. Code pushed to the `dev` will automatically be deployed to the development environment. See **Hosting** below for more details.
+Every time code is pushed to the remote repository, [Wercker](https://app.wercker.com/#applications/5649495fcf52f280570cbc8e) will build and test the new code. This happens for all branches, including open Pull Requests. Wercker will report back to Github automatically to let you know when it is safe to merge a branch. Code pushed to the `dev` branch will automatically be deployed to the development environment. See [Hosting](#hosting) below for more details.
 
 #### Deploy
 All deploys are done from [Wercker](https://app.wercker.com/#applications/5649495fcf52f280570cbc8e) with the exception of Pull Requests. To deploy to production, select a passing commit and then select "Deploy to" in the top right, and select "production". Follow the same instruction to deploy to "development".
