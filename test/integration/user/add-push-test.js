@@ -29,7 +29,7 @@ describe('Integration', () => {
         });
       });
 
-      let pushData = {
+      let iosData = {
         token: 'abcd',
         type: 'ios'
       };
@@ -41,7 +41,7 @@ describe('Integration', () => {
           .query({
             auth: auth.token
           })
-          .send(pushData)
+          .send(iosData)
           .expect(200)
           .end(function(err, result) {
             should.not.exist(err);
@@ -50,8 +50,35 @@ describe('Integration', () => {
             user.firstName.should.equal(auth.user.firstName);
             user.lastName.should.equal(auth.user.lastName);
             user.email.should.equal(auth.user.email);
-            user.push.token.should.equal(pushData.token);
-            user.push.type.should.equal(pushData.type);
+            user.push.token.should.equal(iosData.token);
+            user.push.type.should.equal(iosData.type);
+            done();
+          });
+      });
+
+      let androidData = {
+        token: 'efgh',
+        type: 'android'
+      };
+
+      it('should add a push token', done => {
+        agent
+          .client()
+          .put('/user/' + auth.user.id + '/push')
+          .query({
+            auth: auth.token
+          })
+          .send(androidData)
+          .expect(200)
+          .end(function(err, result) {
+            should.not.exist(err);
+            let user = result.body;
+            should.exist(user);
+            user.firstName.should.equal(auth.user.firstName);
+            user.lastName.should.equal(auth.user.lastName);
+            user.email.should.equal(auth.user.email);
+            user.push.token.should.equal(androidData.token);
+            user.push.type.should.equal(androidData.type);
             done();
           });
       });
