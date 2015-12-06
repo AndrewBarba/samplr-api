@@ -12,12 +12,31 @@ const Response = require('modules/response');
 
 describe('Integration', () => {
   describe('Response', () => {
-    describe('List', () => {
+    describe('List Survey', () => {
 
       let auth;
 
       let userData = {
-        email: `int_response_list@test.com`,
+        email: `int_response_list_survey_res@test.com`,
+        password: "xxx123",
+        firstName: "Andrew",
+        lastName: "Test",
+        type: "RESEARCHER",
+        age: 22
+      };
+
+      before(done => {
+        Auth.register(userData, (err, _auth) => {
+          if (err) return done(err);
+          auth = _auth;
+          done();
+        });
+      });
+
+      let clientAuth;
+
+      let userClientData = {
+        email: `int_response_list_survey_client@test.com`,
         password: "xxx123",
         firstName: "Andrew",
         lastName: "Test",
@@ -26,9 +45,9 @@ describe('Integration', () => {
       };
 
       before(done => {
-        Auth.register(userData, (err, _auth) => {
+        Auth.register(userClientData, (err, _clientAuth) => {
           if (err) return done(err);
-          auth = _auth;
+          clientAuth = _clientAuth;
           done();
         });
       });
@@ -85,11 +104,11 @@ describe('Integration', () => {
 
       before(done => {
         Response.create({
-          userId: auth.user.id,
+          userId: clientAuth.user.id,
           surveyId: survey.id,
           questionId: question.id,
           date: new Date(),
-          state: 'READY'
+          state: 'COMPLETE'
         }, (err, _response) => {
           if (err) return done(err);
           response = _response;
@@ -100,7 +119,7 @@ describe('Integration', () => {
       it('should list responses', done => {
         agent
           .client()
-          .get('/user/' + auth.user.id + '/response')
+          .get('/survey/' + survey.id + '/response')
           .query({
             auth: auth.token
           })
@@ -110,8 +129,6 @@ describe('Integration', () => {
             let responses = result.body;
             should.exist(responses);
             responses.length.should.equal(1);
-            should.exist(responses[0].question);
-            responses[0].question.responses.length.should.equal(2);
             done();
           });
       });
@@ -119,7 +136,7 @@ describe('Integration', () => {
       it('should not list responses', done => {
         agent
           .client()
-          .get('/user/' + auth.user.id + '/response')
+          .get('/survey/' + survey.id + '/response')
           .query({
             auth: '1234'
           })

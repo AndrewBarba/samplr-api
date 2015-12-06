@@ -85,7 +85,7 @@ class ResponseService extends CommonService {
         state: state
       });
 
-    return this.rQuer(r, next);
+    return this.rQuery(r, next);
   }
 
   /**
