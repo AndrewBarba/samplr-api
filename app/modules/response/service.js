@@ -71,7 +71,7 @@ class ResponseService extends CommonService {
       state = RESPONSE_STATE.COMPLETE;
     }
 
-    let r = this.this
+    let r = this.
       .listIndex("surveyId", surveyId)
       .filter({
         state: state
@@ -100,7 +100,7 @@ class ResponseService extends CommonService {
       .filter({
           state: state          
         })
-      .pluck({"right" : ["lastName", "firstName"], "left":["date", "answer", "questionId"]}).run();
+      .pluck({"right" : ["lastName", "firstName"], "left":["date", "answer", "questionId"]});
       
     let csvarray = ["lastName, firstName, date, answer, question"];
     jsonReturn.forEach((value)=>{      
@@ -112,11 +112,8 @@ class ResponseService extends CommonService {
         value.left.questionId
         );
     });
-     
-        
-     
       
-     let r = this.this //r.db("development").table("Response").eqJoin("userId", r.db("development").table("User"))
+     let r = this.this
       .listIndex("surveyId", surveyId)
       .getJoin("userId")
       .filter({
