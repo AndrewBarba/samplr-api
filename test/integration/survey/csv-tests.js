@@ -124,7 +124,6 @@ describe('Integration', () => {
             auth: '1234'
           })
           .send({})
-          .should.not
           .expect(401)
           .end(function(err, result) {
             let csv = result.body;
