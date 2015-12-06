@@ -41,6 +41,7 @@ We have two main hosting providers, [Heroku](https://www.heroku.com) and [Compos
 
 #### Heroku
 We have 3 types of environments on Heroku:
+
 1. [Production](https://samplr-api-prod.herokuapp.com)
 2. [Development](https://samplr-api-dev.herokuapp.com)
 3. Review
