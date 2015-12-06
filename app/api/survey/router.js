@@ -124,7 +124,7 @@ swagger.addGet({
 action: (req,res,next) => {
     async.series([
         done => auth.requiresSurveyOwner(req, res, done),
-        done => controller.getCSV(req, res, done);
+        done => controller.getCSV(req, res, done)
     ], next);
   }
 });
