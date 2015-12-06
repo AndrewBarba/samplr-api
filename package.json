@@ -42,6 +42,7 @@
   "scripts": {
     "postinstall": "make post-install",
     "start": "make start",
-    "test": "make test-all"
+    "test": "make test-all",
+    "coverage": "make test-coverage"
   }
 }
