@@ -5,6 +5,7 @@ const swagger = require('swagger-node-express');
 const controller = require('./controller');
 const validator = require('./validator');
 const auth = require('./authorization');
+const responseAuth = require('../response/authorization');
 
 swagger.addGet({
   spec: {
@@ -52,7 +53,7 @@ swagger.addPut({
   },
   action: (req, res, next) => {
     async.series([
-      done => auth.requiresClientLogin(req, res, done),
+      done => responseAuth.requiresResponsesOwner(req, res, done),
       done => auth.requiresCurrentUser(req, res, done),
       done => validator.validateCompleteResponses(req, res, done),
       done => controller.completeResponses(req, res, done)

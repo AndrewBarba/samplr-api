@@ -1,5 +1,6 @@
 "use strict";
 
+const _ = require('underscore');
 const EventEmitter = require('events').EventEmitter;
 
 class CommonService extends EventEmitter {
@@ -72,6 +73,8 @@ class CommonService extends EventEmitter {
    * @return {Promise}
    */
   listIndex(key, value, next) {
+    if (_.isArray(value)) value = this.model.r.args(value);
+
     let r = this
       .model
       .getAll(value, { index: key });
