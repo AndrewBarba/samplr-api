@@ -1,5 +1,6 @@
 "use strict";
 
+const async = require('async');
 const Errors = require('app/errors');
 const CommonService = require('modules/common').Service;
 
@@ -45,9 +46,22 @@ class ResponseService extends CommonService {
   }
 
   /**
+   * Bulk complete responses
+   *
+   * @method bulkComplete
+   * @param {[Object]} responses
+   * @param {Function} next
+   */
+  bulkComplete(responses, next) {
+    async.map(responses, (response, done) => {
+      this.complete(response.id, response.value, done);
+    }, next);
+  }
+
+  /**
    * List responses by survey id
    *
-   * @method listByUserId
+   * @method listBySurveyId
    * @param {String} userId
    * @param {Function} next
    */
@@ -69,7 +83,7 @@ class ResponseService extends CommonService {
   /**
    * List responses by question id
    *
-   * @method listByUserId
+   * @method listByQuestionId
    * @param {String} userId
    * @param {Function} next
    */

@@ -133,6 +133,22 @@ describe('Integration', () => {
           });
       });
 
+      it('should list users', done => {
+        agent
+          .client()
+          .get('/survey/' + survey.id + '/user')
+          .query({
+            auth: auth.token
+          })
+          .expect(200)
+          .end(function(err, result) {
+            should.not.exist(err);
+            let users = result.body;
+            users.length.should.equal(1);
+            done();
+          });
+      });
+
       it('should not add a user', done => {
         agent
           .client()

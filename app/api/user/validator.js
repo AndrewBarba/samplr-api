@@ -11,6 +11,13 @@ class UserValidator extends CommonValidator {
 
     this.validate(req, res, next);
   }
+
+  validateCompleteResponses(req, res, next) {
+
+    req.checkBody('responses').notEmpty().isArray();
+
+    this.validate(req, res, next);
+  }
 }
 
 module.exports = new UserValidator();
