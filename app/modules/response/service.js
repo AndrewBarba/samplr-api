@@ -95,36 +95,17 @@ class ResponseService extends CommonService {
     }    
     
     //This is the formatted data section, but until we figure out how to return it, we return a dumbed down version instead.
-    let jsonReturn = this //r.db("development").table("Response").eqJoin("userId", r.db("development").table("User")).pluck("....")
-      .listIndex("surveyId", surveyId)
-      .pluck("left.")
-      .getJoin("userId")
-      .filter({
-          state: state          
-        })
-      .pluck({"right" : ["lastName", "firstName"], "left":["date", "answer", "questionId"]});
-      
-    let csvarray = ["lastName, firstName, date, answer, question"];
-    jsonReturn.forEach((value)=>{      
-      csvarray.push(
-        value.right.lastName + ", " + 
-        value.right.firstName + ", " + 
-        value.left.date + ", " + 
-        value.left.value + ", " + 
-        value.left.questionId
-        );
-    });
-      
-      //This return will be fine until I figure out how to return the formatted data above
-     let r = this
+    let r = this
       .listIndex("surveyId", surveyId)
       .getJoin("userId")
       .filter({
         state: state
-      });
+      })
+      .pluck({"right" : ["lastName", "firstName"], "left":["date", "answer", "questionId"]});
 
     return this.rQuery(r, next);
   }
+  
 
   /**
    * List responses by question id
