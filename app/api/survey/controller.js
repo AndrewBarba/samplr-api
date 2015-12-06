@@ -119,8 +119,8 @@ exports.getCSV = (req,res,next) =>{
   Response.getCSV(surveyId, (err, responses) => {
     if(err) return next(err);
     res.status(200).json(responses);
-  })
-}
+  });
+};
 
 /**
  * Adds a user to a survey
