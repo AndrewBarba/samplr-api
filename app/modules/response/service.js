@@ -100,16 +100,16 @@ class ResponseService extends CommonService {
       .filter({
           state: state          
         })
-      .pluck({"right" : ["lastName", "firstName"], "left":["date", "answer", "question"]}).run();
+      .pluck({"right" : ["lastName", "firstName"], "left":["date", "answer", "questionId"]}).run();
       
     let csvarray = ["lastName, firstName, date, answer, question"];
-    jsonReturn.forEach((value, index, arg)=>{
+    jsonReturn.forEach((value)=>{      
       csvarray.push(
-        value.right["lastName"] + ", " + 
-        value.right["firstName"] + ", " + 
-        value.left["date"] + ", " + 
-        value.left["value"] + ", " + 
-        value.left["question"]
+        value.right.lastName + ", " + 
+        value.right.firstName + ", " + 
+        value.left.date + ", " + 
+        value.left.value + ", " + 
+        value.left.questionId
         );
     });
      
