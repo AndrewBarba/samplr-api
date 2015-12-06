@@ -60,6 +60,28 @@ class UserService extends CommonService {
   }
 
   /**
+   * List users by survey id
+   *
+   * @method listBySurveyId
+   * @param {String} userId
+   * @param {Function} next
+   */
+  listBySurveyId(surveyId, next) {
+    let Survey = require('modules/survey');
+
+    let r = Survey
+      .read(surveyId)
+      .getJoin({
+        users: true
+      });
+
+    return this.rQuery(r, (err, survey) => {
+      if (err) return next(err);
+      next(null, survey.users);
+    });
+  }
+
+  /**
    * Search for a user
    *
    * @method search

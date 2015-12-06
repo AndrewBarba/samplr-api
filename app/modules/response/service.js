@@ -61,7 +61,7 @@ class ResponseService extends CommonService {
   /**
    * List responses by survey id
    *
-   * @method listByUserId
+   * @method listBySurveyId
    * @param {String} userId
    * @param {Function} next
    */
@@ -83,7 +83,7 @@ class ResponseService extends CommonService {
   /**
    * List responses by question id
    *
-   * @method listByUserId
+   * @method listByQuestionId
    * @param {String} userId
    * @param {Function} next
    */

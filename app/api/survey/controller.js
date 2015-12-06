@@ -3,6 +3,7 @@
 const Survey = require('modules/survey');
 const Question = require('modules/question');
 const Response = require('modules/response');
+const User = require('modules/user');
 
 /**
  * Get a survey
@@ -72,7 +73,7 @@ exports.update = (req, res, next) => {
 /**
  * List questions for a survey
  *
- * @method listSurveys
+ * @method listQuestions
  * @param {Request}  req
  * @param {Response} res
  * @param {Function} next
@@ -88,6 +89,24 @@ exports.listQuestions = (req, res, next) => {
 };
 
 /**
+ * List users in a survey
+ *
+ * @method listUsers
+ * @param {Request}  req
+ * @param {Response} res
+ * @param {Function} next
+ */
+exports.listUsers = (req, res, next) => {
+
+  let surveyId = req.params.id;
+
+  User.listBySurveyId(surveyId, (err, users) => {
+    if (err) return next(err);
+    res.status(200).json(users);
+  });
+};
+
+/**
  * List responses for this survey
  *
  * @method listResponses
@@ -99,10 +118,15 @@ exports.listResponses = (req, res, next) => {
 
   let surveyId = req.params.id;
 
-  Response.listBySurveyId(surveyId, (err, resposnes) => {
-    if (err) return next(err);
-    res.status(200).json(resposnes);
-  });
+  Response
+    .listBySurveyId(surveyId)
+    .getJoin({
+      question: true
+    })
+    .run((err, resposnes) => {
+      if (err) return next(err);
+      res.status(200).json(resposnes);
+    });
 };
 
 /**

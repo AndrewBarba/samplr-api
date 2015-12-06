@@ -97,6 +97,23 @@ swagger.addGet({
 
 swagger.addGet({
   spec: {
+    path: "/survey/{id}/user",
+    summary: "List user in a survey",
+    method: "GET",
+    type: "List Users",
+    nickname: "listUsers",
+    produces: ["application/json"]
+  },
+  action: (req, res, next) => {
+    async.series([
+      done => auth.requiresSurveyOwner(req, res, done),
+      done => controller.listUsers(req, res, done)
+    ], next);
+  }
+});
+
+swagger.addGet({
+  spec: {
     path: "/survey/{id}/response",
     summary: "List responses for a survey",
     method: "GET",
