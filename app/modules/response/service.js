@@ -76,9 +76,36 @@ class ResponseService extends CommonService {
       .filter({
         state: state
       });
+      
+    return this.rQuery(r, next);
+  }
+
+
+/**
+   * gets a CSV formatted object with responses from a survey id
+   *
+   * @method getCSV
+   * @param {String} surveyID
+   * @param {Function} next
+   */
+  getCSV(surveyId, state, next) {
+    if (arguments.length === 2) {
+        next = state;
+        state = RESPONSE_STATE.COMPLETE;
+    }    
+    
+    //This is the formatted data section, but until we figure out how to return it, we return a dumbed down version instead.
+    let r = this
+      .listIndex("surveyId", surveyId)
+      .getJoin("userId")
+      .filter({
+        state: state
+      })
+      .pluck({"right" : ["lastName", "firstName"], "left":["date", "answer", "questionId"]});
 
     return this.rQuery(r, next);
   }
+  
 
   /**
    * List responses by question id

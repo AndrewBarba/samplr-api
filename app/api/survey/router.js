@@ -129,6 +129,23 @@ swagger.addGet({
   }
 });
 
+swagger.addGet({
+  spec:{
+    path: "/survey/{id}/response/csv",
+    summary: "Get CSV of survey responses",
+    method: "GET",
+    type: "Get CSV",
+    nickname: "getCSV",
+    produces: ["text/csv"]
+  },
+action: (req,res,next) => {
+    async.series([
+        done => auth.requiresSurveyOwner(req, res, done),
+        done => controller.getCSV(req, res, done)
+    ], next);
+  }
+});
+
 swagger.configureDeclaration('survey', {
   description: 'Survey',
   authorizations: ['apiKey'],

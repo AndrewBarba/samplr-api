@@ -100,6 +100,18 @@ describe('Integration', () => {
           .expect(401)
           .end(done);
       });
+      
+     it('should return a CSV response of users:surveys:answers', done => {
+        agent
+          .client()
+          .get("/survey/" + survey.id + "/response/csv")
+          .query({
+            auth: '1234'
+          })
+          .send({})
+          .expect(401)
+          .end(done);
+      });
 
     });
   });
