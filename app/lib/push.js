@@ -3,6 +3,8 @@
 const EventEmitter = require('events').EventEmitter;
 const apn = require('apn');
 const gcm = require('node-gcm');
+const moment = require('moment');
+const logger = require('logger');
 const config = require('config');
 
 // Constants
@@ -23,13 +25,37 @@ class PushClient extends EventEmitter {
 class iOSPushClient extends PushClient {
 
   constructor() {
-    let apn = new apn.Connection(config.pan);
-    super(apn);
+    super(new apn.Connection(config.push.apn));
+  }
+
+  send(message, token) {
+    var note = new apn.Notification();
+    note.expiry = moment().add(30, 'minutes').toDate().getTime();
+    note.sound = 'ping.aiff';
+    note.alert = message;
+    this.client.pushNotification(note, token);
   }
 }
 
 class AndroidPushClient extends PushClient {
 
+  constructor() {
+    super(new gcm.Sender(config.push.gcm.key));
+  }
+
+  send(message, token) {
+    let am = new gcm.Message({
+      collapseKey: 'Samplr',
+      delayWhileIdle: false,
+      data: {
+        message: message
+      }
+    });
+
+    this.client.send(am, [token], 2, err => {
+      if (err) logger.error("Android GCM notification error", err);
+    });
+  }
 }
 
 class PushService extends EventEmitter {
