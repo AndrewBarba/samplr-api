@@ -1,6 +1,5 @@
 "use strict";
 
-const EventEmitter = require('events').EventEmitter;
 const apn = require('apn');
 const gcm = require('node-gcm');
 const moment = require('moment');
@@ -13,7 +12,7 @@ const PUSH_TYPE = {
   ANDROID: 'android'
 };
 
-class PushClient extends EventEmitter {
+class PushClient {
 
   constructor(client) {
     this._client = client;
@@ -58,7 +57,7 @@ class AndroidPushClient extends PushClient {
   }
 }
 
-class PushService extends EventEmitter {
+class PushService {
 
   constructor() {
     this._iosClient = new iOSPushClient();
