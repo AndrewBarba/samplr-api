@@ -124,8 +124,12 @@ describe('Integration', () => {
             auth: '1234'
           })
           .send({})
+          .should.not
           .expect(401)
-          .end(done);
+          .end(function(err, result) {
+            should.not.exist(err);
+            done();
+          });         
       });
     });
   });
