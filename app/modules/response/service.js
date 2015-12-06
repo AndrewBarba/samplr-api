@@ -71,7 +71,7 @@ class ResponseService extends CommonService {
       state = RESPONSE_STATE.COMPLETE;
     }
 
-    let r = this.
+    let r = this
       .listIndex("surveyId", surveyId)
       .filter({
         state: state
@@ -93,6 +93,8 @@ class ResponseService extends CommonService {
         next = state;
         state = RESPONSE_STATE.COMPLETE;
     }    
+    
+    //This is the formatted data section, but until we figure out how to return it, we return a dumbed down version instead.
     let jsonReturn = this //r.db("development").table("Response").eqJoin("userId", r.db("development").table("User")).pluck("....")
       .listIndex("surveyId", surveyId)
       .pluck("left.")
@@ -113,7 +115,8 @@ class ResponseService extends CommonService {
         );
     });
       
-     let r = this.
+      //This return will be fine until I figure out how to return the formatted data above
+     let r = this
       .listIndex("surveyId", surveyId)
       .getJoin("userId")
       .filter({
