@@ -2,6 +2,7 @@
 
 const _ = require('underscore');
 const async = require('async');
+const logger = require('logger');
 
 // Modules
 const Response = require('modules/response');
@@ -29,12 +30,14 @@ async.waterfall([
   (users, done) => {
     _.each(users, user => {
       // notify user
-      console.log(user);
+      logger.info(user);
     });
     done();
   }
 ], err => {
   if (err) throw err;
+
+  logger.info('Done! Waiting for notifications...');
 
   // exit in 30 seconds
   setTimeout(process.exit, 30 * 1000);
