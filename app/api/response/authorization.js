@@ -43,12 +43,12 @@ class ResponseAuth extends CommonAuth {
         .listIndex('id', responseIds)
         .pluck('userId')
         .execute((err, responses) => {
-          if (err || !responses) return next(new Errors.NotFoundError());
+          if (err || !responses || responses.length !== responseIds.length) return next(new Errors.NotFoundError());
 
           for (let response of responses) {
             if (response.userId !== req.userId) return next(new Errors.ForbiddenError());
           }
-          
+
           return next();
         });
     });
