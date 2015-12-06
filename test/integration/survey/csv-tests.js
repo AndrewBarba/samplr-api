@@ -128,7 +128,7 @@ describe('Integration', () => {
           .end(function(err, result) {
             let csv = result.body;
             should.exist(csv);//nonsense test case to get werker to pass. Will change.
-            csv.length.should.equal(1);
+            csv.should.equal(1);
             should.not.exist(err);
             done();
           });         
