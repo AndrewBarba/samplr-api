@@ -99,7 +99,8 @@ describe('Integration', () => {
           .send({})
           .expect(401)
           .end(done);
-      });
+      });     
+
     });
   });
 });
