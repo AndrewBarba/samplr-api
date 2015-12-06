@@ -58,6 +58,18 @@ describe('Integration', () => {
           .end(done);
       });
 
+      it('should be too short', done => {
+        agent
+          .client()
+          .post('/auth/login')
+          .send({
+            email: data.email,
+            password: "xxx"
+          })
+          .expect(500)
+          .end(done);
+      });
+
     });
   });
 });

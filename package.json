@@ -43,6 +43,7 @@
     "postinstall": "make post-install",
     "start": "make start",
     "test": "make test-all",
-    "coverage": "make test-coverage"
+    "coverage": "make test-coverage",
+    "view-coverage": "open coverage/lcov-report/index.html"
   }
 }

@@ -53,7 +53,18 @@ describe('Integration', () => {
         Survey.create({
           name: "Hello, World",
           userId: auth.user.id,
-          groupId: group.id
+          groupId: group.id,
+          schedule: [{
+            time: 'NOON'
+          }, {
+            time: 'MORNING'
+          }, {
+            time: 'SUNRISE'
+          }, {
+            time: 'SUNSET'
+          }, {
+            time: 'NIGHT'
+          }]
         }, (err, _survey) => {
           if (err) return done(err);
           survey = _survey;

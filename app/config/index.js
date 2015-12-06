@@ -23,7 +23,7 @@ const DEFAULTS = {
       key: 'static/certificates/apple/key.pem'
     },
     gcm: {
-      key: '1234'
+      key: process.env.GCM_KEY
     }
   }
 };
