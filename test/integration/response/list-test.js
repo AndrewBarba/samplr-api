@@ -5,6 +5,9 @@ const agent = require('test/lib/agent');
 
 // Modules
 const Auth = require('modules/auth');
+const Group = require('modules/group');
+const Survey = require('modules/survey');
+const Question = require('modules/question');
 const Response = require('modules/response');
 
 describe('Integration', () => {
@@ -30,13 +33,61 @@ describe('Integration', () => {
         });
       });
 
+      let group;
+
+      before(done => {
+        Group.create({
+          name: "Hello, World",
+          userId: auth.user.id
+        }, (err, _group) => {
+          if (err) return done(err);
+          group = _group;
+          done();
+        });
+      });
+
+      let survey;
+
+      before(done => {
+        Survey.create({
+          name: "Hello, World",
+          userId: auth.user.id,
+          groupId: group.id
+        }, (err, _survey) => {
+          if (err) return done(err);
+          survey = _survey;
+          done();
+        });
+      });
+
+      let question;
+
+      before(done => {
+        Question.create({
+          title: "How are you?",
+          surveyId: survey.id,
+          userId: auth.user.id,
+          responses: [{
+            value: 0,
+            text: "Bad"
+          }, {
+            value: 1,
+            text: "Good"
+          }]
+        }, (err, _question) => {
+          if (err) return done(err);
+          question = _question;
+          done();
+        });
+      });
+
       let response;
 
       before(done => {
         Response.create({
           userId: auth.user.id,
-          surveyId: '1234',
-          questionId: '1234',
+          surveyId: survey.id,
+          questionId: question.id,
           date: new Date(),
           state: 'READY'
         }, (err, _response) => {
@@ -59,6 +110,8 @@ describe('Integration', () => {
             let responses = result.body;
             should.exist(responses);
             responses.length.should.equal(1);
+            should.exist(responses[0].question);
+            responses[0].question.responses.length.should.equal(2);
             done();
           });
       });
