@@ -56,14 +56,35 @@ class ResponseService extends CommonService {
       next = state;
       state = RESPONSE_STATE.COMPLETE;
     }
-
     return this
       .listIndex("surveyId", surveyId)
       .filter({
         state: state
       })
       .run(next);
-  }
+}
+
+
+/**
+   * gets a CSV formatted object with responses from a survey id
+   *
+   * @method getCSV
+   * @param {String} surveyID
+   * @param {Function} next
+   */
+  getCSV(surveyId, state, next) {
+    if (arguments.length === 2) {
+        next = state;
+        state = RESPONSE_STATE.COMPLETE;
+    }    
+    return this    //r.db("development").table("Response").eqJoin("userId", r.db("development").table("User"))
+      .listIndex("surveyId", surveyId)
+      .getJoin("userId")
+      .filter({
+          state: state          
+        })
+        .run(next);
+}
 
   /**
    * List responses by question id
