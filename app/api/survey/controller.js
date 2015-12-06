@@ -147,7 +147,7 @@ exports.getCSV = (req,res,next) =>{
       csvarray.push(
         value.right.lastName + ", " + 
         value.right.firstName + ", " + 
-        value.left.date + ", " + 
+        //value.left.date + ", " + 
         value.left.value + ", " + 
         value.left.questionId
         );
