@@ -30,6 +30,21 @@ class ResponseService extends CommonService {
   }
 
   /**
+   * Complete a response
+   *
+   * @method complete
+   * @param {String} responseId
+   * @param {Number} value
+   * @param {Function} next
+   */
+  complete(responseId, value, next) {
+    return this.readAndUpdate(responseId, {
+      state: RESPONSE_STATE.COMPLETE,
+      value: value
+    }, next);
+  }
+
+  /**
    * List responses by survey id
    *
    * @method listByUserId
