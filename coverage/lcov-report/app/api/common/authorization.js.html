@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">77.14% </span>
+        <span class="strong">94.29% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>27/35</span>
+        <span class='fraction'>33/35</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">64.71% </span>
+        <span class="strong">82.35% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>22/34</span>
+        <span class='fraction'>28/34</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">75% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>3/4</span>
+        <span class='fraction'>4/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">82.14% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>23/28</span>
+        <span class='fraction'>28/28</span>
       </div>
     </div>
   </div>
-  <div class='status-line medium'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -155,16 +155,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">38×</span>
+<span class="cline-any cline-yes">38×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">32×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">26×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">26×</span>
-<span class="cline-any cline-yes">20×</span>
-<span class="cline-any cline-yes">20×</span>
+<span class="cline-any cline-yes">23×</span>
+<span class="cline-any cline-yes">23×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -175,8 +175,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5×</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4×</span>
@@ -191,15 +191,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -281,16 +281,16 @@ class CommonAuth {
    *
    * @method requiresClientLogin
    */
-  requiresClientLogin<span class="fstat-no" title="function not covered" >(req, res, next) {</span>
-<span class="cstat-no" title="statement not covered" >    this.requiresLogin(req, res, err =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) <span class="cstat-no" title="statement not covered" >return next(err);</span></span>
+  requiresClientLogin(req, res, next) {
+    this.requiresLogin(req, res, err =&gt; {
+      if (err) return next(err);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      User</span>
+      User
         .read(req.userId)
         .pluck('type')
         .execute((err, user) =&gt; {
-<span class="cstat-no" title="statement not covered" >          if (err || !user) <span class="cstat-no" title="statement not covered" >return next(new Errors.UnauthorizedError());</span></span>
-<span class="cstat-no" title="statement not covered" >          return user.type === USER_TYPE.CLIENT ? next() : next(new Errors.UnauthorizedError());</span>
+          <span class="missing-if-branch" title="if path not taken" >I</span>if (err || !user) <span class="cstat-no" title="statement not covered" >return next(new Errors.UnauthorizedError());</span>
+          return user.type === USER_TYPE.CLIENT ? next() : <span class="branch-1 cbranch-no" title="branch not covered" >next(new Errors.UnauthorizedError());</span>
         });
     });
   }
@@ -322,7 +322,7 @@ module.exports = CommonAuth;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Dec 06 2015 14:04:12 GMT-0500 (EST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Dec 06 2015 14:22:37 GMT-0500 (EST)
 </div>
 </div>
 <script src="../../../prettify.js"></script>
