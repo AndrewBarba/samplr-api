@@ -77,13 +77,35 @@ class ResponseService extends CommonService {
         next = state;
         state = RESPONSE_STATE.COMPLETE;
     }    
-    return this //r.db("development").table("Response").eqJoin("userId", r.db("development").table("User"))
+    let jsonReturn = this //r.db("development").table("Response").eqJoin("userId", r.db("development").table("User")).pluck("....")
       .listIndex("surveyId", surveyId)
+      .pluck("left.")
       .getJoin("userId")
       .filter({
           state: state          
         })
-        .run(next);
+      .pluck({"right" : ["lastName", "firstName"], "left":["date", "answer", "question"]}).run();
+      
+    let csvarray = ["lastName, firstName, date, answer, question"];
+    jsonReturn.forEach((value, index, arg)=>{
+      csvarray.push(
+        value.right["lastName"] + ", " + 
+        value.right["firstName"] + ", " + 
+        value.left["date"] + ", " + 
+        value.left["value"] + ", " + 
+        value.left["question"]
+        );
+    });
+     
+        
+     
+      
+      this.this //r.db("development").table("Response").eqJoin("userId", r.db("development").table("User"))
+      .listIndex("surveyId", surveyId)
+      .getJoin("userId")
+      .filter({
+          state: state          
+        }).run(next);
 }
 
   /**
