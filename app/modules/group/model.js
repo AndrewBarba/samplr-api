@@ -13,7 +13,6 @@ class GroupModel extends CommonModel {
 
   relationships() {
     this.belongsTo("User", "userId");
-    this.hasAndBelongsToMany("User");
   }
 }
 

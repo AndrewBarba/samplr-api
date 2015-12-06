@@ -42,9 +42,42 @@ class UserService extends CommonService {
         firstName: options.firstName,
         lastName: options.lastName,
         age: options.age,
-        type: options.type
+        type: options.type,
+        userId: options.userId
       }, next);
     });
+  }
+
+  /**
+   * Search for a user
+   *
+   * @method search
+   * @param {String} userId
+   * @param {String} query
+   * @param {Function} next
+   */
+  search(userId, query, next) {
+
+    let parts = query.split(" ");
+    let op = this.listIndex("userId", userId);
+
+    if (query.indexOf('@') >= 0) {
+      op = op.filter(user => {
+        return user("email").match(`(?i)${query}`);
+      });
+    } else if (parts.length === 1) {
+      op = op.filter(user => {
+        return user("firstName").match(`(?i)${parts[0]}`);
+      });
+    } else {
+      op = op.filter(user => {
+        return user("firstName")
+          .match(`(?i)${parts[0]}`)
+          .or(user("lastName").match(`(?i)${parts[1]}`));
+      });
+    }
+
+    op.run(next);
   }
 }
 

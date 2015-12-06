@@ -7,6 +7,4 @@ const model = new Model("User");
 const service = new Service(model);
 
 exports = module.exports = service;
-
-// Expose
 exports.TYPE = require('./type');

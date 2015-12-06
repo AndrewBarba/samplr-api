@@ -74,8 +74,8 @@ class CommonModel {
    *
    * @method ensureIndex
    */
-  ensureIndex(key) {
-    this.Model.ensureIndex(key);
+  ensureIndex(key, options) {
+    this.Model.ensureIndex(key, options);
     return this;
   }
 
@@ -91,6 +91,15 @@ class CommonModel {
   }
 
   /**
+   * Forward save method
+   *
+   * @method save
+   */
+  save(options) {
+    return this.Model.save(options);
+  }
+
+  /**
    * Forward get method
    *
    * @method get
@@ -102,10 +111,19 @@ class CommonModel {
   /**
    * Forward getAll method
    *
-   * @method readIndex
+   * @method getAll
    */
   getAll(value, options) {
     return this.Model.getAll(value, options);
+  }
+
+  /**
+   * Forward filter method
+   *
+   * @method filter
+   */
+  filter(options) {
+    return this.Model.filter(options);
   }
 
   /**

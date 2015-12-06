@@ -10,7 +10,6 @@ class AuthValidator extends CommonValidator {
     req.checkBody('password').notEmpty().isString();
     req.checkBody('firstName').notEmpty().isString();
     req.checkBody('lastName').notEmpty().isString();
-    req.checkBody('type').notEmpty().isString();
 
     if ('age' in req.body) req.sanitizeBody('age').toInt();
 

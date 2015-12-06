@@ -1,0 +1,9 @@
+
+const RESPONSE_STATE = {
+  PENDING: 'PENDING',
+  READY: 'READY',
+  COMPLETE: 'COMPLETE',
+  EXPIRED: 'EXPIRED'
+};
+
+module.exports = RESPONSE_STATE;

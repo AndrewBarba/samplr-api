@@ -7,9 +7,9 @@ class QuestionModel extends CommonModel {
   schema() {
     return {
       userId: this.type.string().required(),
+      surveyId: this.type.string().required(),
       title: this.type.string(),
       responses: [{
-        key: this.type.number().integer(),
         value: this.type.number().integer(),
         text: this.type.string()
       }]
@@ -18,7 +18,7 @@ class QuestionModel extends CommonModel {
 
   relationships() {
     this.belongsTo("User", "userId");
-    this.hasAndBelongsToMany("Survey");
+    this.belongsTo("Survey", "surveyId");
   }
 }
 

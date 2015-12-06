@@ -5,6 +5,24 @@ const swagger = require('swagger-node-express');
 const controller = require('./controller');
 const validator = require('./validator');
 const auth = require('./authorization');
+const groupAuth = require('../group/authorization');
+
+swagger.addGet({
+  spec: {
+    path: "/survey/{id}",
+    summary: "Get a survey",
+    method: "GET",
+    type: "Read",
+    nickname: "read",
+    produces: ["application/json"]
+  },
+  action: (req, res, next) => {
+    async.series([
+      done => auth.requiresSurveyOwner(req, res, done),
+      done => controller.read(req, res, done)
+    ], next);
+  }
+});
 
 swagger.addPost({
   spec: {
@@ -17,7 +35,7 @@ swagger.addPost({
   },
   action: (req, res, next) => {
     async.series([
-      done => auth.requiresResearcherLogin(req, res, done),
+      done => groupAuth.requiresGroupOwner(req, res, done),
       done => validator.validateCreate(req, res, done),
       done => controller.create(req, res, done)
     ], next);
@@ -42,8 +60,60 @@ swagger.addPut({
   }
 });
 
+swagger.addPut({
+  spec: {
+    path: "/survey/{id}/user",
+    summary: "Add a user to survey",
+    method: "PUT",
+    type: "Add User",
+    nickname: "addUser",
+    produces: ["application/json"]
+  },
+  action: (req, res, next) => {
+    async.series([
+      done => auth.requiresSurveyOwner(req, res, done),
+      done => validator.validateAddUser(req, res, done),
+      done => controller.addUser(req, res, done)
+    ], next);
+  }
+});
+
+swagger.addGet({
+  spec: {
+    path: "/survey/{id}/question",
+    summary: "List questions for a survey",
+    method: "GET",
+    type: "List Questions",
+    nickname: "listQuestions",
+    produces: ["application/json"]
+  },
+  action: (req, res, next) => {
+    async.series([
+      done => auth.requiresSurveyOwner(req, res, done),
+      done => controller.listQuestions(req, res, done)
+    ], next);
+  }
+});
+
+swagger.addGet({
+  spec: {
+    path: "/survey/{id}/response",
+    summary: "List responses for a survey",
+    method: "GET",
+    type: "List Responses",
+    nickname: "listResponses",
+    produces: ["application/json"]
+  },
+  action: (req, res, next) => {
+    async.series([
+      done => auth.requiresSurveyOwner(req, res, done),
+      done => controller.listResponses(req, res, done)
+    ], next);
+  }
+});
+
 swagger.configureDeclaration('survey', {
-  description: 'Group',
+  description: 'Survey',
   authorizations: ['apiKey'],
   produces: ['application/json']
 });

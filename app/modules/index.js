@@ -5,12 +5,12 @@ class Modules {
   init(next) {
 
     // Load all modules
-    require('./auth');
-    require('./user');
-    require('./group');
-    require('./survey');
-    require('./question');
     require('./response');
+    require('./question');
+    require('./survey');
+    require('./group');
+    require('./user');
+    require('./auth');
 
     process.nextTick(next);
   }
