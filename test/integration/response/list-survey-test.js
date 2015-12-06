@@ -1,24 +1,23 @@
 "use strict";
 
 const should = require('should');
-const moment = require('moment');
 const agent = require('test/lib/agent');
 
 // Modules
 const Auth = require('modules/auth');
-const User = require('modules/user');
 const Group = require('modules/group');
 const Survey = require('modules/survey');
 const Question = require('modules/question');
+const Response = require('modules/response');
 
 describe('Integration', () => {
-  describe('Survey', () => {
-    describe('Add User', () => {
+  describe('Response', () => {
+    describe('List Survey', () => {
 
       let auth;
 
       let userData = {
-        email: `int_survey_add_user@test.com`,
+        email: `int_response_list_survey_res@test.com`,
         password: "xxx123",
         firstName: "Andrew",
         lastName: "Test",
@@ -30,6 +29,25 @@ describe('Integration', () => {
         Auth.register(userData, (err, _auth) => {
           if (err) return done(err);
           auth = _auth;
+          done();
+        });
+      });
+
+      let clientAuth;
+
+      let userClientData = {
+        email: `int_response_list_survey_client@test.com`,
+        password: "xxx123",
+        firstName: "Andrew",
+        lastName: "Test",
+        type: "CLIENT",
+        age: 22
+      };
+
+      before(done => {
+        Auth.register(userClientData, (err, _clientAuth) => {
+          if (err) return done(err);
+          clientAuth = _clientAuth;
           done();
         });
       });
@@ -53,18 +71,7 @@ describe('Integration', () => {
         Survey.create({
           name: "Hello, World",
           userId: auth.user.id,
-          groupId: group.id,
-          schedule: [{
-            time: 'NOON'
-          }, {
-            time: 'MORNING'
-          }, {
-            time: 'SUNRISE'
-          }, {
-            time: 'SUNSET'
-          }, {
-            time: 'NIGHT'
-          }]
+          groupId: group.id
         }, (err, _survey) => {
           if (err) return done(err);
           survey = _survey;
@@ -93,51 +100,46 @@ describe('Integration', () => {
         });
       });
 
-      let user;
+      let response;
 
       before(done => {
-        User.create({
-          email: `int_survey_add_user_client@test.com`,
-          firstName: "Andrew",
-          lastName: "Test",
-          type: "CLIENT",
-          age: 22
-        }, (err, _user) => {
+        Response.create({
+          userId: clientAuth.user.id,
+          surveyId: survey.id,
+          questionId: question.id,
+          date: new Date(),
+          state: 'COMPLETE'
+        }, (err, _response) => {
           if (err) return done(err);
-          user = _user;
+          response = _response;
           done();
         });
       });
 
-      it('should add a user', done => {
-
-        let data = {
-          userId: user.id,
-          start: moment().startOf('month').toDate().getTime(),
-          end: moment().endOf('month').toDate().getTime()
-        };
-
+      it('should list responses', done => {
         agent
           .client()
-          .put('/survey/' + survey.id + '/user')
+          .get('/survey/' + survey.id + '/response')
           .query({
             auth: auth.token
           })
-          .send(data)
-          .expect(201)
+          .expect(200)
           .end(function(err, result) {
             should.not.exist(err);
-            let survey = result.body;
-            survey.users.length.should.equal(1);
+            let responses = result.body;
+            should.exist(responses);
+            responses.length.should.equal(1);
             done();
           });
       });
 
-      it('should not add a user', done => {
+      it('should not list responses', done => {
         agent
           .client()
-          .put('/survey/' + survey.id + '/user')
-          .send({})
+          .get('/survey/' + survey.id + '/response')
+          .query({
+            auth: '1234'
+          })
           .expect(401)
           .end(done);
       });

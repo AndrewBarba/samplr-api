@@ -44,3 +44,12 @@ test-int:
 	node node_modules/.bin/mocha \
 	--timeout 20000 \
 	./test/integration
+
+test-coverage:
+	@NODE_ENV=test \
+	istanbul \
+	cover \
+	node_modules/.bin/_mocha \
+	-- \
+	--timeout 20000 \
+	./test

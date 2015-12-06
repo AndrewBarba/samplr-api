@@ -1,5 +1,6 @@
 "use strict";
 
+const _ = require('underscore');
 const EventEmitter = require('events').EventEmitter;
 
 class CommonService extends EventEmitter {
@@ -39,7 +40,7 @@ class CommonService extends EventEmitter {
       .model
       .get(objectId);
 
-    return rQuery(r, next);
+    return this.rQuery(r, next);
   }
 
   /**
@@ -59,7 +60,7 @@ class CommonService extends EventEmitter {
       .getAll(value, { index: key })
       .limit(1);
 
-    return rOneQuery(r, next);
+    return this.rOneQuery(r, next);
   }
 
   /**
@@ -72,11 +73,13 @@ class CommonService extends EventEmitter {
    * @return {Promise}
    */
   listIndex(key, value, next) {
+    if (_.isArray(value)) value = this.model.r.args(value);
+
     let r = this
       .model
       .getAll(value, { index: key });
 
-    return rQuery(r, next);
+    return this.rQuery(r, next);
   }
 
   /**
@@ -92,7 +95,7 @@ class CommonService extends EventEmitter {
       .model
       .filter(options);
 
-    return rQuery(r, next);
+    return this.rQuery(r, next);
   }
 
   /**
@@ -109,7 +112,7 @@ class CommonService extends EventEmitter {
       .read(objectId)
       .update(options);
 
-    return rQuery(r, next);
+    return this.rQuery(r, next);
   }
 
   /**
@@ -126,21 +129,21 @@ class CommonService extends EventEmitter {
       .readIndex(key, value)
       .update(options);
 
-    return rOneQuery(r, next);
+    return this.rOneQuery(r, next);
   }
-}
 
-function rQuery(r, next) {
-  if (!next) return r;
-  return r.run(next);
-}
+  rQuery(r, next) {
+    if (!next) return r;
+    return r.run(next);
+  }
 
-function rOneQuery(r, next) {
-  if (!next) return r;
-  return r.run((err, res) => {
-    if (err) return next(err);
-    next(null, res[0]);
-  });
+  rOneQuery(r, next) {
+    if (!next) return r;
+    return r.run((err, res) => {
+      if (err) return next(err);
+      next(null, res[0]);
+    });
+  }
 }
 
 module.exports = CommonService;

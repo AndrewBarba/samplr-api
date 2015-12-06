@@ -53,9 +53,32 @@ exports.listResponses = (req, res, next) => {
 
   let userId = req.userId;
 
-  Response.listByUserId(userId, (err, resposnes) => {
+  Response
+    .listByUserId(userId)
+    .getJoin({
+      question: true
+    })
+    .run((err, resposnes) => {
+      if (err) return next(err);
+      res.status(200).json(resposnes);
+    });
+};
+
+/**
+ * Complete responses
+ *
+ * @method completeResponses
+ * @param {Request}  req
+ * @param {Response} res
+ * @param {Function} next
+ */
+exports.completeResponses = (req, res, next) => {
+
+  let responses = req.body.responses;
+
+  Response.bulkComplete(responses, (err, result) => {
     if (err) return next(err);
-    res.status(200).json(resposnes);
+    res.status(200).json(result);
   });
 };
 
@@ -67,15 +90,22 @@ exports.listResponses = (req, res, next) => {
  * @param {Response} res
  * @param {Function} next
  */
-exports.search = (req, res, next) => {
+exports.listUsers = (req, res, next) => {
 
   let userId = req.userId;
   let query = req.query.query;
 
-  User.search(userId, query, (err, users) => {
-    if (err) return next(err);
-    res.status(200).json(users);
-  });
+  if (query && query.length !== 0) {
+    User.search(userId, query, (err, users) => {
+      if (err) return next(err);
+      res.status(200).json(users);
+    });
+  } else {
+    User.listByUserId(userId, (err, users) => {
+      if (err) return next(err);
+      res.status(200).json(users);
+    });
+  }
 };
 
 /**

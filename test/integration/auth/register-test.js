@@ -15,6 +15,23 @@ describe('Integration', () => {
         age: 22
       };
 
+      it('should be too short', done => {
+        let data = {
+          email: `int_auth_reg@test.com`,
+          password: "xxx",
+          firstName: "Andrew",
+          lastName: "Test",
+          age: 22
+        };
+
+        agent
+          .client()
+          .post('/auth/register')
+          .send(data)
+          .expect(500)
+          .end(done);
+      });
+
       it('should register a new user', done => {
         agent
           .client()

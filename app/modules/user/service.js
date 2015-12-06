@@ -49,6 +49,17 @@ class UserService extends CommonService {
   }
 
   /**
+   * List users by user id
+   *
+   * @method listByUserId
+   * @param {String} userId
+   * @param {Function} next
+   */
+  listByUserId(userId, next) {
+    return this.listIndex("userId", userId, next);
+  }
+
+  /**
    * Search for a user
    *
    * @method search
@@ -58,8 +69,8 @@ class UserService extends CommonService {
    */
   search(userId, query, next) {
 
+    let op = this.listByUserId(userId);
     let parts = query.split(" ");
-    let op = this.listIndex("userId", userId);
 
     if (query.indexOf('@') >= 0) {
       op = op.filter(user => {

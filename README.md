@@ -1,6 +1,8 @@
 samplr-api
 ==========
 
+[![wercker status](https://app.wercker.com/status/74d737510390fe618b54f0c481675b92/s/master "wercker status")](https://app.wercker.com/project/bykey/74d737510390fe618b54f0c481675b92)
+
 Samplr API built with Node.js and RethinkDB
 
 ## Setup

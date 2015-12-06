@@ -1,5 +1,6 @@
 "use strict";
 
+const async = require('async');
 const Errors = require('app/errors');
 const CommonService = require('modules/common').Service;
 
@@ -45,6 +46,19 @@ class ResponseService extends CommonService {
   }
 
   /**
+   * Bulk complete responses
+   *
+   * @method bulkComplete
+   * @param {[Object]} responses
+   * @param {Function} next
+   */
+  bulkComplete(responses, next) {
+    async.map(responses, (response, done) => {
+      this.complete(response.id, response.value, done);
+    }, next);
+  }
+
+  /**
    * List responses by survey id
    *
    * @method listByUserId
@@ -56,13 +70,15 @@ class ResponseService extends CommonService {
       next = state;
       state = RESPONSE_STATE.COMPLETE;
     }
-    return this
+
+    let r = this.this
       .listIndex("surveyId", surveyId)
       .filter({
         state: state
-      })
-      .run(next);
-}
+      });
+      
+    return this.rQuery(r, next);
+  }
 
 
 /**
@@ -100,13 +116,15 @@ class ResponseService extends CommonService {
         
      
       
-      this.this //r.db("development").table("Response").eqJoin("userId", r.db("development").table("User"))
+     let r = this.this //r.db("development").table("Response").eqJoin("userId", r.db("development").table("User"))
       .listIndex("surveyId", surveyId)
       .getJoin("userId")
       .filter({
-          state: state          
-        }).run(next);
-}
+        state: state
+      });
+
+    return this.rQuery(r, next);
+  }
 
   /**
    * List responses by question id
@@ -121,12 +139,13 @@ class ResponseService extends CommonService {
       state = RESPONSE_STATE.COMPLETE;
     }
 
-    return this
+    let r = this
       .listIndex("questionId", questionId)
       .filter({
         state: state
-      })
-      .run(next);
+      });
+
+    return this.rQuery(r, next);
   }
 
   /**
@@ -142,12 +161,13 @@ class ResponseService extends CommonService {
       state = RESPONSE_STATE.READY;
     }
 
-    return this
+    let r = this
       .listIndex("userId", userId)
       .filter({
         state: state
-      })
-      .run(next);
+      });
+
+    return this.rQuery(r, next);
   }
 }
 

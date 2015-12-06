@@ -5,6 +5,7 @@ const swagger = require('swagger-node-express');
 const controller = require('./controller');
 const validator = require('./validator');
 const auth = require('./authorization');
+const responseAuth = require('../response/authorization');
 
 swagger.addGet({
   spec: {
@@ -41,6 +42,25 @@ swagger.addGet({
   }
 });
 
+swagger.addPut({
+  spec: {
+    path: "/user/{id}/response",
+    summary: "Complete responses",
+    method: "PUT",
+    type: "Complete Resposnes",
+    nickname: "completeResponses",
+    produces: ["application/json"]
+  },
+  action: (req, res, next) => {
+    async.series([
+      done => responseAuth.requiresResponsesOwner(req, res, done),
+      done => auth.requiresCurrentUser(req, res, done),
+      done => validator.validateCompleteResponses(req, res, done),
+      done => controller.completeResponses(req, res, done)
+    ], next);
+  }
+});
+
 swagger.addGet({
   spec: {
     path: "/user/{id}/response",
@@ -61,17 +81,18 @@ swagger.addGet({
 
 swagger.addGet({
   spec: {
-    path: "/user/search",
-    summary: "Search for a user",
+    path: "/user/{id}/user",
+    summary: "List my users",
     method: "GET",
-    type: "Search",
-    nickname: "search",
+    type: "List users",
+    nickname: "listUsers",
     produces: ["application/json"]
   },
   action: (req, res, next) => {
     async.series([
+      done => auth.requiresCurrentUser(req, res, done),
       done => auth.requiresResearcherLogin(req, res, done),
-      done => controller.search(req, res, done)
+      done => controller.listUsers(req, res, done)
     ], next);
   }
 });

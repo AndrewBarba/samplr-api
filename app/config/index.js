@@ -15,6 +15,16 @@ const DEFAULTS = {
   env: ENV,
   http: {
     port: process.env.PORT || 3000
+  },
+  push: {
+    apn: {
+      gateway: 'gateway.push.apple.com',
+      cert: 'static/certificates/apple/cert.pem',
+      key: 'static/certificates/apple/key.pem'
+    },
+    gcm: {
+      key: process.env.GCM_KEY
+    }
   }
 };
 
