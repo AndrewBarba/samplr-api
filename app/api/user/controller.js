@@ -53,10 +53,15 @@ exports.listResponses = (req, res, next) => {
 
   let userId = req.userId;
 
-  Response.listByUserId(userId, (err, resposnes) => {
-    if (err) return next(err);
-    res.status(200).json(resposnes);
-  });
+  Response
+    .listByUserId(userId)
+    .getJoin({
+      question: true
+    })
+    .run((err, resposnes) => {
+      if (err) return next(err);
+      res.status(200).json(resposnes);
+    });
 };
 
 /**

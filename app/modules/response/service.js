@@ -57,12 +57,13 @@ class ResponseService extends CommonService {
       state = RESPONSE_STATE.COMPLETE;
     }
 
-    return this
+    let r = this
       .listIndex("surveyId", surveyId)
       .filter({
         state: state
-      })
-      .run(next);
+      });
+
+    return this.rQuery(r, next);
   }
 
   /**
@@ -78,12 +79,13 @@ class ResponseService extends CommonService {
       state = RESPONSE_STATE.COMPLETE;
     }
 
-    return this
+    let r = this
       .listIndex("questionId", questionId)
       .filter({
         state: state
-      })
-      .run(next);
+      });
+
+    return this.rQuer(r, next);
   }
 
   /**
@@ -99,12 +101,13 @@ class ResponseService extends CommonService {
       state = RESPONSE_STATE.READY;
     }
 
-    return this
+    let r = this
       .listIndex("userId", userId)
       .filter({
         state: state
-      })
-      .run(next);
+      });
+
+    return this.rQuery(r, next);
   }
 }
 
