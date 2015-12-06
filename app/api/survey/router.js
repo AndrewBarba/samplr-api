@@ -7,6 +7,23 @@ const validator = require('./validator');
 const auth = require('./authorization');
 const groupAuth = require('../group/authorization');
 
+swagger.addGet({
+  spec: {
+    path: "/survey/{id}",
+    summary: "Get a survey",
+    method: "GET",
+    type: "Read",
+    nickname: "read",
+    produces: ["application/json"]
+  },
+  action: (req, res, next) => {
+    async.series([
+      done => auth.requiresSurveyOwner(req, res, done),
+      done => controller.read(req, res, done)
+    ], next);
+  }
+});
+
 swagger.addPost({
   spec: {
     path: "/survey",

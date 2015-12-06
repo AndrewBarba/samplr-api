@@ -108,6 +108,7 @@ class SurveyService extends CommonService {
       (questions, done) => {
         let responses = _generateResponses(survey, user, start, end, questions);
         Response
+          .model
           .save(responses)
           .then(res => done(null, res))
           .catch(err => done(err));

@@ -6,6 +6,23 @@ const controller = require('./controller');
 const validator = require('./validator');
 const auth = require('./authorization');
 
+swagger.addGet({
+  spec: {
+    path: "/group/{id}",
+    summary: "Get a group",
+    method: "GET",
+    type: "Read",
+    nickname: "read",
+    produces: ["application/json"]
+  },
+  action: (req, res, next) => {
+    async.series([
+      done => auth.requiresGroupOwner(req, res, done),
+      done => controller.read(req, res, done)
+    ], next);
+  }
+});
+
 swagger.addPost({
   spec: {
     path: "/group",

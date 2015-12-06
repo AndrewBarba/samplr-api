@@ -4,6 +4,24 @@ const Group = require('modules/group');
 const Survey = require('modules/survey');
 
 /**
+ * Get a group
+ *
+ * @method read
+ * @param {Request}  req
+ * @param {Response} res
+ * @param {Function} next
+ */
+exports.read = (req, res, next) => {
+
+  let groupId = req.params.id;
+
+  Group.read(groupId, (err, group) => {
+    if (err) return next(err);
+    res.status(200).json(group);
+  });
+};
+
+/**
  * Create a new group
  *
  * @method create

@@ -91,6 +91,15 @@ class CommonModel {
   }
 
   /**
+   * Forward save method
+   *
+   * @method save
+   */
+  save(options) {
+    return this.Model.save(options);
+  }
+
+  /**
    * Forward get method
    *
    * @method get

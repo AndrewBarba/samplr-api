@@ -4,6 +4,24 @@ const Survey = require('modules/survey');
 const Question = require('modules/question');
 
 /**
+ * Get a survey
+ *
+ * @method read
+ * @param {Request}  req
+ * @param {Response} res
+ * @param {Function} next
+ */
+exports.read = (req, res, next) => {
+
+  let surveyId = req.params.id;
+
+  Survey.read(surveyId, (err, survey) => {
+    if (err) return next(err);
+    res.status(200).json(survey);
+  });
+};
+
+/**
  * Create a new survey
  *
  * @method create
