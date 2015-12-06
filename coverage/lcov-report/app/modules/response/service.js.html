@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">12.9% </span>
+        <span class="strong">35.48% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>4/31</span>
+        <span class='fraction'>11/31</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">31.25% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/16</span>
+        <span class='fraction'>5/16</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">40% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/5</span>
+        <span class='fraction'>2/5</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">15.38% </span>
+        <span class="strong">42.31% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>4/26</span>
+        <span class='fraction'>11/26</span>
       </div>
     </div>
   </div>
@@ -179,15 +179,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -197,7 +195,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -292,14 +292,14 @@ class ResponseService extends CommonService {
    * @param {String} options.surveyId
    * @param {Function} next
    */
-  create<span class="fstat-no" title="function not covered" >(options, next) {</span>
-<span class="cstat-no" title="statement not covered" >    if (!options) <span class="cstat-no" title="statement not covered" >return next(new Errors.InvalidArgumentError("SurveyService.create - options is required"));</span></span>
-<span class="cstat-no" title="statement not covered" >    if (!options.date) <span class="cstat-no" title="statement not covered" >return next(new Errors.InvalidArgumentError("SurveyService.create - options.date is required"));</span></span>
-<span class="cstat-no" title="statement not covered" >    if (!options.userId) <span class="cstat-no" title="statement not covered" >return next(new Errors.InvalidArgumentError("SurveyService.create - options.userId is required"));</span></span>
-<span class="cstat-no" title="statement not covered" >    if (!options.questionId) <span class="cstat-no" title="statement not covered" >return next(new Errors.InvalidArgumentError("SurveyService.create - options.questionId is required"));</span></span>
-<span class="cstat-no" title="statement not covered" >    if (!options.surveyId) <span class="cstat-no" title="statement not covered" >return next(new Errors.InvalidArgumentError("SurveyService.create - options.surveyId is required"));</span></span>
+  create(options, next) {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!options) <span class="cstat-no" title="statement not covered" >return next(new Errors.InvalidArgumentError("SurveyService.create - options is required"));</span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!options.date) <span class="cstat-no" title="statement not covered" >return next(new Errors.InvalidArgumentError("SurveyService.create - options.date is required"));</span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!options.userId) <span class="cstat-no" title="statement not covered" >return next(new Errors.InvalidArgumentError("SurveyService.create - options.userId is required"));</span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!options.questionId) <span class="cstat-no" title="statement not covered" >return next(new Errors.InvalidArgumentError("SurveyService.create - options.questionId is required"));</span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!options.surveyId) <span class="cstat-no" title="statement not covered" >return next(new Errors.InvalidArgumentError("SurveyService.create - options.surveyId is required"));</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return super.create(options, next);</span>
+    return super.create(options, next);
   }
 &nbsp;
   /**
@@ -310,8 +310,8 @@ class ResponseService extends CommonService {
    * @param {Number} value
    * @param {Function} next
    */
-  complete<span class="fstat-no" title="function not covered" >(responseId, value, next) {</span>
-<span class="cstat-no" title="statement not covered" >    return this.readAndUpdate(responseId, {</span>
+  complete(responseId, value, next) {
+    return this.readAndUpdate(responseId, {
       state: RESPONSE_STATE.COMPLETE,
       value: value
     }, next);
@@ -391,7 +391,7 @@ module.exports = ResponseService;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Dec 06 2015 13:32:35 GMT-0500 (EST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Dec 06 2015 13:58:22 GMT-0500 (EST)
 </div>
 </div>
 <script src="../../../prettify.js"></script>
