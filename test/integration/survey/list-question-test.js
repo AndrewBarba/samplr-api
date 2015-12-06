@@ -92,13 +92,18 @@ describe('Integration', () => {
       it('should not list surveys', done => {
         agent
           .client()
-          .get('/survey/' + survey.id + '/question')
+          .get("/survey/" + survey.id + "/response/csv")
           .query({
             auth: '1234'
           })
           .send({})
           .expect(401)
           .end(done);
+      });
+      
+      it('should return csv of users joined to survey results', => {
+        agent.client()
+        .get("/results/")
       });
 
     });
