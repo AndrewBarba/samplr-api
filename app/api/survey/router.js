@@ -43,6 +43,24 @@ swagger.addPut({
   }
 });
 
+swagger.addPut({
+  spec: {
+    path: "/survey/{id}/user",
+    summary: "Add a user to survey",
+    method: "PUT",
+    type: "Add User",
+    nickname: "addUser",
+    produces: ["application/json"]
+  },
+  action: (req, res, next) => {
+    async.series([
+      done => auth.requiresSurveyOwner(req, res, done),
+      done => validator.validateAddUser(req, res, done),
+      done => controller.addUser(req, res, done)
+    ], next);
+  }
+});
+
 swagger.addGet({
   spec: {
     path: "/survey/{id}/question",

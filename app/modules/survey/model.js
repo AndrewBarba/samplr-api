@@ -24,6 +24,7 @@ class SurveyModel extends CommonModel {
   relationships() {
     this.belongsTo("User", "userId");
     this.belongsTo("Group", "groupId");
+    this.hasAndBelongsToMany("User");
   }
 }
 

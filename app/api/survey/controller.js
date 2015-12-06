@@ -67,3 +67,24 @@ exports.listQuestions = (req, res, next) => {
     res.status(200).json(questions);
   });
 };
+
+/**
+ * Adds a user to a survey
+ *
+ * @method addUser
+ * @param {Request}  req
+ * @param {Response} res
+ * @param {Function} next
+ */
+exports.addUser = (req, res, next) => {
+
+  let surveyId = req.params.id;
+  let userId = req.body.userId;
+  let start = new Date(req.body.start);
+  let end = new Date(req.body.end);
+
+  Survey.addUser(surveyId, userId, start, end, (err, survey) => {
+    if (err) return next(err);
+    res.status(201).json(survey);
+  });
+};

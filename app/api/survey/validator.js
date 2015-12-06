@@ -19,6 +19,15 @@ class SurveyValidator extends CommonValidator {
 
     this.validate(req, res, next);
   }
+
+  validateAddUser(req, res, next) {
+
+    req.checkBody('userId').notEmpty().isString();
+    req.checkBody('start').notEmpty().isNumber();
+    req.checkBody('end').notEmpty().isNumber();
+
+    this.validate(req, res, next);
+  }
 }
 
 module.exports = new SurveyValidator();
