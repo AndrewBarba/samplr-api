@@ -77,7 +77,7 @@ class ResponseService extends CommonService {
         next = state;
         state = RESPONSE_STATE.COMPLETE;
     }    
-    return this    //r.db("development").table("Response").eqJoin("userId", r.db("development").table("User"))
+    return this //r.db("development").table("Response").eqJoin("userId", r.db("development").table("User"))
       .listIndex("surveyId", surveyId)
       .getJoin("userId")
       .filter({

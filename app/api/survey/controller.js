@@ -106,6 +106,23 @@ exports.listResponses = (req, res, next) => {
 };
 
 /**
+ * gets a CSV of responses on a survey givemn a survey ID
+ * 
+ * @mthod getCSV
+ * @param {Request} req
+ * @param {Response} res
+ * @param {Function} next
+ */
+exports.getCSV = (req,res,next) =>{
+  let surveyId = req.params.id;
+  
+  Response.getCSV(surveyId, (err, responses) => {
+    if(err) return next(err);
+    res.status(200).json(responses);
+  })
+}
+
+/**
  * Adds a user to a survey
  *
  * @method addUser
