@@ -113,7 +113,7 @@ class ResponseService extends CommonService {
         );
     });
       
-     let r = this.this
+     let r = this.
       .listIndex("surveyId", surveyId)
       .getJoin("userId")
       .filter({
