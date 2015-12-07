@@ -5,6 +5,9 @@ const Question = require('modules/question');
 const Response = require('modules/response');
 const User = require('modules/user');
 
+// Constants
+const RESPONSE_STATE = Response.STATE;
+
 /**
  * Get a survey
  *
@@ -117,15 +120,56 @@ exports.listUsers = (req, res, next) => {
 exports.listResponses = (req, res, next) => {
 
   let surveyId = req.params.id;
+  let state = req.params.state || RESPONSE_STATE.COMPLETE;
 
   Response
-    .listBySurveyId(surveyId)
+    .listBySurveyId(surveyId, state)
     .getJoin({
       question: true
     })
     .run((err, resposnes) => {
       if (err) return next(err);
       res.status(200).json(resposnes);
+    });
+};
+
+/**
+ * Gets a CSV of responses on a survey given a survey ID
+ *
+ * @method listCSVResponses
+ * @param {Request} req
+ * @param {Response} res
+ * @param {Function} next
+ */
+exports.listCSVResponses = (req, res, next) =>{
+
+  let surveyId = req.params.id;
+
+  Response
+    .listBySurveyId(surveyId)
+    .getJoin({
+      user: true,
+      question: true
+    })
+    .run((err, responses) => {
+      if (err) return next(err);
+
+      let csvarray = ["lastName, firstName, date, answer, question"];
+
+      responses.forEach(value => {
+        let qid = value.question.id;
+        let qval = value.value;
+        let qdate = value.date;
+        let lname = value.user.lastName;
+        let fname = value.user.firstName;
+        csvarray.push(lname + ","+fname+","+qdate+","+qval+","+qid);
+      });
+
+      let csvString = csvarray.join("\n");
+
+      res.attachment('data.csv');
+      res.setHeader('Content-Type', 'text/csv');
+      res.end(csvString);
     });
 };
 
