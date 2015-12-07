@@ -1,5 +1,6 @@
 "use strict";
 
+const _ = require('underscore');
 const async = require('async');
 const Errors = require('app/errors');
 const CommonService = require('modules/common').Service;
@@ -66,10 +67,11 @@ class ResponseService extends CommonService {
    * @param {Function} next
    */
   listBySurveyId(surveyId, state, next) {
-    if (arguments.length === 2) {
+    if (arguments.length === 2 && _.isFunction(state)) {
       next = state;
-      state = RESPONSE_STATE.COMPLETE;
+      state = null;
     }
+    state = state || RESPONSE_STATE.COMPLETE;
 
     let r = this
       .listIndex("surveyId", surveyId)
@@ -113,10 +115,11 @@ class ResponseService extends CommonService {
    * @param {Function} next
    */
   listByQuestionId(questionId, state, next) {
-    if (arguments.length === 2) {
+    if (arguments.length === 2 && _.isFunction(state)) {
       next = state;
-      state = RESPONSE_STATE.COMPLETE;
+      state = null;
     }
+    state = state || RESPONSE_STATE.COMPLETE;
 
     let r = this
       .listIndex("questionId", questionId)
@@ -135,10 +138,11 @@ class ResponseService extends CommonService {
    * @param {Function} next
    */
   listByUserId(userId, state, next) {
-    if (arguments.length === 2) {
+    if (arguments.length === 2 && _.isFunction(state)) {
       next = state;
-      state = RESPONSE_STATE.READY;
+      state = null;
     }
+    state = state || RESPONSE_STATE.READY;
 
     let r = this
       .listIndex("userId", userId)

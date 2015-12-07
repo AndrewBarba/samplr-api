@@ -3,6 +3,9 @@
 const Question = require('modules/question');
 const Response = require('modules/response');
 
+// Constants
+const RESPONSE_STATE = Response.STATE;
+
 /**
  * Create a new question
  *
@@ -61,9 +64,12 @@ exports.update = (req, res, next) => {
 exports.listResponses = (req, res, next) => {
 
   let questionId = req.params.id;
+  let state = req.params.state || RESPONSE_STATE.COMPLETE;
 
-  Response.listByQuestionId(questionId, (err, resposnes) => {
-    if (err) return next(err);
-    res.status(200).json(resposnes);
-  });
+  Response
+    .listByQuestionId(questionId, state)
+    .run((err, resposnes) => {
+      if (err) return next(err);
+      res.status(200).json(resposnes);
+    });
 };

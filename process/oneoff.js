@@ -22,11 +22,6 @@ async.series([
     logger.info('Connections loaded.\n');
     logger.info('Initializing modules...');
     app.modules.init(done);
-  },
-  done => {
-    logger.info('Modules loaded.\n');
-    logger.info('Starting worker...');
-    app.worker.start(done);
   }
 ], err => {
   if (err) throw err;
