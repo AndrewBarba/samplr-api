@@ -119,6 +119,7 @@ describe('Integration', () => {
       it("response should exist and date should be defined", done => {
         should.exist(response);
         should.exist(response.date);
+        agent.end(done);
       });
 
       // it('should list responses', done => {
