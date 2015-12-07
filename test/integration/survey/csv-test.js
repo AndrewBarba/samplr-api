@@ -131,10 +131,10 @@ describe('Integration', () => {
           })
           .expect(200)
           .end(function(err, result) {
-            let csv = result.body;
+            let csv = result.body.text;
             should.exist(csv);//nonsense test case to get werker to pass. Will change.
-            let emptyObj = {};
-            csv.should.equal(emptyObj);            
+            // let emptyObj = {};
+            csv.should.equal("");            
             should.not.exist(err);
             done();
           });
