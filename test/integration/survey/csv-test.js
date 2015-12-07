@@ -117,12 +117,6 @@ describe('Integration', () => {
         });
       });
 
-
-      it("response should exist", ()=>{
-        should.exist(response);
-        should.exist(response.date);
-      });
-
       it('should return a CSV response of users:surveys:answers', done => {
         agent
           .client()

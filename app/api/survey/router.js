@@ -138,10 +138,10 @@ swagger.addGet({
     nickname: "getCSV",
     produces: ["text/csv"]
   },
-action: (req,res,next) => {
+  action: (req, res, next) => {
     async.series([
-        done => auth.requiresSurveyOwner(req, res, done),
-        done => controller.getCSV(req, res, done)
+      done => auth.requiresSurveyOwner(req, res, done),
+      done => controller.listCSVResponses(req, res, done)
     ], next);
   }
 });
