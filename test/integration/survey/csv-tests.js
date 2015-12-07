@@ -117,10 +117,9 @@ describe('Integration', () => {
       });   
       
       
-      it("response should exist", done => {
+      it("response should exist", ()=>{
         should.exist(response);
         should.exist(response.date);        
-        agent.done();        
       });
              
      it('should return a CSV response of users:surveys:answers', done => {
