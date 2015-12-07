@@ -68,8 +68,9 @@ class ResponseService extends CommonService {
   listBySurveyId(surveyId, state, next) {
     if (arguments.length === 2) {
       next = state;
-      state = RESPONSE_STATE.COMPLETE;
+      state = null;
     }
+    state = state || RESPONSE_STATE.COMPLETE;
 
     let r = this
       .listIndex("surveyId", surveyId)
@@ -90,8 +91,9 @@ class ResponseService extends CommonService {
   listByQuestionId(questionId, state, next) {
     if (arguments.length === 2) {
       next = state;
-      state = RESPONSE_STATE.COMPLETE;
+      state = null;
     }
+    state = state || RESPONSE_STATE.COMPLETE;
 
     let r = this
       .listIndex("questionId", questionId)
@@ -112,8 +114,9 @@ class ResponseService extends CommonService {
   listByUserId(userId, state, next) {
     if (arguments.length === 2) {
       next = state;
-      state = RESPONSE_STATE.READY;
+      state = null;
     }
+    state = state || RESPONSE_STATE.READY;
 
     let r = this
       .listIndex("userId", userId)
