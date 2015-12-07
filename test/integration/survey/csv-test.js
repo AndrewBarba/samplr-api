@@ -122,7 +122,7 @@ describe('Integration', () => {
         should.exist(response.date);
       });
 
-      it('should return a CSV response of users:surveys:answers', () => {
+      it('should return a CSV response of users:surveys:answers', done => {
         agent
           .client()
           .get("/survey/" + survey.id + "/response/csv")
@@ -133,9 +133,9 @@ describe('Integration', () => {
           .end(function(err, result) {
             let csv = result.body;
             should.exist(csv);//nonsense test case to get werker to pass. Will change.
-            //csv.should.equal(1);
+            csv.should.equal(1);            
             should.not.exist(err);
-            //done();
+            done();
           });
       });
     });
