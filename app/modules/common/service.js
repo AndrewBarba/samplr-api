@@ -73,7 +73,7 @@ class CommonService extends EventEmitter {
    * @return {Promise}
    */
   listIndex(key, value, next) {
-    if (_.isArray(value)) value = this.model.r.args(value);
+    if (_.isArray(value) && value.length > 0) value = this.model.r.args(value);
 
     let r = this
       .model
