@@ -155,17 +155,8 @@ exports.getCSV = (req,res,next) =>{
       let fname = value.user.firstName;
       csvarray.push(lname + ","+fname+","+qdate+","+qval+","+qid);
     });
-    // responses.forEach((value)=>{      
-    //   csvarray.push(
-    //     value.right.lastName + ", " +
-    //     value.right.firstName + ", " +
-    //     value.left.date + ", " +
-    //     value.left.value + ", " +
-    //     value.left.questionId
-    //     );
-    // });
     let csvString = csvarray.join("\n");
-    res.status(200).send(csvString);
+    res.status(200).end(csvString);
   });
 };
 
