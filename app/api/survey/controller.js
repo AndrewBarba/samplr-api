@@ -147,17 +147,25 @@ exports.getCSV = (req,res,next) =>{
   Response.getCSV(surveyId, (err, responses) => {
     if(err) return next(err);
     let csvarray = ["lastName, firstName, date, answer, question"];
-    responses.forEach((value)=>{      
-      csvarray.push(
-        value.right.lastName + ", " +
-        value.right.firstName + ", " +
-        value.left.date + ", " +
-        value.left.value + ", " +
-        value.left.questionId
-        );
+    responses.forEach((value)=>{
+      let qid = value.question.id;
+      let qval = value.question.value;
+      let qdate = value.question.date;
+      let lname = value.user.lastName;
+      let fname = value.user.firstName;
+      csvarray.push(lname + ","+fname+","+qdate+","+qval+","+qid);
     });
+    // responses.forEach((value)=>{      
+    //   csvarray.push(
+    //     value.right.lastName + ", " +
+    //     value.right.firstName + ", " +
+    //     value.left.date + ", " +
+    //     value.left.value + ", " +
+    //     value.left.questionId
+    //     );
+    // });
     let csvString = csvarray.join("\n");
-    res.status(200).json(csvString);
+    res.status(200).text(csvString);
   });
 };
 
