@@ -115,7 +115,9 @@ describe('Integration', () => {
           done();
         });
       });   
-       
+      
+      
+             
      it('should return a CSV response of users:surveys:answers', done => {
         agent
           .client()
@@ -124,7 +126,7 @@ describe('Integration', () => {
             auth: auth.token
           })
           .send({})
-          .expect(500)
+          .expect(200)
           .end(function(err, result) {
             let csv = result.body;
             should.exist(csv);//nonsense test case to get werker to pass. Will change.
