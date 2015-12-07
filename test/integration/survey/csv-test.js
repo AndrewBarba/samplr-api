@@ -108,7 +108,8 @@ describe('Integration', () => {
           surveyId: survey.id,
           questionId: question.id,
           date: new Date(),
-          state: 'COMPLETE'
+          state: 'COMPLETE',
+          value: 5
         }, (err, _response) => {
           if (err) return done(err);
           response = _response;
@@ -131,10 +132,8 @@ describe('Integration', () => {
           })
           .expect(200)
           .end(function(err, result) {
-            let csv = result.body.text;
-            should.exist(csv);//nonsense test case to get werker to pass. Will change.
-            // let emptyObj = {};
-            csv.should.equal("");            
+            let csv = result.text;
+            should.exist(csv);
             should.not.exist(err);
             done();
           });

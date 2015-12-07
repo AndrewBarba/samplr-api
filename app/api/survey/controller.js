@@ -149,8 +149,8 @@ exports.getCSV = (req,res,next) =>{
     let csvarray = ["lastName, firstName, date, answer, question"];
     responses.forEach((value)=>{
       let qid = value.question.id;
-      let qval = value.question.value;
-      let qdate = value.question.date;
+      let qval = value.value;
+      let qdate = value.date;
       let lname = value.user.lastName;
       let fname = value.user.firstName;
       csvarray.push(lname + ","+fname+","+qdate+","+qval+","+qid);
