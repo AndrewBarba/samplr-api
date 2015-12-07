@@ -8,15 +8,16 @@ const Auth = require('modules/auth');
 const Group = require('modules/group');
 const Survey = require('modules/survey');
 const Question = require('modules/question');
+const Response = require('modules/response');
 
 describe('Integration', () => {
-  describe('Survey', () => {
-    describe('List Question', () => {
+  describe('SurveyCSV', () => {
+    describe('CSV Responses', () => {
 
       let auth;
 
       let userData = {
-        email: `int_survey_list_question@test.com`,
+        email: `int_csv_response_question_res@test.com`,
         password: "xxx123",
         firstName: "Andrew",
         lastName: "Test",
@@ -32,11 +33,30 @@ describe('Integration', () => {
         });
       });
 
+      let clientAuth;
+
+      let userClientData = {
+        email: `int_csv_response_question_client@test.com`,
+        password: "xxx123",
+        firstName: "Andrew",
+        lastName: "Test",
+        type: "CLIENT",
+        age: 22
+      };
+
+      before(done => {
+        Auth.register(userClientData, (err, _clientAuth) => {
+          if (err) return done(err);
+          clientAuth = _clientAuth;
+          done();
+        });
+      });
+
       let group;
 
       before(done => {
         Group.create({
-          name: "Hello, World",
+          name: "CSVGroup",
           userId: auth.user.id
         }, (err, _group) => {
           if (err) return done(err);
@@ -49,7 +69,7 @@ describe('Integration', () => {
 
       before(done => {
         Survey.create({
-          name: "Hello, World",
+          name: "CSVSurvey",
           userId: auth.user.id,
           groupId: group.id
         }, (err, _survey) => {
@@ -63,9 +83,16 @@ describe('Integration', () => {
 
       before(done => {
         Question.create({
-          title: "Hello, World",
+          title: "CSV_Q0",
+          surveyId: survey.id,
           userId: auth.user.id,
-          surveyId: survey.id
+          responses: [{
+            value: 0,
+            text: "0"
+          }, {
+            value: 1,
+            text: "1"
+          }]
         }, (err, _question) => {
           if (err) return done(err);
           question = _question;
@@ -73,34 +100,44 @@ describe('Integration', () => {
         });
       });
 
-      it('should list questions', done => {
+      let response;
+
+      before(done => {
+        Response.create({
+          userId: clientAuth.user.id,
+          surveyId: survey.id,
+          questionId: question.id,
+          date: new Date(),
+          state: 'COMPLETE',
+          value: 5
+        }, (err, _response) => {
+          if (err) return done(err);
+          response = _response;
+          done();
+        });
+      });
+
+
+      it("response should exist", ()=>{
+        should.exist(response);
+        should.exist(response.date);
+      });
+
+      it('should return a CSV response of users:surveys:answers', done => {
         agent
           .client()
-          .get('/survey/' + survey.id + '/question')
+          .get("/survey/" + survey.id + "/response/csv")
           .query({
             auth: auth.token
           })
           .expect(200)
           .end(function(err, result) {
+            let csv = result.text;
+            should.exist(csv);
             should.not.exist(err);
-            let questions = result.body;
-            questions.length.should.equal(1);
             done();
           });
       });
-
-      it('should not list surveys', done => {
-        agent
-          .client()
-          .get('/survey/' + survey.id + '/question')
-          .query({
-            auth: '1234'
-          })
-          .send({})
-          .expect(401)
-          .end(done);
-      });     
-
     });
   });
 });

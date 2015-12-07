@@ -134,6 +134,36 @@ exports.listResponses = (req, res, next) => {
 };
 
 /**
+ * gets a CSV of responses on a survey givemn a survey ID
+ *
+ * @mthod getCSV
+ * @param {Request} req
+ * @param {Response} res
+ * @param {Function} next
+ */
+exports.getCSV = (req,res,next) =>{
+  let surveyId = req.params.id;
+
+  Response.getCSV(surveyId, (err, responses) => {
+    if(err) return next(err);
+    let csvarray = ["lastName, firstName, date, answer, question"];
+    responses.forEach((value)=>{
+      let qid = value.question.id;
+      let qval = value.value;
+      let qdate = value.date;
+      let lname = value.user.lastName;
+      let fname = value.user.firstName;
+      csvarray.push(lname + ","+fname+","+qdate+","+qval+","+qid);
+    });
+
+    let csvString = csvarray.join("\n");
+    res.attachment('data.csv');
+    res.setHeader('Content-Type', 'text/csv');
+    res.end(csvString);
+  });
+};
+
+/**
  * Adds a user to a survey
  *
  * @method addUser
