@@ -81,7 +81,7 @@ class ResponseService extends CommonService {
   }
 
 
-/**
+  /**
    * gets a CSV formatted object with responses from a survey id
    *
    * @method getCSV
@@ -92,9 +92,7 @@ class ResponseService extends CommonService {
     if (arguments.length === 2) {
         next = state;
         state = RESPONSE_STATE.COMPLETE;
-    }    
-    
-    //This is the formatted data section, but until we figure out how to return it, we return a dumbed down version instead.
+    }        
     let r = this
       .listIndex("surveyId", surveyId)
       .getJoin("userId")
