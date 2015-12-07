@@ -141,7 +141,7 @@ exports.listResponses = (req, res, next) => {
  * @param {Response} res
  * @param {Function} next
  */
-exports.listCSVResponses = (req,res,next) =>{
+exports.listCSVResponses = (req, res, next) =>{
 
   let surveyId = req.params.id;
 
