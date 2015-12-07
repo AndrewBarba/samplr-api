@@ -1,5 +1,6 @@
 "use strict";
 
+const Errors = require('app/errors');
 const Auth = require('modules/auth');
 
 // Constants
@@ -69,7 +70,7 @@ exports.login = (req, res, next) => {
     email: email,
     password: password
   }, (err, auth) => {
-    if (err) return next(err);
+    if (err) return next(new Errors.UnauthorizedError());
     res.status(200).json(auth);
   });
 };

@@ -54,7 +54,7 @@ describe('Integration', () => {
             email: data.email,
             password: "wrong password"
           })
-          .expect(400)
+          .expect(401)
           .end(done);
       });
 
@@ -66,7 +66,7 @@ describe('Integration', () => {
             email: data.email,
             password: "xxx"
           })
-          .expect(500)
+          .expect(401)
           .end(done);
       });
 
