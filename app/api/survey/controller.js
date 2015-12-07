@@ -135,7 +135,7 @@ exports.listResponses = (req, res, next) => {
 
 /**
  * gets a CSV of responses on a survey givemn a survey ID
- * 
+ *
  * @mthod getCSV
  * @param {Request} req
  * @param {Response} res
@@ -143,16 +143,16 @@ exports.listResponses = (req, res, next) => {
  */
 exports.getCSV = (req,res,next) =>{
   let surveyId = req.params.id;
-  
+
   Response.getCSV(surveyId, (err, responses) => {
     if(err) return next(err);
     let csvarray = ["lastName, firstName, date, answer, question"];
     responses.forEach((value)=>{      
       csvarray.push(
-        value.right.lastName + ", " + 
-        value.right.firstName + ", " + 
-        value.left.date + ", " + 
-        value.left.value + ", " + 
+        value.right.lastName + ", " +
+        value.right.firstName + ", " +
+        value.left.date + ", " +
+        value.left.value + ", " +
         value.left.questionId
         );
     });

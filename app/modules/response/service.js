@@ -78,7 +78,7 @@ class ResponseService extends CommonService {
       .filter({
         state: state
       });
-      
+
     return this.rQuery(r, next);
   }
 
@@ -91,21 +91,26 @@ class ResponseService extends CommonService {
    * @param {Function} next
    */
   getCSV(surveyId, state, next) {
-    if (arguments.length === 2) {
-        next = state;
-        state = RESPONSE_STATE.COMPLETE;
-    }        
+    if (arguments.length === 2 && _.isFunction(state)) {
+      next = state;
+      state = null;
+    }
+    state = state || RESPONSE_STATE.COMPLETE;
+
     let r = this
       .listIndex("surveyId", surveyId)
-      .getJoin("userId")
+      .getJoin({
+        user: true,
+        question: true
+      })
       .filter({
         state: state
-      })
-      .pluck({"right" : ["lastName", "firstName"], "left":["date", "answer", "questionId"]});
+      });
+      // .pluck({"right" : ["lastName", "firstName"], "left":["date", "answer", "questionId"]});
 
     return this.rQuery(r, next);
   }
-  
+
 
   /**
    * List responses by question id

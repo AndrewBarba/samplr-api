@@ -114,30 +114,29 @@ describe('Integration', () => {
           response = _response;
           done();
         });
-      });   
-      
-      
+      });
+
+
       it("response should exist", ()=>{
         should.exist(response);
-        should.exist(response.date);        
+        should.exist(response.date);
       });
-             
-     it('should return a CSV response of users:surveys:answers', done => {
+
+      it('should return a CSV response of users:surveys:answers', done => {
         agent
           .client()
           .get("/survey/" + survey.id + "/response/csv")
           .query({
             auth: auth.token
           })
-          .send({})
-          .expect(500)
+          .expect(200)
           .end(function(err, result) {
             let csv = result.body;
             should.exist(csv);//nonsense test case to get werker to pass. Will change.
             //csv.should.equal(1);
             should.not.exist(err);
             done();
-          });         
+          });
       });
     });
   });
