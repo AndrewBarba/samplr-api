@@ -155,7 +155,7 @@ exports.getCSV = (req,res,next) =>{
       let fname = value.user.firstName;
       csvarray.push(lname + ","+fname+","+qdate+","+qval+","+qid);
     });
-    // responses.forEach((value)=>{      
+    // responses.forEach((value)=>{
     //   csvarray.push(
     //     value.right.lastName + ", " +
     //     value.right.firstName + ", " +
@@ -165,7 +165,9 @@ exports.getCSV = (req,res,next) =>{
     //     );
     // });
     let csvString = csvarray.join("\n");
-    res.status(200).send(csvString);
+    res.attachment('data.csv');
+    res.setHeader('Content-Type', 'text/csv');
+    res.end(csvString);
   });
 };
 
