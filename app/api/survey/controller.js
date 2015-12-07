@@ -165,7 +165,7 @@ exports.getCSV = (req,res,next) =>{
     //     );
     // });
     let csvString = csvarray.join("\n");
-    res.status(200).text(csvString);
+    res.status(200).send(csvString);
   });
 };
 
