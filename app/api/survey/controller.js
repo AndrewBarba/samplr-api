@@ -156,7 +156,7 @@ exports.listCSVResponses = (req,res,next) =>{
 
       let csvarray = ["lastName, firstName, date, answer, question"];
 
-      responses.forEach((value)=>{
+      responses.forEach(value => {
         let qid = value.question.id;
         let qval = value.value;
         let qdate = value.date;
@@ -166,7 +166,7 @@ exports.listCSVResponses = (req,res,next) =>{
       });
 
       let csvString = csvarray.join("\n");
-      
+
       res.attachment('data.csv');
       res.setHeader('Content-Type', 'text/csv');
       res.end(csvString);
