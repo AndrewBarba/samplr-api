@@ -5,6 +5,9 @@ const Question = require('modules/question');
 const Response = require('modules/response');
 const User = require('modules/user');
 
+// Constants
+const RESPONSE_STATE = Response.STATE;
+
 /**
  * Get a survey
  *
@@ -117,9 +120,10 @@ exports.listUsers = (req, res, next) => {
 exports.listResponses = (req, res, next) => {
 
   let surveyId = req.params.id;
+  let state = req.params.state || RESPONSE_STATE.COMPLETE;
 
   Response
-    .listBySurveyId(surveyId)
+    .listBySurveyId(surveyId, state)
     .getJoin({
       question: true
     })

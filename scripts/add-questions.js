@@ -29,7 +29,7 @@ async.waterfall([
         surveyId: question.surveyId,
         questionId: question.id,
         state: 'COMPLETE',
-        value: parseInt(Math.random() * 100),
+        value: parseInt(Math.random() * 1.99),
         date: new Date()
       }, done);
     }, done);
