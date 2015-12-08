@@ -128,6 +128,25 @@ class ResponseService extends CommonService {
 
     return this.rQuery(r, next);
   }
+
+  /**
+   * Expires responses before the current date
+   *
+   * @method expireByDate
+   * @param {Date} date
+   * @param {Function} next
+   */
+  expireByDate(date, next) {
+    this
+      .listIndex('state', RESPONSE_STATE.READY)
+      .filter(res => {
+        return res('date').lt(date);
+      })
+      .update({
+        state: RESPONSE_STATE.EXPIRED
+      })
+      .run(next);
+  }
 }
 
 module.exports = ResponseService;
