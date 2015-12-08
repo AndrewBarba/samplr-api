@@ -69,7 +69,7 @@ const LOCAL = _.extend({}, DEVELOPMENT, {
     host: 'aws-us-east-1-portal.2.dblayer.com',
     port: 10511,
     db: 'development',
-    authKey: 'skirmNQlg18q5xUbU54xNN0neQRgeRP1UD2HCa8iSZE',
+    authKey: process.env.RETHINKDB_AUTH_KEY || 'localhost',
     ssl: {
       rejectUnauthorized: false
     }
