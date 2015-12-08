@@ -19,8 +19,8 @@ describe('Integration', () => {
       let userData = {
         email: `int_csv_response_question_res@test.com`,
         password: "xxx123",
-        firstName: "Andrew",
-        lastName: "Test",
+        firstName: "csvTestingFirst",
+        lastName: "csvTestingLast",
         type: "RESEARCHER",
         age: 22
       };
@@ -38,8 +38,8 @@ describe('Integration', () => {
       let userClientData = {
         email: `int_csv_response_question_client@test.com`,
         password: "xxx123",
-        firstName: "Andrew",
-        lastName: "Test",
+        firstName: "csvTestingFirst",
+        lastName: "csvTestingLast",
         type: "CLIENT",
         age: 22
       };
@@ -117,6 +117,8 @@ describe('Integration', () => {
         });
       });
 
+      let csv;
+
       it('should return a CSV response of users:surveys:answers', done => {
         agent
           .client()
@@ -126,11 +128,30 @@ describe('Integration', () => {
           })
           .expect(200)
           .end(function(err, result) {
-            let csv = result.text;
+            csv = result.text;
             should.exist(csv);
             should.not.exist(err);
             done();
           });
+      });
+
+      it('should get csv headers', done => {
+        let splits = csv.split('\n');
+        splits[0].should.equal("Last, First, Email, Date, Answer, Question, Question ID");
+        done();
+      });
+
+      it('should get an actual csv row', done => {
+        let splits = csv.split('\n');
+        let row1 = splits[1].split(',');
+        row1[0].should.equal(clientAuth.user.lastName);
+        row1[1].should.equal(clientAuth.user.firstName);
+        row1[2].should.equal(clientAuth.user.email);
+        row1[3].should.equal(new Date(response.date).toString());
+        row1[4].should.equal(response.value+'');
+        row1[5].should.equal(question.title);
+        row1[6].should.equal(question.id);
+        done();
       });
     });
   });

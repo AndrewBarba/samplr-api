@@ -154,15 +154,17 @@ exports.listCSVResponses = (req, res, next) =>{
     .run((err, responses) => {
       if (err) return next(err);
 
-      let csvarray = ["lastName, firstName, date, answer, question"];
+      let csvarray = ["Last, First, Email, Date, Answer, Question, Question ID"];
 
       responses.forEach(value => {
+        let qtitle = value.question.title;
         let qid = value.question.id;
         let qval = value.value;
         let qdate = value.date;
         let lname = value.user.lastName;
         let fname = value.user.firstName;
-        csvarray.push(lname + ","+fname+","+qdate+","+qval+","+qid);
+        let email = value.user.email;
+        csvarray.push([lname, fname, email, qdate, qval, qtitle, qid].join(','));
       });
 
       let csvString = csvarray.join("\n");

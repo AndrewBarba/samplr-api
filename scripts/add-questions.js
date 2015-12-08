@@ -1,5 +1,6 @@
 
 const async = require('async');
+const moment = require('moment');
 const Response = require('modules/response');
 const Question = require('modules/question');
 const utils = require('lib/utils');
@@ -23,14 +24,14 @@ async.waterfall([
     }, done);
   },
   (question, done) => {
-    async.times(5, (int, done) => {
+    async.times(50, (int, done) => {
       Response.create({
         userId: USER_ID,
         surveyId: question.surveyId,
         questionId: question.id,
-        state: 'COMPLETE',
+        state: 'READY',
         value: parseInt(Math.random() * 1.99),
-        date: new Date()
+        date: moment().add(1, 'year').toDate()
       }, done);
     }, done);
   }
