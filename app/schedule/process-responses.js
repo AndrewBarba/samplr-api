@@ -17,6 +17,7 @@ async.waterfall([
     Response.processByDate(new Date(), done);
   },
   (responses, done) => {
+    logger.info(`Processed ${responses.length} responses`);
     let usersIds = _.chain(responses).pluck('userId').unique().value();
     User.listIndex('id', usersIds, done);
   },

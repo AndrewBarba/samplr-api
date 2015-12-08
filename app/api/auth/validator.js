@@ -7,7 +7,7 @@ class AuthValidator extends CommonValidator {
   validateRegister(req, res, next) {
 
     req.checkBody('email').notEmpty().isEmail();
-    req.checkBody('password').notEmpty().isString();
+    req.checkBody('password').notEmpty().isString().len(6, 128);
     req.checkBody('firstName').notEmpty().isString();
     req.checkBody('lastName').notEmpty().isString();
 

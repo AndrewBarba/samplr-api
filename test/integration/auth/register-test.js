@@ -28,7 +28,7 @@ describe('Integration', () => {
           .client()
           .post('/auth/register')
           .send(data)
-          .expect(500)
+          .expect(400)
           .end(done);
       });
 
