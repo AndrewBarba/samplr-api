@@ -130,6 +130,25 @@ class ResponseService extends CommonService {
   }
 
   /**
+   * Processes responses before the current date
+   *
+   * @method processByDate
+   * @param {Date} date
+   * @param {Function} next
+   */
+  processByDate(date, next) {
+    this
+      .listIndex('state', RESPONSE_STATE.PENDING)
+      .filter(res => {
+        return res('date').lt(date);
+      })
+      .update({
+        state: RESPONSE_STATE.READY
+      })
+      .run(next);
+  }
+
+  /**
    * Expires responses before the current date
    *
    * @method expireByDate

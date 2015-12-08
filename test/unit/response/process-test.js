@@ -8,7 +8,7 @@ const Response = require('modules/response');
 
 describe('Unit', () => {
   describe('Response', () => {
-    describe('Expire', () => {
+    describe('Process', () => {
 
       let response1;
       let response2;
@@ -18,7 +18,7 @@ describe('Unit', () => {
           userId: '1234',
           surveyId: '1234',
           questionId: '1234',
-          state: Response.STATE.READY,
+          state: Response.STATE.PENDING,
           date: moment().subtract(10, 'minutes').toDate()
         }, (err, res) => {
           response1 = res;
@@ -31,7 +31,7 @@ describe('Unit', () => {
           userId: '1234',
           surveyId: '1234',
           questionId: '1234',
-          state: Response.STATE.READY,
+          state: Response.STATE.PENDING,
           date: moment().add(10, 'minutes').toDate()
         }, (err, res) => {
           response2 = res;
@@ -39,17 +39,17 @@ describe('Unit', () => {
         });
       });
 
-      it('should expire the first response', done => {
-        Response.expireByDate(new Date(), (err, res) => {
+      it('should process the first response', done => {
+        Response.processByDate(new Date(), (err, res) => {
           should.not.exist(err);
           res.length.should.equal(1);
-          res[0].state.should.equal(Response.STATE.EXPIRED);
+          res[0].state.should.equal(Response.STATE.READY);
           done();
         });
       });
 
-      it('should not expire the second response', done => {
-        Response.expireByDate(new Date(), (err, res) => {
+      it('should not process the second response', done => {
+        Response.processByDate(new Date(), (err, res) => {
           should.not.exist(err);
           res.length.should.equal(0);
           done();
