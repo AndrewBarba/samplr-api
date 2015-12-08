@@ -27,6 +27,15 @@ make test-unit
 make test-int
 ```
 
+#### Code Coverage
+To generate code coverage you must have RethinkDB installed locally and running on the default port. Generating coverage runs all unit tests and opens a generated HTML file in the browser.
+```
+npm run coverage && npm run view-coverage
+```
+
+## Documentation
+API Documentation is automatically generated when using Swagger to define routes. To view documentation, open [http://api.samplr.nu/docs/](http://api.samplr.nu/docs/)
+
 ## Workflow
 There are two main branches in this project, `master` and `dev`. `master` is expected to be production ready at all times. All new features should make a branch off of `dev` and then open a [Pull Request](https://developer.github.com/v3/pulls/) back into dev. Pull Requests should not be merged until all tests are passing.
 
