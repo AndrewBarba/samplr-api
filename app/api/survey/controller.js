@@ -158,7 +158,7 @@ exports.listCSVResponses = (req, res, next) =>{
 
       responses.forEach(value => {
         let qtitle = value.question.title;
-        let qid = value.question.id
+        let qid = value.question.id;
         let qval = value.value;
         let qdate = value.date;
         let lname = value.user.lastName;
