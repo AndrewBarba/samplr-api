@@ -4,6 +4,10 @@ const ENV = process.env.NODE_ENV || 'local';
 const _ = require('underscore');
 const pkg = require('../../package');
 
+/* ------------------------------------------------------------------------- *
+ * Default
+ * ------------------------------------------------------------------------- */
+
 const DEFAULTS = {
   app: {
     author: pkg.author,
@@ -28,6 +32,10 @@ const DEFAULTS = {
   }
 };
 
+/* ------------------------------------------------------------------------- *
+ * Production
+ * ------------------------------------------------------------------------- */
+
 const PRODUCTION = _.extend({}, DEFAULTS, {
   ENV_PROD: true,
   logger: {
@@ -43,6 +51,10 @@ const PRODUCTION = _.extend({}, DEFAULTS, {
     }
   }
 });
+
+/* ------------------------------------------------------------------------- *
+ * Development
+ * ------------------------------------------------------------------------- */
 
 const DEVELOPMENT = _.extend({}, DEFAULTS, {
   ENV_DEV: true,
@@ -60,6 +72,10 @@ const DEVELOPMENT = _.extend({}, DEFAULTS, {
   }
 });
 
+/* ------------------------------------------------------------------------- *
+ * Local
+ * ------------------------------------------------------------------------- */
+
 const LOCAL = _.extend({}, DEVELOPMENT, {
   ENV_LOCAL: true,
   logger: {
@@ -76,6 +92,10 @@ const LOCAL = _.extend({}, DEVELOPMENT, {
   }
 });
 
+/* ------------------------------------------------------------------------- *
+ * Test
+ * ------------------------------------------------------------------------- */
+
 const TEST = _.extend({}, DEVELOPMENT, {
   ENV_TEST: true,
   logger: {
@@ -85,6 +105,10 @@ const TEST = _.extend({}, DEVELOPMENT, {
     host: process.env.RETHINKDB_PORT_29015_TCP_ADDR || 'localhost'
   }
 });
+
+/* ------------------------------------------------------------------------- *
+ * Expose
+ * ------------------------------------------------------------------------- */
 
 module.exports = {
   production: PRODUCTION,
