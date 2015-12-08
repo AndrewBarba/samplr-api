@@ -50,13 +50,66 @@ describe('Integration', () => {
         });
       });
 
-      it('should search for a user', done => {
+      it('should list all users', done => {
+        agent
+          .client()
+          .get('/user/' + auth.user.id + '/user')
+          .query({
+            auth: auth.token
+          })
+          .expect(200)
+          .end(function(err, result) {
+            should.not.exist(err);
+            let users = result.body;
+            should.exist(users);
+            users.length.should.be.greaterThan(0);
+            done();
+          });
+      });
+
+      it('should search for a user by name', done => {
         agent
           .client()
           .get('/user/' + auth.user.id + '/user')
           .query({
             auth: auth.token,
             query: "And Te"
+          })
+          .expect(200)
+          .end(function(err, result) {
+            should.not.exist(err);
+            let users = result.body;
+            should.exist(users);
+            users.length.should.be.greaterThan(0);
+            done();
+          });
+      });
+
+      it('should search for a user by first name', done => {
+        agent
+          .client()
+          .get('/user/' + auth.user.id + '/user')
+          .query({
+            auth: auth.token,
+            query: "And"
+          })
+          .expect(200)
+          .end(function(err, result) {
+            should.not.exist(err);
+            let users = result.body;
+            should.exist(users);
+            users.length.should.be.greaterThan(0);
+            done();
+          });
+      });
+
+      it('should search for a user by email', done => {
+        agent
+          .client()
+          .get('/user/' + auth.user.id + '/user')
+          .query({
+            auth: auth.token,
+            query: "search_client@test"
           })
           .expect(200)
           .end(function(err, result) {
