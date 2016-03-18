@@ -33,5 +33,5 @@ async.series([
   }
 ], err => {
   if (err) throw err;
-  logger.info('Server listening on port:', config.http.port);
+  logger.info('Server listening on port= ', config.http.port);
 });
