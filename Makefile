@@ -5,7 +5,7 @@ default:
 	npm install
 
 start:
-	pm2 process/server-cluster.js
+	pm2 start process/server-cluster.js
 
 worker:
 	node process/worker-cluster
