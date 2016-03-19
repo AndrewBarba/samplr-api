@@ -5,7 +5,7 @@ samplr-api
 
 Samplr API built with Node.js and RethinkDB
 
-## Setup
+## Setup :
 You must be running [Node.js](https://nodejs.org/en/) version 4.2.3 or later to run this project.
 ```
 make
