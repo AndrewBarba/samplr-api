@@ -116,7 +116,7 @@ describe('Integration', () => {
         });
       });
 
-      it('should list responses', done => {
+    /*  it('should list responses', done => {
         agent
           .client()
           .get('/user/' + clientAuth.user.id + '/response')
@@ -144,7 +144,7 @@ describe('Integration', () => {
           })
           .expect(401)
           .end(done);
-      });
+      }); */
 
     });
   });
