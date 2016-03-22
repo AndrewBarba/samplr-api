@@ -1,7 +1,7 @@
 "use strict";
 
-const should = require('should');
-const agent = require('test/lib/agent');
+//const should = require('should');
+//const agent = require('test/lib/agent');
 
 // Modules
 const Auth = require('modules/auth');
