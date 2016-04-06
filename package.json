@@ -18,6 +18,7 @@
     "cors": "2.7.1",
     "express": "4.13.3",
     "express-validator": "2.18.0",
+    "mocha-jenkins-reporter": "0.2.2",
     "forky": "0.3.0",
     "moment": "2.10.6",
     "newrelic": "1.24.0",
