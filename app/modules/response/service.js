@@ -118,7 +118,9 @@ class ResponseService extends CommonService {
       next = state;
       state = null;
     }
-    state = state || RESPONSE_STATE.READY;
+    
+    state = state || RESPONSE_STATE.PENDING;
+    console.log("state:",state);
 
     let r = this
       .listIndex("userId", userId)

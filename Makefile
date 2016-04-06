@@ -5,10 +5,12 @@ default:
 	npm install
 
 start:
-	node process/server-cluster
+	pm2 start process/server-cluster.js
 
-worker:
-	node process/worker-cluster
+jenkins:
+    @JUNIT_REPORT_PATH=report.xml JUNIT_REPORT_STACK=1 ./node_modules/.bin/mocha --reporter mocha-jenkins-reporter || true
+
+   .PHONY: jenkins
 
 lint:
 	gulp jshint
