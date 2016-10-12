@@ -61,3 +61,7 @@ The production environment connects to the production database on Compose.io and
 
 #### Compose.io
 Currently we have a single RethinkDB deployment hosted on Compose.io. The environment has two databases, production and development. Soon we will be separating these databases onto their own deployments for more security and scalability.
+
+## Presentation
+
+[Final Presentation](http://bit.ly/2d7rIdA)
